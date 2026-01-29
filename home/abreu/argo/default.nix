@@ -1,16 +1,22 @@
 {
   inputs,
+  outputs,
   config,
   ...
 }: {
-  imports = [
-    ../../features
-    ./desktop-environment
-    ./git.nix
-    inputs.hydenix.homeModules.default
-    inputs.sops-nix.homeManagerModules.sops
-    inputs.stylix.homeModules.stylix
-  ];
+  imports =
+    [
+      ../../features/cli
+      ../../features/gui
+      ../../features/desktop-environment/hydenix
+      ../../features/desktop-environment/stylix/ayu-mirage-theme
+
+      ../../common.nix
+      ./git.nix
+      inputs.sops-nix.homeManagerModules.sops
+    ]
+    # Custom modules
+    ++ (builtins.attrValues outputs.homeManagerModules);
 
   home = {
     username = "abreu";
@@ -25,4 +31,6 @@
       "api-keys/tavily" = {};
     };
   };
+
+  abnt2-keyboard.hm.enable = true;
 }

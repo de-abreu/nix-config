@@ -9,7 +9,9 @@
 }: let
   username = "abreu";
 in {
-  imports = [inputs.hydenix.inputs.home-manager.nixosModules.home-manager];
+  imports = [
+    inputs.hydenix.inputs.home-manager.nixosModules.home-manager
+  ];
 
   users.users.${username} = {
     isNormalUser = true;
@@ -37,7 +39,10 @@ in {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = {inherit inputs outputs importAll experimentalFeatures;};
+    extraSpecialArgs = {
+      inherit inputs outputs importAll experimentalFeatures;
+    };
+    backupFileExtension = "bak";
     users.${username} =
       import
       "${inputs.self}/home/${username}/${config.networking.hostName}";

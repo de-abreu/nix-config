@@ -19,18 +19,16 @@ with builtins; let
   pkgsFor = lib.genAttrs (import systems) (
     system: import nixpkgs {inherit system;}
   );
+  forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
   experimentalFeatures = ["nix-command" "flakes" "pipe-operators"];
 in {
+  nixosModules = import ./modules/nixos;
+  homeManagerModules = import ./modules/home-manager;
+
   overlays = import ./overlays {inherit inputs;};
-  devShells =
-    import systems
-    |> lib.foldl' (
-      acc: system:
-        acc
-        // {
-          ${system} = import ./shell.nix {pkgs = pkgsFor.${system};};
-        }
-    ) {};
+
+  packages = forEachSystem (pkgs: import ./pkgs {inherit pkgs;});
+  devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
 
   nixosConfigurations.argo = lib.nixosSystem {
     modules = [./hosts/argo];

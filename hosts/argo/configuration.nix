@@ -3,6 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   inputs,
+  outputs,
   config,
   pkgs,
   ...
@@ -18,6 +19,9 @@ in {
     inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
     inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
     inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+
+    # Custom modules
+    outputs.nixosModules.abnt2-keyboard
   ];
 
   nixpkgs.overlays = [
@@ -54,6 +58,14 @@ in {
     LC_PAPER = "pt_BR.UTF-8";
     LC_TELEPHONE = "pt_BR.UTF-8";
     LC_TIME = "pt_BR.UTF-8";
+  };
+
+  abnt2-keyboard = {
+    enable = true;
+    kanata = {
+      enable = true;
+      devices = ["/dev/input/by-path/platform-i8042-serio-0-event-kbd"];
+    };
   };
 
   sops = {

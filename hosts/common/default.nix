@@ -11,7 +11,10 @@
     ./users
   ];
 
-  nixpkgs.overlays = [outputs.overlays.stable-packages];
+  nixpkgs.overlays = [
+    outputs.overlays.additions
+    outputs.overlays.unstable-packages
+  ];
 
   nix = {
     settings = {

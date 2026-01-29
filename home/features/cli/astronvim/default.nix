@@ -5,6 +5,7 @@
 {
   config,
   pkgs,
+  flakePath,
   ...
 }: {
   imports = [./quarto-nvim.nix ./prettierd.nix];
@@ -137,7 +138,7 @@
     xdg = {
       configFile."nvim".source = with config;
         lib.file.mkOutOfStoreSymlink
-        "${home.homeDirectory}/.config/NixOS/home/features/cli/astronvim/nvim";
+        "${flakePath}/home/features/cli/astronvim/nvim";
       mimeApps.defaultApplications."text/plain" = "nvim.desktop";
     };
     stylix.targets.neovim.enable = false; # Managed by astroui.lua

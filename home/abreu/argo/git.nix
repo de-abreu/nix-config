@@ -19,6 +19,9 @@ in {
       };
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
+      pull.rebase = true;
+      merge.conflictStyle = "zdiff3";
+      rerere.enabled = true;
     };
     signing = {
       format = "ssh";
