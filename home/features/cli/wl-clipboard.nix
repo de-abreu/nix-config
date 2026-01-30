@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = [pkgs.wl-clipboard];
   programs.fish.shellAbbrs = {
-    cp = "wl-copy";
+    c = "wl-copy";
     co = "wl-paste";
   };
 }
