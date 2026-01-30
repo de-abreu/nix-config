@@ -133,7 +133,10 @@
     };
 
     # Fixes the libsqlite.so not found issue for https://github.com/kkharji/sqlite.lua.
-    home.sessionVariables.LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath (with pkgs; [sqlite])}:$LD_LIBRARY_PATH";
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath (with pkgs; [sqlite])}:$LD_LIBRARY_PATH";
+    };
 
     xdg = {
       configFile."nvim".source = with config;
