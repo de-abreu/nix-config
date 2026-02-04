@@ -22,8 +22,7 @@ in
     bindd = ${mod}, period, $d Gliph picker, exec, pkill -x rofi || hyde-shell glyph-picker; $toDefault
     bindd = ${mod}, V, $d Clipboard history, exec, pkill -x rofi || hyde-shell cliphist -c; $toDefault
     bindd = ${mod} Shift, space, $d Menu layout options, exec, pkill -x rofi || hyde-shell rofiselect; $toDefault
-    bindd = ${mod} Shift, W, $d Change Wallpaper, exec, pkill -x rofi || hyde-shell wallpaper -SG # launch wallpaper select menu
-    bindd = ${mod}, $apostrophe, $d Power options, exec, pkill -x rofi || hyde-shell logoutlaunch
+    bindd = ${mod}, $apostrophe, $d Power options, exec, pkill -x rofi || hyde-shell logoutlaunch; $toDefault
 
     $d = [$l|Shortcuts]
     bindd = ${mod}, T, $d open terminal, exec, ${TERMINAL}; $toDefault

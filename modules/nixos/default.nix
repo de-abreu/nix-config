@@ -1,3 +1,4 @@
 {
-  abnt2-keyboard = import ./abnt2-keyboard;
+  kanata = import ./kanata;
+  adjust-kbd-backlight = import ./adjust-kbd-backlight.nix;
 }

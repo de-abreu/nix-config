@@ -10,19 +10,19 @@
 }: let
   hostname = "argo";
 in {
-  imports = [
-    inputs.hydenix.nixosModules.default # Hydenix desktop environment
-    inputs.sops-nix.nixosModules.sops # Sops secrets management
+  imports =
+    [
+      inputs.hydenix.nixosModules.default # Hydenix desktop environment
+      inputs.sops-nix.nixosModules.sops # Sops secrets management
 
-    # Hardware modules
-    ./hardware-configuration.nix # Results of the hardware scan.
-    inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
-    inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
-    inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
-
+      # Hardware modules
+      ./hardware-configuration.nix # Results of the hardware scan.
+      inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
+      inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
+      inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+    ]
     # Custom modules
-    outputs.nixosModules.abnt2-keyboard
-  ];
+    ++ (builtins.attrValues outputs.nixosModules);
 
   nixpkgs.overlays = [
     inputs.hydenix.overlays.default
@@ -60,11 +60,15 @@ in {
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  abnt2-keyboard = {
-    enable = true;
+  programs = {
+    adjust_kbd_backlight = {
+      enable = true;
+      device = "dell::kbd_backlight";
+    };
     kanata = {
       enable = true;
       devices = ["/dev/input/by-path/platform-i8042-serio-0-event-kbd"];
+      addBinaryToPath = true;
     };
   };
 

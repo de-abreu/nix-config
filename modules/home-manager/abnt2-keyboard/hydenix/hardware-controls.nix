@@ -22,6 +22,7 @@ in
     binddlt = , XF86AudioNext, $d play next media, exec, ${pctl} next
 
     $d=[$hc|Brightness]
+    bindd = , "XF86KbdLightOnOff", $d toggle keyboard backlight, exec, adjust_kbd_backlight
     binddel = , XF86MonBrightnessUp, $d increase brightness, exec, ${bctl} i
     binddel = , XF86MonBrightnessDown, $d decrease brightness, exec, ${bctl} d
 

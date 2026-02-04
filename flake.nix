@@ -20,6 +20,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+
     stylix.url = "github:nix-community/stylix/release-25.11";
     systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";

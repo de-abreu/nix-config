@@ -47,7 +47,7 @@ in {
             $toDefault = ${changeSubmap "reset" base0B}
 
             $d=[Hyprmode]
-            binddr = , Super_L, $d Toggle, exec, $toHyprmode
+            bindd = $mainMod, Super_L, $d toggle Hyprmode, exec, $toHyprmode
 
             ${hardware-controls}
 
@@ -61,7 +61,7 @@ in {
 
             submap = hyprmode
 
-            bindr = , Super_L, exec, $toDefault
+            bind = $mainMod, Super_L, exec, $toDefault
 
             ${hardware-controls}
 

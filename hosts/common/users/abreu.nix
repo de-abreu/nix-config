@@ -1,6 +1,5 @@
 {
   config,
-  experimentalFeatures,
   importAll,
   inputs,
   outputs,
@@ -39,10 +38,7 @@ in {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = {
-      inherit inputs outputs importAll experimentalFeatures;
-    };
-    backupFileExtension = "bak";
+    extraSpecialArgs = { inherit inputs outputs importAll; };
     users.${username} =
       import
       "${inputs.self}/home/${username}/${config.networking.hostName}";
