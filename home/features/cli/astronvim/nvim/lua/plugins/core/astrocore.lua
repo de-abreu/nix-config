@@ -40,7 +40,7 @@ return {
 
         -- Set tab length
         shiftwidth = 0, -- Set to zero to return the same value as tabstop
-        tabstop = 4,
+        tabstop = 2,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
