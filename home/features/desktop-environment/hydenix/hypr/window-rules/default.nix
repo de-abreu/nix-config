@@ -1,9 +1,11 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 with builtins; let
+  inherit (lib) mkForce mkIf;
   transparent = foldl' (acc: el: acc + "windowrulev2=opacity 0.8 0.7 1.0, ${el}\n") "" [
     "class:^org.wezfurlong.wezterm$"
     "class:^org.pwmt.zathura$"
@@ -17,10 +19,7 @@ with builtins; let
     "class:^(xdg-desktop-portal-gtk)$"
   ];
 in {
-  # FIX: A patch legacy hyprland configuration that is incompatible with the
-  # recent breaking changes.
-
-  home.file.".local/share/hypr/" = lib.mkForce {
+  home.file.".local/share/hypr/" = mkForce {
     recursive = true;
     source = pkgs.runCommand "hyde-hypr-patched" {} ''
       # 1. Create the output directory
@@ -37,6 +36,16 @@ in {
       cp ${./default-window-rules.conf} $out/windowrules.conf
     '';
   };
-  hydenix.hm.hyprland.windowrules.overrideConfig =
-    (readFile ./application-window-rules.conf) + transparent + floating;
+  hydenix.hm.hyprland = {
+    windowrules.overrideConfig =
+      (readFile ./application-window-rules.conf) + transparent + floating;
+    extraConfig =
+      mkIf config.stylix.enable
+      #hyprlang
+      ''
+        general {
+          col.active_border = rgb(${config.lib.stylix.colors.base0B})
+        }
+      '';
+  };
 }

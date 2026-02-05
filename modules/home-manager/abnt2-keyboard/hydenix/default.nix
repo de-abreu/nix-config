@@ -21,15 +21,24 @@ in {
           sensitivity=1
           }
         '';
-      keybindings.overrideConfig = with config.lib.stylix.colors;
-      with pkgs; let
+      keybindings.overrideConfig = with pkgs; let
         hardware-controls = callPackage ./hardware-controls.nix {};
         launchers = callPackage ./launchers.nix {inherit config;};
         theming = callPackage ./theming.nix {};
         windows = callPackage ./windows.nix {};
         workspaces = callPackage ./workspaces.nix {};
 
-        changeSubmap = name: indicator: "hyprctl keyword general:col.active_border \"rgb(${indicator})\"; hyprctl dispatch submap ${name}";
+        changeSubmap =
+          if config.stylix.enable
+          then
+            with config.lib.stylix.colors; {
+              toHyprmode = "hyprctl keyword general:col.active_border \"rgb(${base08})\"; hyprctl dispatch submap hyprmode";
+              toDefault = "hyprctl keyword general:col.active_border \"rgb(${base0B})\"; hyprctl dispatch submap reset";
+            }
+          else {
+            toHyprmode = "hyprctl dispatch submap hyprmode";
+            toDefault = "hyprctl dispatch submap reset";
+          };
       in
         if cfg.keybinds != null
         then cfg.keybinds
@@ -43,8 +52,8 @@ in {
             $printScreen = code:107
 
             # Commands to change between submaps
-            $toHyprmode = ${changeSubmap "hyprmode" base08}
-            $toDefault = ${changeSubmap "reset" base0B}
+            $toHyprmode = ${changeSubmap.toHyprmode}
+            $toDefault = ${changeSubmap.toDefault}
 
             $d=[Hyprmode]
             bindd = $mainMod, Super_L, $d toggle Hyprmode, exec, $toHyprmode
