@@ -6,6 +6,7 @@
   imports = [
     inputs.stylix.homeModules.stylix
     ./overrides
+    ../common.nix
   ];
 
   stylix = with pkgs; {

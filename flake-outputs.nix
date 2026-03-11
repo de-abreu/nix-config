@@ -7,23 +7,32 @@ inputs @ {
 with builtins; let
   inherit (self) outputs;
   lib = nixpkgs.lib;
+
   importAll = with lib;
-    dir:
-      builtins.readDir dir
-      |> filterAttrs (name: type:
-        type
-        == "directory"
-        || (hasSuffix ".nix" name && name != "default.nix"))
+  with builtins;
+    {
+      dir,
+      exclude ? [],
+    }:
+      readDir dir
+      |> filterAttrs (name: type: let
+        isNixFile = hasSuffix ".nix" name && name != "default.nix";
+        isDirectory = type == "directory";
+        isNotExcluded = !(elem name exclude);
+      in
+        (isNixFile || isDirectory) && isNotExcluded)
       |> attrNames
       |> map (name: dir + "/${name}");
+
   pkgsFor = lib.genAttrs (import systems) (
     system: import nixpkgs {inherit system;}
   );
+
   forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
   experimentalFeatures = ["nix-command" "flakes" "pipe-operators"];
 in {
   nixosModules = import ./modules/nixos;
-  homeManagerModules = import ./modules/home-manager;
+  homeModules = import ./modules/home-manager;
 
   overlays = import ./overlays {inherit inputs;};
 

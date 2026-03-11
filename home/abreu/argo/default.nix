@@ -6,17 +6,18 @@
 }: {
   imports =
     [
-      ../../features/cli
-      ../../features/gui
       ../../features/desktop-environment/hydenix
       ../../features/desktop-environment/stylix/ayu-mirage-theme
-
+      ../../features/keymaps/abnt2
+      ../../features/programs
       ../../common.nix
       ./git.nix
+
       inputs.sops-nix.homeManagerModules.sops
+      inputs.nixvim.homeModules.nixvim
     ]
     # Custom modules
-    ++ (builtins.attrValues outputs.homeManagerModules);
+    ++ (builtins.attrValues outputs.homeModules);
 
   home = {
     username = "abreu";
@@ -31,6 +32,4 @@
       "api-keys/tavily" = {};
     };
   };
-
-  abnt2-keyboard.hm.enable = true;
 }

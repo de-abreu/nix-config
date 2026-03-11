@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  imports = [inputs.hydenix.homeModules.default] ++ importAll ./.;
+  imports = [inputs.hydenix.homeModules.default] ++ importAll {dir = ./.;};
 
   hydenix.hm = {
     enable = true;
