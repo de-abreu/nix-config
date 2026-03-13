@@ -24,7 +24,7 @@ in {
       {
         key = "<leader>uy";
         action = "<cmd>Yazi toggle<cr>";
-        options.desx = "Resume previous Yazi session";
+        options.desc = "Resume previous Yazi session";
       }
     ]);
 }

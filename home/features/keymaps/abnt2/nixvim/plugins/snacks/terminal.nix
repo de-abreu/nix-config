@@ -2,20 +2,37 @@
   config,
   lib,
   ...
-}: let
-  cfg = config.programns.nixvim.plugins.snacks;
-  enable = cfg.enable && (cfg.settings.terminal.enabled or false);
+}:
+let
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable = cfg.enable && ((cfg.settings.terminal.enabled or false) == true);
   prefix = "<leader>t";
+
+  # Helper to open a specific terminal and remember its position
   toggleTerminal = position: {
     __raw =
       # lua
       ''
         function()
+          _G.snacks_last_term_pos = '${position}'
           Snacks.terminal.toggle(nil, { win = { position = '${position}' } })
         end
       '';
   };
-in {
+
+  # Helper to toggle the last used terminal (defaults to float)
+  toggleLastTerminal = {
+    __raw =
+      # lua
+      ''
+        function()
+          local pos = _G.snacks_last_term_pos or "float"
+          Snacks.terminal.toggle(nil, { win = { position = pos } })
+        end
+      '';
+  };
+in
+{
   programs.nixvim = {
     plugins.which-key.settings.spec = lib.optional enable [
       {
@@ -25,40 +42,52 @@ in {
       }
     ];
 
-    keymaps = lib.mkIf enable (map (m: m // {mode = "n";}) [
-      {
-        key = prefix + "f";
-        action = toggleTerminal "float";
-        options = {
-          desc = "Floating Terminal";
-          silent = true;
-        };
-      }
+    keymaps = lib.mkIf enable (
+      map (m: m // { mode = m.mode or "n"; }) [
+        {
+          key = prefix + "f";
+          action = toggleTerminal "float";
+          options = {
+            desc = "Floating Terminal";
+            silent = true;
+          };
+        }
+        {
+          key = prefix + "v";
+          action = toggleTerminal "right";
+          options = {
+            desc = "Vertical Split Terminal";
+            silent = true;
+          };
+        }
+        {
+          key = prefix + "h";
+          action = toggleTerminal "bottom";
+          options = {
+            desc = "Horizontal Split Terminal";
+            silent = true;
+          };
+        }
+        {
+          key = prefix + "l";
+          action.__raw = "function() Snacks.lazygit() end";
+          options.desc = "Open lazygit";
+        }
 
-      # Vertical Split Terminal (opens on the right)
-      {
-        key = prefix + "v";
-        action = toggleTerminal "right";
-        options = {
-          desc = "Vertical Split Terminal";
-          silent = true;
-        };
-      }
-
-      # Horizontal Split Terminal (opens at the bottom)
-      {
-        key = prefix + "h";
-        action = toggleTerminal "bottom";
-        options = {
-          desc = "Horizontal Split Terminal";
-          silent = true;
-        };
-      }
-      {
-        key = prefix + "l";
-        action.__raw = "function() Snacks.lazygit() end";
-        options.desc = "Open lazygit";
-      }
-    ]);
+        {
+          mode = [
+            "n"
+            "i"
+            "t"
+          ];
+          key = "<c-t>";
+          action = toggleLastTerminal;
+          options = {
+            desc = "Toggle Terminal (Last/Float)";
+            silent = true;
+          };
+        }
+      ]
+    );
   };
 }

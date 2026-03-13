@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.programs.nixvim.plugins.prediction;
+  cfg = config.programs.nixvim.plugins.precognition;
 in {
-  programs.nixvim.keymaps = lib.optional cfg.enable [
+  programs.nixvim.keymaps = lib.mkIf cfg.enable [
     {
       mode = "n";
       key = "<leader>up";

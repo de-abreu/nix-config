@@ -2,10 +2,10 @@
   programs.wezterm = {
     enable = true;
     extraConfig = {
-      "multiplexing" = ./modules/multiplexing.lua;
-      "rendering" = ./modules/rendering.lua;
-      "scrollback-nvim" = ./modules/scrollback-nvim.lua;
-      "tab-bar" = ./modules/tab-bar.lua;
+      "multiplexing" = ./multiplexing.lua;
+      "rendering" = ./rendering.lua;
+      "scrollback-nvim" = ./scrollback-nvim.lua;
+      "tab-bar" = ./tab-bar.lua;
     };
   };
 

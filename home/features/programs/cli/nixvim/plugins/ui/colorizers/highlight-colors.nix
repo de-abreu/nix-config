@@ -33,7 +33,7 @@
           		end
           	end
           	return highlight
-          end,
+          end
         '';
     };
     highlight-colors = {

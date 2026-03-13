@@ -1,6 +1,6 @@
-{config, ...}: {
+{treesitter, ...}: {
   programs.nixvim.plugins.treesitter-refactor = {
-    inherit (config.plugins.treesitter) enable;
+    inherit (treesitter) enable;
 
     settings = {
       highlightDefinitions = {

@@ -6,7 +6,7 @@
   cfg = config.programs.nixvim.plugins.snacks;
   enable =
     cfg.enable
-    && (cfg.settings.picker.enabled or false)
+    && ((cfg.settings.picker.enabled or false) == true)
     && config.programs.git.enable;
   prefix = "<leader>g";
   mkAction = func: {__raw = "function() Snacks.picker.${func}() end";};

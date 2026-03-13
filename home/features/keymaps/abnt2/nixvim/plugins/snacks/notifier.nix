@@ -4,7 +4,7 @@
   ...
 }: let
   cfg = config.programs.nixvim.plugins.snacks;
-  enable = cfg.enable && (cfg.settings.notifier.enabled or false);
+  enable = cfg.enable && ((cfg.settings.notifier.enabled or false) == true);
   mkAction = func: {__raw = "function() Snacks.${func}() end";};
   prefix = "<leader>n";
 in {

@@ -6,7 +6,7 @@
   inherit (lib) getExe';
 in {
   programs.nixvim = {
-    extraPackages = ["cmake-format"];
+    extraPackages = [pkgs.cmake-format];
     lsp.servers = {
       cmake.enable = true;
 
@@ -91,7 +91,7 @@ in {
       };
 
       dap = {
-        adapters.executables.lldb.command = getExe' pkgs.llbd "llbd-vscode";
+        adapters.executables.lldb.command = getExe' pkgs.lldb "llbd-vscode";
 
         configurations.cpp = [
           {

@@ -11,7 +11,7 @@ in {
       switch = "K";
     };
 
-    keymaps = lib.mkIf cfg.ufo.enable [
+    keymaps = lib.mkIf cfg.nvim-ufo.enable [
       {
         mode = "n";
         key = "zR";

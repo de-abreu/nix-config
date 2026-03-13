@@ -1,7 +1,6 @@
 {
-  programs.nixvim.plugins.which-key = {
+  programs.nixvim.plugins.nvim-surround = {
     enable = true;
     lazyLoad.settings.event = "DeferredUIEnter";
-    settings.win.border = "single";
   };
 }

@@ -3,8 +3,8 @@
   lib,
   ...
 }: let
-  cfg = config.programns.nixvim.plugins.snacks;
-  enable = cfg.enable && (cfg.settings.words.enabled or false);
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable = cfg.enable && ((cfg.settings.words.enabled or false) == true);
   mkAction = direction: {
     __raw = "function() Snacks.words.jump(${
       if direction == "next"

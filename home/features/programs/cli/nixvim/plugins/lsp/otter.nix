@@ -1,6 +1,6 @@
 # INFO: Otter.nvim provides lsp features, including code completion, for code embedded in other documents
 {config, ...}: let
-  cfg = config.programs.nixvim.plugins.treesiter;
+  cfg = config.programs.nixvim.plugins.treesitter;
 in {
   programs.nixvim.plugins.otter = {
     inherit (cfg) enable;

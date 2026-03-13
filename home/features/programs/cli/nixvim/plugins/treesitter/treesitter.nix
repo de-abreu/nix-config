@@ -4,7 +4,7 @@
   ...
 }: {
   programs.nixvim.plugins.treesitter = let
-    allGrammars = config.plugins.treesitter.package.passthru.allGrammars;
+    allGrammars = config.programs.nixvim.plugins.treesitter.package.passthru.allGrammars;
   in {
     enable = true;
     # folding.enable = true;

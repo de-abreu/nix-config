@@ -18,7 +18,7 @@
         };
 
         progress.enabled = true;
-        signature.enabled = !config.plugins.lsp-signature.enable;
+        signature.enabled = !config.programs.nixvim.plugins.lsp-signature.enable;
       };
 
       presets = {

@@ -26,7 +26,7 @@ in {
               vim.notify(string.format("Faster ${desc} %s", tostring(vim.g[enabled_var])), "info")
             end
           '';
-        options.esc = "Toggle ${desc}";
+        options.desc = "Toggle ${desc}";
       };
     in
       lib.optionals cfg.faster.enable [

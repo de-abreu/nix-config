@@ -1,5 +1,5 @@
 {
-  programs.nixvim.plugins.which-key.spec = [
+  programs.nixvim.plugins.which-key.settings.spec = [
     {
       __unkeyed-1 = "<leader>u";
       mode = "n";

@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   programs.nixvim.plugins.snacks = {
     enable = true;
     settings =
@@ -18,10 +19,16 @@
         "scroll"
         "statuscolumn"
         "terminal"
+        "toggle"
         "zen"
       ]
-      ++ lib.optionals config.programs.git.enabled ["gitbrowse"]
-      ++ lib.optionals config.programs.lazygit.enabled ["lazygit"]
-      |> (l: lib.genAttrs l (_: {enabled = true;}));
+      ++ lib.optionals config.programs.git.enable [ "gitbrowse" ]
+      ++ lib.optionals config.programs.lazygit.enable [ "lazygit" ]
+      |> (
+        l:
+        lib.genAttrs l (_: {
+          enabled = true;
+        })
+      );
   };
 }

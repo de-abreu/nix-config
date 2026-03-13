@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  cfg = config.nixvim.plugins.lualine;
+  cfg = config.programs.nixvim.plugins.lualine;
 in {
   programs.nixvim = {
     plugins.firenvim = {

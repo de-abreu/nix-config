@@ -1,10 +1,13 @@
 {pkgs}:
 pkgs.vimUtils.buildVimPlugin {
-  name = "alpha-ascii";
-  src = pkgs.fetchFromGitHub {
-    owner = "nhattVim";
-    repo = "alpha-ascii.nvim";
-    rev = "0c64c489745362a26c4839e557b45f49e0c9a093";
-    hash = "sha256-Jz+aQv74T49z0y1bBGeC4+g5O0sOa1/D+d3Tj5G8j8E=";
-  };
+  pname = "alpha-ascii.nvim";
+  version = "master";
+  src =
+    pkgs.fetchFromGitHub
+    {
+      owner = "nhattVim";
+      repo = "alpha-ascii.nvim";
+      rev = "8cc22c23c5f0b79bf582340927ce454463c5dfac";
+      hash = "sha256-sc6w9666CnW94xWW9tuiHseoWvdTM2EMdioIo6EDcjQ=";
+    };
 }

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  cfg = config.nixvim.plugins;
+  cfg = config.programs.nixvim.plugins;
   enable = cfg.gitsigns.enable && cfg.which-key.enable;
 in {
   programs.nixvim.plugins.gitsigns.settings.on_attach =

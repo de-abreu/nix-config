@@ -2,8 +2,26 @@
 # adding the circumflex to vowels easier.
 {lib, ...}: {
   programs.kanata = let
+    # Helper to map numbers to keypad keys so Kanata types them instead of delaying
+    mapHexChar = c: let
+      numMap = {
+        "0" = "kp0";
+        "1" = "kp1";
+        "2" = "kp2";
+        "3" = "kp3";
+        "4" = "kp4";
+        "5" = "kp5";
+        "6" = "kp6";
+        "7" = "kp7";
+        "8" = "kp8";
+        "9" = "kp9";
+      };
+    in
+      numMap.${c} or c;
+
     unicode = hexcode:
       lib.stringToCharacters hexcode
+      |> map mapHexChar
       |> lib.concatStringsSep " "
       |> (seq: "(macro C-S-u ${seq} ent)");
   in {
@@ -54,7 +72,7 @@
       a = "@rom_a";
       s = "@rom_s";
       t = "@rom_t";
-      i = "@rom_i";
+      i = "@circ_i";
       f = "@circ_a";
       e = "@circ_e";
       o = "@circ_o";

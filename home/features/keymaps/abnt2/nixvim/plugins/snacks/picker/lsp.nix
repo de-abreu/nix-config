@@ -3,12 +3,12 @@
   lib,
   ...
 }: let
-  cfg = config.programns.nixvim.plugins.snacks;
-  enable = cfg.enable && (cfg.settings.picker.enabled or false);
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable = cfg.enable && ((cfg.settings.picker.enabled or false) == true);
   prefix = "<leader>l";
   mkAction = func: {__raw = "function() Snacks.picker.${func}() end";};
 in {
-  programs.nixvim.keymaps = lib.options enable (map (el: el // {mode = "n";}) [
+  programs.nixvim.keymaps = lib.mkIf enable (map (el: el // {mode = "n";}) [
     {
       action = mkAction "lsp_definitions";
       key = prefix + "d";

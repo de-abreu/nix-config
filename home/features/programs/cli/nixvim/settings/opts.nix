@@ -28,7 +28,7 @@
   modelines = 100; # Scan first/last 100 lines for modelines
 
   # Identation and formatting
-  tabstop = 0; # Follow shiftwidth
+  tabstop = 2; # Follow shiftwidth
   shiftwidth = 2;
   expandtab = true;
   autoindent = true;

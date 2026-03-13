@@ -1,18 +1,27 @@
 let
-  mkAction = func: {__raw = "function() require('flash).${func}() end";};
-in {
+  mkAction = func: { __raw = "function() require('flash').${func}() end"; };
+in
+{
   programs.nixvim.plugins.flash.lazyLoad.settings.keys = [
     {
-      __unkeyed-1 = "s";
+      __unkeyed-1 = "h";
       __unkeyed-2 = mkAction "jump";
-      mode = ["n" "x" "o"];
+      mode = [
+        "n"
+        "x"
+        "o"
+      ];
       desc = "Flash";
     }
 
     {
-      __unkeyed-1 = "S";
+      __unkeyed-1 = "H";
       __unkeyed-2 = mkAction "treesitter";
-      mode = ["n" "x" "o"];
+      mode = [
+        "n"
+        "x"
+        "o"
+      ];
       desc = "Flash Treesitter";
     }
 
@@ -26,7 +35,10 @@ in {
     {
       __unkeyed-1 = "R";
       __unkeyed-2 = mkAction "treesitter_search";
-      mode = ["o" "x"];
+      mode = [
+        "o"
+        "x"
+      ];
       desc = "Treesitter Search";
     }
 
@@ -45,7 +57,11 @@ in {
             end
           '';
       };
-      mode = ["n" "x" "o"];
+      mode = [
+        "n"
+        "x"
+        "o"
+      ];
       desc = "Flash Line";
     }
   ];

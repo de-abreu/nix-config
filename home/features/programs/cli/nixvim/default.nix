@@ -1,8 +1,12 @@
-{importAll, ...}: {
-  imports = importAll {dir = ./.;};
+{ importAll, ... }:
+{
+  imports = importAll { dir = ./.; };
 
-  programs.nixvim = {
-    enable = true;
-    defaultEditor = true;
+  programs = {
+    nixvim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    fish.shellAbbrs."nv" = "nvim";
   };
 }

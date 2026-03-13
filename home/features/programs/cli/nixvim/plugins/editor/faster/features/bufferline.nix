@@ -1,7 +1,7 @@
 {config, ...}: let
   cfg = config.programs.nixvim.plugins.bufferline;
 in {
-  programs.nixvim.plugins.plugins.faster.settings.features.bufferline = {
+  programs.nixvim.plugins.faster.settings.features.bufferline = {
     on = cfg.enable;
     defer = false;
     enable.__raw =

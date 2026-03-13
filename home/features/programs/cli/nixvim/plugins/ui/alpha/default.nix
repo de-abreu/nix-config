@@ -4,38 +4,40 @@
   lib,
   pkgs,
   ...
-}: let
-  alpha-ascii = import ./alpha-ascii.nix {inherit pkgs;};
-  mkDashboardButton = import ./mkDashbordButton.nix {inherit config lib;};
-  icons = import ../icons.nix;
-in {
+}:
+let
+  alpha-ascii = import ./alpha-ascii.nix { inherit pkgs; };
+  mkDashboardButton = import ./mkDashboardButton.nix { inherit config lib; };
+  icons = import ../lib/icons.nix;
+in
+{
   programs.nixvim = {
-    extraConfigLuaPre = ''vim.g.start_time = vim.uv.hrtime()'';
-    extraPlugins = [alpha-ascii];
+    extraConfigLuaPre = "vim.g.start_time = vim.uv.hrtime()";
+    extraPlugins = [
+      alpha-ascii
+      pkgs.vimPlugins.alpha-nvim
+    ];
 
-    plugins.alpha = {
-      enable = true;
-      luaConfig.content = with icons;
+    extraConfigLua =
       # lua
-        ''
-          require("alpha-ascii").setup({ header = "random" })
+      ''
+        require("alpha_ascii").setup({ header = "random" })
 
-          local alpha = require("alpha")
-          local dashboard = require("alpha.themes.dashboard")
+        local alpha = require("alpha")
+        local dashboard = require("alpha.themes.dashboard")
 
-          dashboard.section.buttons.val = {
-              ${mkDashboardButton "New file" file.new},
-              ${mkDashboardButton "Smart Find File" search},
-              ${mkDashboardButton "Search Word (visual or cursor)" file.word},
-              ${mkDashboardButton "Find marks" bookmarks},
-              ${mkDashboardButton "Find Config File" config},
-              ${mkDashboardButton "Restore Session" refresh}
-              dashboard.button("SPC c i", "  Change header image", ":AlphaAsciiNext<CR>"),
-          }
+        dashboard.section.buttons.val = {
+            ${mkDashboardButton "New file" icons.file.new}
+            ${mkDashboardButton "Smart Find Files" icons.search}
+            ${mkDashboardButton "Grep Files" icons.file.word}
+            ${mkDashboardButton "Find marks" icons.bookmarks}
+            ${mkDashboardButton "Find Config File" icons.config}
+            ${mkDashboardButton "Restore Session" icons.refresh}
+            dashboard.button("SPC c i", "  Change header image", ":AlphaAsciiNext<CR>"),
+        }
 
-          alpha.setup(dashboard.opts)
-        '';
-    };
+        alpha.setup(dashboard.config)
+      '';
 
     autoGroups.alpha_startup.clear = true;
     autoCmd = [
@@ -62,10 +64,13 @@ in {
               local v = vim.version()
               local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch
 
-              -- 4. Count Plugins (Heuristic for Nixvim)
+              -- 4. Count Plugins (Filtering out Tree-sitter grammars)
+              local plugin_dirs = vim.fn.globpath(vim.o.packpath, "pack/*/start/*", false, true)
               local plugins_count = 0
-              for _, path in ipairs(vim.api.nvim_list_runtime_paths()) do
-                  if path:match("/nix/store/") and not path:match("vim%-pack%-dir") then
+
+              for _, dir in ipairs(plugin_dirs) do
+                  -- Ignore any directory name that contains "tree-sitter-" or "treesitter-"
+                  if not string.match(dir, "tree%-sitter%-") and not string.match(dir, "treesitter%-") then
                       plugins_count = plugins_count + 1
                   end
               end

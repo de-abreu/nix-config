@@ -4,7 +4,7 @@
   ...
 }: let
   cfg = config.programs.nixvim.plugins.snacks;
-  enable = cfg.enabl && (cfg.settings.rename.enabled or false);
+  enable = cfg.enable && ((cfg.settings.rename.enabled or false) == true);
 in {
   programs.nixvim.keymaps = lib.mkIf enable [
     {

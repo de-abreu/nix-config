@@ -6,7 +6,7 @@
     settings = {
       check_ts = true;
       ts_config.java = false;
-      enabled =
+      enabled.__raw =
         # lua
         ''
           function(bufnr)
@@ -14,11 +14,7 @@
           end
         '';
       fast_wrap = {
-        chars = ["{" "[" "(" "\"" "'"];
-        pattern = "[%'%\"%)%>%]%\)%}%,]";
-        offset = 0;
         end_key = "$";
-        check_comma = true;
         highlight = "PmenuSel";
         highlight_grey = "LineNr";
       };

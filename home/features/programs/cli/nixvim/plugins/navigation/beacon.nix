@@ -2,6 +2,8 @@
 # it easier after quick movements
 {pkgs, ...}: let
   beacon = pkgs.vimUtils.buildVimPlugin {
+    pname = "beacon.nvim";
+    version = "master";
     src = pkgs.fetchFromGitHub {
       owner = "DanilaMihailov";
       repo = "beacon.nvim";
@@ -10,13 +12,11 @@
     };
   };
 in {
-  programs.nixvim = {
-    extraPlugins = [beacon];
-    plugins.lz-n.plugins = [
-      {
-        plugin = beacon;
-        event = "DeferredUIEnter";
-      }
-    ];
-  };
+  programs.nixvim.extraPlugins = [beacon];
+  extra.lz-n.plugins = [
+    {
+      name = "beacon.nvim";
+      event = "DeferredUIEnter";
+    }
+  ];
 }

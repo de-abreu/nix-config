@@ -1,5 +1,5 @@
 {
-  programs.nixvim.snacks.settings.picker = {
+  programs.nixvim.plugins.snacks.settings.picker = {
     actions.grug_far_replace.__raw =
       # lua
       ''

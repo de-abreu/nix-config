@@ -6,7 +6,7 @@
   cfg = config.programs.nixvim.plugins.snacks;
   enable =
     cfg.enable
-    && (cfg.settings.gitbrowse.enabled or false)
+    && ((cfg.settings.gitbrowse.enabled or false) == true)
     && (config.programs.git.enable);
   bind = {
     key = "<leader>go";

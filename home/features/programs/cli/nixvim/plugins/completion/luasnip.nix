@@ -3,6 +3,7 @@
     luasnip = {
       enable = true;
       lazyLoad.settings.event = "InsertEnter";
+      fromVscode = [{}];
 
       settings = {
         history = true;
@@ -11,7 +12,8 @@
       };
     };
 
-    friendly-snippets.enable = true;
     blink-cmp.settings.snippets.preset = "luasnip";
+    friendly-snippets.enable = true;
+    neogen.settings.snippet_engine = "luasnip";
   };
 }

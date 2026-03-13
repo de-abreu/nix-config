@@ -2,51 +2,65 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.nixvim.plugins.snacks;
-  enable =
-    cfg.enable
-    && (cfg.settings.explorer.enable or false)
-    && (cfg.settings.toggle.enable or false);
-in {
-  programs.nixvim.keymaps = lib.mkIf enable [
-    {
-      mode = "n";
-      key = "<leader>e";
-      action.__raw = "function() Snacks.toggle.explorer():toggle() end";
-      options.desc = "Toggle Explorer";
-    }
-    {
-      mode = "n";
-      key = "<leader>o";
-      action.__raw =
-        # lua
-        ''
-          function()
-            -- Ask snacks if the explorer is currently active
-            local pickers = Snacks.picker.get({ source = "explorer" })
+in
+{
+  programs.nixvim = {
+    keymaps = lib.mkIf cfg.enable [
+      {
+        mode = "n";
+        key = "<leader>e";
+        action.__raw = "function() Snacks.explorer() end";
+        options.desc = "Toggle Explorer";
+      }
+      {
+        mode = "n";
+        key = "<leader>o";
+        action.__raw =
+          # lua
+          ''
+            function()
+              local pickers = Snacks.picker.get({ source = "explorer" })
 
-            if #pickers > 0 then
-              local picker = pickers[1]
-              local current_buf = vim.api.nvim_get_current_buf()
+              if #pickers > 0 then
+                local picker = pickers[1]
 
-              -- Check if our cursor is currently inside the explorer's list or input buffer
-              local is_explorer_focused = current_buf == picker.list.buf or (picker.input and current_buf == picker.input.buf)
+                -- Use the native snacks method to check if the explorer is focused
+                if picker:is_focused() then
+                  -- wincmd p is dangerous here; it might bounce between internal picker windows.
+                  -- Instead, explicitly find the first window that is a normal code buffer.
+                  for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    local buf = vim.api.nvim_win_get_buf(win)
+                    local ft = vim.bo[buf].filetype
+                    local config = vim.api.nvim_win_get_config(win)
 
-              if is_explorer_focused then
-                -- We are in the explorer. Jump back to the previously active window.
-                vim.cmd("wincmd p")
+                    -- Check if it's a normal window (relative == "") and NOT a snacks window
+                    if config.relative == "" and ft ~= "snacks_picker_list" and ft ~= "snacks_picker_input" then
+                      vim.api.nvim_set_current_win(win)
+                      break
+                    end
+                  end
+                else
+                  -- The explorer is open, but we are in a code buffer. Focus the explorer.
+                  picker:focus()
+                end
               else
-                -- The explorer is open, but we are in a code buffer. Focus the explorer.
-                picker:focus()
+                -- The explorer doesn't exist at all. Open it.
+                Snacks.explorer()
               end
-            else
-              -- The explorer doesn't exist at all. Open it.
-              Snacks.toggle.explorer():toggle()
             end
-          end
-        '';
-      options.desc = "Toggle Explorer Focus";
-    }
-  ];
+          '';
+        options.desc = "Toggle Explorer Focus";
+      }
+    ];
+    plugins.snacks.settings.picker.sources.explorer.win.list.keys = {
+      l = "list_up";
+      j = "explorer_close";
+      "ç" = "confirm";
+      "<cr>" = "confirm";
+      h = "flash";
+    };
+  };
 }

@@ -1,14 +1,17 @@
 let
   icons = import ./lib/icons.nix;
-in {
+in
+{
   programs.nixvim.diagnostic.settings = {
+    virtual_lines.current_line = true;
+    virtual_text = false;
     signs = {
-      text = with icons.diagnostic; {
-        "[vim.diagnostic.severity.ERROR]" = "${error} ";
-        "[vim.diagnostic.severity.WARN]" = "${warn} ";
-        "[vim.diagnostic.severity.HINT]" = "${hint}";
-        "[vim.diagnostic.severity.INFO]" = "${info} ";
-      };
+      text = with icons.diagnostic; [
+        "${error} "
+        "${warn} "
+        "${hint} "
+        "${info} "
+      ];
     };
   };
 }
