@@ -2,7 +2,9 @@
   config,
   lib,
   ...
-}: {
+}: let
+  cfg = config.nixvim.plugins.lualine;
+in {
   programs.nixvim = {
     plugins.firenvim = {
       enable = true;
@@ -17,7 +19,7 @@
       };
     };
 
-    autoCmd = lib.optionals config.plugins.firenvim.enable [
+    autoCmd = [
       {
         event = "UIEnter";
         callback = {
@@ -29,7 +31,7 @@
                 if client ~= nil and client.name == "Firenvim" then
                   vim.o.laststatus = 0
                   vim.o.showtabline = 0
-                  require('lualine').hide()
+                  ${lib.optionalString cfg.enable "require('lualine').hide()"}
                   local ok, _ = pcall(vim.cmd, "colorscheme sorbet")
                 end
               end

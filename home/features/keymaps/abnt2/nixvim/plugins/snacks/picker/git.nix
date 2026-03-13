@@ -1,46 +1,49 @@
 {
   config,
-  featuresEnabled,
   lib,
-  pickerAction,
   ...
 }: let
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable =
+    cfg.enable
+    && (cfg.settings.picker.enabled or false)
+    && config.programs.git.enable;
   prefix = "<leader>g";
-  enable = featuresEnabled "picker" && config.programs.git.enable;
+  mkAction = func: {__raw = "function() Snacks.picker.${func}() end";};
 in {
-  programs.nixvim.keymaps = lib.optionals enable (map (el: el // {mode = "n";}) [
+  programs.nixvim.keymaps = lib.mkIf enable (map (el: el // {mode = "n";}) [
     {
-      action = pickerAction "git_branches";
+      action = mkAction "git_branches";
       key = prefix + "b";
       options.desc = "Branches";
     }
     {
-      action = pickerAction "git_log";
+      action = mkAction "git_log";
       key = prefix + "l";
       options.desc = "Log";
     }
     {
-      action = pickerAction "git_log_line";
+      action = mkAction "git_log_line";
       key = prefix + "L";
       options.desc = "Log Line";
     }
     {
-      action = pickerAction "git_status";
+      action = mkAction "git_status";
       key = prefix + "s";
       options.desc = "Status";
     }
     {
-      action = pickerAction "git_stash";
+      action = mkAction "git_stash";
       key = prefix + "S";
       options.desc = "Stash";
     }
     {
-      action = pickerAction "git_diff";
+      action = mkAction "git_diff";
       key = prefix + "d";
       options.desc = "Diff (Hunks)";
     }
     {
-      action = pickerAction "git_log_file";
+      action = mkAction "git_log_file";
       key = prefix + "f";
       options.desc = "Log File";
     }

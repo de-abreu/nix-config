@@ -3,7 +3,11 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  isWordsEnabled =
+    (config.programs.nixvim.plugins ? blink-cmp-words && config.programs.nixvim.plugins.blink-cmp-words.enable)
+    || (lib.elem pkgs.vimPlugins.blink-cmp-words config.programs.nixvim.extraPlugins);
+in {
   programs.nixvim.plugins.blink-cmp.settings.sources = {
     default.__raw =
       # lua
@@ -18,9 +22,7 @@
           -- Add optional sources based on plugin availability
           ${lib.optionalString config.programs.nixvim.plugins.lazydev.enable "table.insert(common_sources, 'lazydev')"}
           ${lib.optionalString config.programs.nixvim.plugins.blink-copilot.enable "table.insert(common_sources, 'copilot')"}
-          ${lib.optionalString (
-          config.programs.nixvim.plugins.blink-cmp-dictionary.enable || config.programs.nixvim.plugins.blink-cmp-words.enable
-        ) "table.insert(common_sources, 'dictionary')"}
+          ${lib.optionalString isWordsEnabled "table.insert(common_sources, 'dictionary')"}
           ${lib.optionalString config.programs.nixvim.plugins.blink-emoji.enable "table.insert(common_sources, 'emoji')"}
           ${lib.optionalString (lib.elem pkgs.vimPlugins.blink-nerdfont-nvim config.programs.nixvim.extraPlugins) "table.insert(common_sources, 'nerdfont')"}
           ${lib.optionalString config.programs.nixvim.plugins.blink-cmp-spell.enable "table.insert(common_sources, 'spell')"}

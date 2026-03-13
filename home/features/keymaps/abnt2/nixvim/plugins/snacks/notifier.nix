@@ -1,19 +1,19 @@
 {
-  featuresEnabled,
+  config,
   lib,
-  snacksAction,
   ...
 }: let
-  feat = "notifier";
-  action = func: snacksAction "${feat}.${func}" {};
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable = cfg.enable && (cfg.settings.notifier.enabled or false);
+  mkAction = func: {__raw = "function() Snacks.${func}() end";};
   prefix = "<leader>n";
 in {
   programs.nixvim = {
-    keymaps = lib.optionals (featuresEnabled feat) [
+    keymaps = lib.mkIf enable [
       {
         mode = "n";
         key = prefix + "d";
-        action = action "hide";
+        action = mkAction "hide";
         options = {
           desc = "Dismiss all notifications";
           silent = true;
@@ -23,7 +23,7 @@ in {
       {
         mode = "n";
         key = prefix + "h";
-        action = action "show_history";
+        action = mkAction "show_history";
         options = {
           desc = "Show notification history";
           silent = true;
@@ -31,7 +31,7 @@ in {
       }
     ];
 
-    plugin.which-key.settings.spec = lib.optional (featuresEnabled feat) [
+    plugins.which-key.settings.spec = lib.optional enable [
       {
         __unkeyed-1 = prefix;
         group = "Notifications";

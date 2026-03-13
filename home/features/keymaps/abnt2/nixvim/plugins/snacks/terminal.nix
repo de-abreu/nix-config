@@ -1,9 +1,10 @@
 {
-  featureEnabled,
+  config,
   lib,
   ...
 }: let
-  feat = "terminal";
+  cfg = config.programns.nixvim.plugins.snacks;
+  enable = cfg.enable && (cfg.settings.terminal.enabled or false);
   prefix = "<leader>t";
   toggleTerminal = position: {
     __raw =
@@ -16,7 +17,7 @@
   };
 in {
   programs.nixvim = {
-    plugins.which-key.settings.spec = lib.optional (featureEnabled feat) [
+    plugins.which-key.settings.spec = lib.optional enable [
       {
         __unkeyed-1 = prefix;
         group = "Terminal";
@@ -24,7 +25,7 @@ in {
       }
     ];
 
-    keymaps = lib.optionals (featureEnabled feat) (map (m: m // {mode = "n";}) [
+    keymaps = lib.mkIf enable (map (m: m // {mode = "n";}) [
       {
         key = prefix + "f";
         action = toggleTerminal "float";

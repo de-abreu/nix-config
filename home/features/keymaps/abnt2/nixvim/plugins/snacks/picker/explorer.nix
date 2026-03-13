@@ -1,9 +1,15 @@
 {
-  featuresEnabled,
+  config,
   lib,
   ...
-}: {
-  programs.nixvim.keybinds = lib.optionals (featuresEnabled ["explorer" "toggle"]) [
+}: let
+  cfg = config.programs.nixvim.plugins.snacks;
+  enable =
+    cfg.enable
+    && (cfg.settings.explorer.enable or false)
+    && (cfg.settings.toggle.enable or false);
+in {
+  programs.nixvim.keymaps = lib.mkIf enable [
     {
       mode = "n";
       key = "<leader>e";

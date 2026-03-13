@@ -1,14 +1,15 @@
 {
-  featureEnabled,
+  config,
   lib,
-  snacksAction,
   ...
 }: let
-  feat = "scratch";
+  cfg = config.programns.nixvim.plugins.snacks;
+  enable = cfg.enable && (cfg.settings.picker.enabled or false);
+  mkAction = func: {__raw = "function() Snacks.picker.${func}() end";};
   prefix = "<leader>N";
 in {
   programs.nixvim = {
-    which-key.settings.spec = lib.optional (featureEnabled feat) [
+    which-key.settings.spec = lib.optional enable [
       {
         __unkeyed-1 = prefix;
         group = "Notes";
@@ -16,15 +17,15 @@ in {
       }
     ];
 
-    keymaps = lib.optionals (featureEnabled feat) (map (m: m // {mode = "n";}) [
+    keymaps = lib.mkIf enable (map (m: m // {mode = "n";}) [
       {
         key = prefix + "n";
-        action = snacksAction "scratch" {};
+        action = mkAction "scratch";
         options.desc = "New Scratch Buffer";
       }
       {
         key = prefix + "s";
-        action = snacksAction "scratch.select" {};
+        action = mkAction "scratch.select";
         options.desc = "Select Scratch Buffer";
       }
     ]);

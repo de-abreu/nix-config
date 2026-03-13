@@ -1,15 +1,17 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
-}: {
+}: let
+  cfg = config.programs.nixvim.plugins;
+in {
   programs.nixvim = {
     plugins.nvim-ufo.settings.preview.mappings = {
       close = "q";
       switch = "K";
     };
 
-    keymaps = lib.optionals pluginCfg.ufo.enable [
+    keymaps = lib.mkIf cfg.ufo.enable [
       {
         mode = "n";
         key = "zR";

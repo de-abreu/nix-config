@@ -3,10 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.nixvim.plugins.which-key;
+  cfg = config.nixvim.plugins;
+  enable = cfg.gitsigns.enable && cfg.which-key.enable;
 in {
   programs.nixvim.plugins.gitsigns.settings.on_attach =
-    lib.mkIf cfg.enable
+    lib.mkIf enable
     # lua
     ''
       function(bufnr)

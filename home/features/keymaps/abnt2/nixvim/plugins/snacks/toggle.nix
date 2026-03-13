@@ -1,23 +1,21 @@
 {
-  snacksCfg,
-  featuresEnabled,
+  config,
   lib,
-  snacksAction,
   ...
 }: let
-  feat = "toggle";
-  prefix = "<leader>u";
-  toggle = func: snacksAction "${feat}.${func}" {};
+  cfg = config.programns.nixvim.plugins.snacks;
+  enable = cfg.enable && (cfg.settings.picker.enabled or false);
+  toggle = func: {__raw = "function() Snacks.toggle.${func}() end";};
   toggleOpt = name: opt: {
     __raw =
       # lua
       "function() Snacks.toggle.option('${opt}', { name = '${name}' }):toggle() end";
   };
+  prefix = "<leader>u";
 in {
   programs.nixvim.keymaps =
-    map (m: m // {mode = "n";})
-    (lib.optionals
-      (featuresEnabled feat)
+    lib.optionals enable
+    (map (m: m // {mode = "n";}) (
       [
         {
           key = prefix + "d";
@@ -92,7 +90,7 @@ in {
           options.desc = "Toggle Fold Column";
         }
       ]
-      ++ lib.optionals (snacksCfg.zen.enabled) [
+      ++ lib.optionals cfg.settings.zen.enable [
         {
           key = prefix + "z";
           action = toggle "zen";
@@ -104,11 +102,12 @@ in {
           options.desc = "Toggle Maximize (Zoom)";
         }
       ]
-      ++ lib.optionals (snacksCfg.dim.enabled) [
+      ++ lib.optionals cfg.settings.zen.enable [
         {
           key = prefix + "D";
           action = toggle "dim";
           options.desc = "Toggle Dim Mode";
         }
-      ]);
+      ]
+    ));
 }

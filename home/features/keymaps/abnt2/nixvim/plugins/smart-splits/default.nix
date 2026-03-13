@@ -1,29 +1,28 @@
 {
+  config,
   lib,
-  mkAction,
-  pluginCfg,
   ...
 }: let
-  action = func: mkAction "smart-splits" func {};
+  cfg = config.programs.nixvim.plugins.smart-splits;
   resize-windows = map (m: m // {mode = "n";}) [
     {
       key = "<M-j>";
-      action = action "resize_left";
+      action.__raw = "function() require('smart-splits').resize_left() end";
       options.desc = "Push vertical split left";
     }
     {
       key = "<M-k>";
-      action = action "resize_down";
+      action.__raw = "function() require('smart-splits').resize_down() end";
       options.desc = "Push horizontal split down";
     }
     {
       key = "<M-l>";
-      action = action "resize_up";
+      action.__raw = "function() require('smart-splits').resize_up() end";
       options.desc = "Push horizontal split up";
     }
     {
       key = "<M-;>";
-      action = action "resize_right";
+      action.__raw = "function() require('smart-splits').resize_right() end";
       options.desc = "Push vertical split right";
     }
   ];
@@ -31,22 +30,22 @@
   move-cursor = map (m: m // {mode = "n";}) [
     {
       key = "<C-j>";
-      action = action "move_cursor_left";
+      action.__raw = "function() require('smart-splits').move_cursor_left() end";
       options.desc = "Move cursor to left window";
     }
     {
       key = "<C-k>";
-      action = action "move_cursor_down";
+      action.__raw = "function() require('smart-splits').move_cursor_down() end";
       options.desc = "Move cursor to window below";
     }
     {
       key = "<C-l>";
-      action = action "move_cursor_up";
+      action.__raw = "function() require('smart-splits').move_cursor_up() end";
       options.desc = "Move cursor to window above";
     }
     {
       key = "<C-;>";
-      action = action "move_cursor_right";
+      action.__raw = "function() require('smart-splits').move_cursor_right() end";
       options.desc = "Move cursor to right window";
     }
   ];
@@ -54,28 +53,30 @@
   swap-buffers = map (m: m // {mode = "n";}) [
     {
       key = "J";
-      action = action "swap_buf_left";
+      action.__raw = "function() require('smart-splits').swap_buf_left() end";
       options.desc = "Swap the current buffer with the one to the left";
     }
     {
       key = "K";
-      action = action "swap_buf_down";
+      action.__raw = "function() require('smart-splits').swap_buf_down() end";
       options.desc = "Swap the current buffer with the one below";
     }
     {
       key = "L";
-      action = action "swap_buf_up";
+      action.__raw = "function() require('smart-splits').swap_buf_up() end";
       options.desc = "Swap current buffer with the one above";
     }
     {
       key = "<S-Ç>";
-      action = action "swap_buf_right";
+      action.__raw = "function() require('smart-splits').swap_buf_right() end";
       options.desc = "Swap current buffer with the one to the right";
     }
   ];
 in {
   programs = {
-    nixvim.keymaps = lib.mkIf pluginCfg.smart-splits.enable (resize-windows ++ move-cursor ++ swap-buffers);
+    nixvim.keymaps =
+      lib.optionals cfg.enable
+      (resize-windows ++ move-cursor ++ swap-buffers);
 
     # Wezterm integration untouched
     wezterm.extraConfig."keybinds.smart-splits" = ./smart-splits.lua;

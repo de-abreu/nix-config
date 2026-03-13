@@ -1,10 +1,12 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
-}: {
+}: let
+  cfg = config.programs.nixvim.plugins.neo-tree;
+in {
   programs.nixvim = {
-    keymaps = lib.optionals pluginCfg.neo-tree.enable [
+    keymaps = lib.mkIf cfg.enable [
       {
         action = "<cmd>Neotree Toggle<cr>";
         key = "<Leader>e";

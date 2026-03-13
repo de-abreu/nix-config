@@ -1,12 +1,14 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
-}: {
+}: let
+  cfg = config.programs.nixvim.plugins.bufferline;
+in {
   programs.nixvim = {
     plugins = {
       bufferline.settings.options.letter_mapping = "asdfjklçghnmertziopwxcvqb\\-";
-      which-key.settings.spec = lib.optionals pluginCfg.bufferline.enable [
+      which-key.settings.spec = lib.mkIf cfg.enable [
         {
           __unkeyed-1 = "<leader>b";
           group = "Buffers";
@@ -39,7 +41,7 @@
         end
       '';
     in
-      lib.optionals pluginCfg.bufferline.enable (map (m: m // {mode = "n";}) [
+      lib.optionals cfg.enable (map (m: m // {mode = "n";}) [
         {
           key = "<Right>";
           action.__raw =

@@ -1,6 +1,6 @@
 # TODO: Merge these AstroNvim keybinds with Akari's
 {
-  programs.nixvim.plugins.blink = {
+  programs.nixvim.plugins.blink-cmp.settings = {
     keymap = {
       preset = "none";
       "<C-Space>" = ["show" "show_documentation" "hide_documentation"];

@@ -1,9 +1,11 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
-}: {
-  programs.nixvim.keymaps = lib.optionals pluginCfg.conform-nvim.enable [
+}: let
+  cfg = config.programs.nixvim.plugins.conform-nvim;
+in {
+  programs.nixvim.keymaps = lib.mkIf cfg.enable [
     {
       action.__raw =
         # lua

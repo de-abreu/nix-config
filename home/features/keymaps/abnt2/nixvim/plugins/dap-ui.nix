@@ -1,11 +1,12 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
 }: let
+  cfg = config.programs.nixvim.plugins.dap-ui;
   prefix = "<leader>d";
 in {
-  programs.nixvim.keymaps = lib.optionals pluginCfg.dap-ui.enable [
+  programs.nixvim.keymaps = lib.mkIf cfg.enable [
     {
       mode = "n";
       key = prefix + "E";

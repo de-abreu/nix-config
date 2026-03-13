@@ -2,12 +2,10 @@ let
   icons = import ./lib/icons.nix;
 in {
   programs.nixvim.plugins = {
-    mini-icons = {
-      enable = true;
-      lazyLoad.settings.lazy = true;
-
+    mini = {
       mockDevIcons = true;
-      settings = with icons; {
+
+      modules.icons = with icons; {
         file = {
           ".keep" = {
             glyph = git.default;
@@ -27,6 +25,8 @@ in {
       };
     };
 
+    # 3. Neo-tree stays exactly the same!
+    # The Lua API `require("mini.icons")` works identically regardless of how it was loaded.
     neo-tree.settings.defaultComponentConfigs = {
       icon.provider.__raw =
         # lua
@@ -39,7 +39,6 @@ in {
               text, hl = mini_icons.get("file", node.name)
             elseif node.type == "directory" then
               text, hl = mini_icons.get("directory", node.name)
-              -- Original logic: hide icon if expanded (optional)
               if node:is_expanded() then text = nil end
             end
 

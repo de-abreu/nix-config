@@ -1,12 +1,13 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
 }: let
+  cfg = config.programs.nixvim.plugins.trouble;
   prefix = "<leader>x";
 in {
   programs.nixvim = {
-    plugins.which-key.settings.spec = lib.optional pluginCfg.trouble.enable [
+    plugins.which-key.settings.spec = lib.optional cfg.enable [
       {
         __unkeyed-1 = prefix;
         mode = "n";
@@ -15,7 +16,7 @@ in {
       }
     ];
 
-    keymaps = lib.optionals pluginCfg.trouble.enable [
+    keymaps = lib.mkIf cfg.enable [
       {
         mode = "n";
         key = prefix + "x";

@@ -1,11 +1,12 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
-}: {
+}: let
+  cfg = config.programs.nixvim.plugins.yazi;
+in {
   programs.nixvim.keymaps =
-    lib.optionals
-    pluginCfg.yazi.enable
+    lib.optionals cfg.enable
     (map (m: m // {mode = "n";}) [
       {
         key = "<leader>te";

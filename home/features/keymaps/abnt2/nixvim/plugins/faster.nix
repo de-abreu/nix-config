@@ -1,8 +1,10 @@
 {
-  pluginCfg,
+  config,
   lib,
   ...
-}: {
+}: let
+  cfg = config.programs.nixvim.plugins;
+in {
   programs.nixvim = {
     keymaps = let
       # Helper to create toggle keymaps for faster features
@@ -27,7 +29,7 @@
         options.esc = "Toggle ${desc}";
       };
     in
-      lib.optionals pluginCfg.faster.enable [
+      lib.optionals cfg.faster.enable [
         # Global toggles
         (mkFasterToggle "AllFeatures" "<leader>uxa" "All Features")
         (mkFasterToggle "Bigfile" "<leader>uxb" "Bigfile Behavior")
@@ -41,26 +43,26 @@
         (mkFasterToggle "Vimopts" "<leader>uxy" "Vimopts")
         (mkFasterToggle "Filetype" "<leader>uxv" "Filetype")
       ]
-      ++ lib.optionals (pluginCfg.noice.enable) [
+      ++ lib.optionals (cfg.noice.enable) [
         (mkFasterToggle "Noice" "<leader>uxn" "Noice")
       ]
-      ++ lib.optionals (pluginCfg.lualine.enable) [
+      ++ lib.optionals (cfg.lualine.enable) [
         (mkFasterToggle "Lualine" "<leader>uxu" "Lualine")
       ]
-      ++ lib.optionals (pluginCfg.bufferline.enable) [
+      ++ lib.optionals (cfg.bufferline.enable) [
         (mkFasterToggle "Bufferline" "<leader>uxo" "Bufferline")
       ]
-      ++ lib.optionals (pluginCfg.gitsigns.enable) [
+      ++ lib.optionals (cfg.gitsigns.enable) [
         (mkFasterToggle "Gitsigns" "<leader>uxg" "Gitsigns")
       ]
-      ++ lib.optionals (pluginCfg.blink-indent.enable) [
+      ++ lib.optionals (cfg.blink-indent.enable) [
         (mkFasterToggle "BlinkIndent" "<leader>uxd" "Blink Indent")
       ]
-      ++ lib.optionals (pluginCfg.snacks.enable) [
+      ++ lib.optionals (cfg.snacks.enable) [
         (mkFasterToggle "Snacks" "<leader>uxk" "Snacks")
       ];
 
-    plugins.which-key.settings.spec = lib.optionals pluginCfg.faster.enable [
+    plugins.which-key.settings.spec = lib.mkIf cfg.faster.enable [
       {
         __unkeyed-1 = "<leader>ux";
         group = "Faster Toggles";

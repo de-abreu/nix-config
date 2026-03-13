@@ -1,9 +1,9 @@
 {
   programs.nixvim.plugins = {
     sqlite-lua.enable = true;
-    lazyLoad.setting.event = "DeferredUIEnter";
     yanky = {
       enable = true;
+      lazyLoad.settings.event = "DeferredUIEnter";
       settings.ring = {
         history_length = 30;
         storage = "sqlite";

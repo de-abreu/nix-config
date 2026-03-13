@@ -1,14 +1,16 @@
 {
-  featuresEnabled,
+  config,
   flakePath,
   lib,
-  pickerAction,
   ...
 }: let
+  cfg = config.programns.nixvim.plugins.snacks;
+  enable = cfg.enable && (cfg.settings.picker.enabled or false);
+  mkAction = func: {__raw = "function() Snacks.picker.${func}() end";};
   prefix = "<leader>f";
 in {
   programs.nixvim = {
-    plugins.which-key.settings.spec = lib.optionals (featuresEnabled "picker") [
+    plugins.which-key.settings.spec = lib.mkIf enable [
       {
         __unkeyed-1 = prefix;
         mode = "n";
@@ -16,9 +18,9 @@ in {
       }
     ];
 
-    keymaps = lib.optionals (featuresEnabled "picker") (map (el: el // {mode = "n";}) [
+    keymaps = lib.mkIf enable (map (el: el // {mode = "n";}) [
       {
-        action = pickerAction "buffers";
+        action = mkAction "buffers";
         key = prefix + "b";
         options.desc = "Buffers";
       }
@@ -60,31 +62,31 @@ in {
       }
 
       {
-        action = pickerAction "files";
+        action = mkAction "files";
         key = prefix + "f";
         options.desc = "Find Files";
       }
 
       {
-        action = pickerAction "grep";
+        action = mkAction "grep";
         key = prefix + "g";
         options.desc = "Grep files";
       }
 
       {
-        action = pickerAction "git_files";
+        action = mkAction "git_files";
         key = prefix + "g";
         options.desc = "Find Git Files";
       }
 
       {
-        action = pickerAction "projects";
+        action = mkAction "projects";
         key = prefix + "p";
         options.desc = "Find Projects";
       }
 
       {
-        action = pickerAction "recent";
+        action = mkAction "recent";
         key = prefix + "r";
         options.desc = "Recent";
       }

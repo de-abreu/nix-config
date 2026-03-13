@@ -1,12 +1,13 @@
 {
+  config,
   lib,
-  pluginCfg,
   ...
 }: let
+  cfg = config.programs.nixvim.plugins.grug-far;
   prefix = "<leader>ss";
 in {
   programs.nixvim = {
-    plugins.which-key.settings.spec = lib.optional pluginCfg.grug-far.enable [
+    plugins.which-key.settings.spec = lib.optional cfg.enable [
       {
         __unkeyed-1 = prefix;
         group = "Search/Replace";

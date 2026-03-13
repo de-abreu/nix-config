@@ -1,12 +1,13 @@
 {
-  pluginCfg,
+  config,
   lib,
   ...
 }: let
+  cfg = config.programs.nixvim.plugins.lsp;
   prefix = "<leader>l";
 in {
-  programs.nixvim.plugins = {
-    lsp.keymapsOnEvents.LspAttach = lib.optionals pluginCfg.lsp.enable [
+  programs.nixvim = {
+    keymapsOnEvents.LspAttach = lib.mkIf cfg.enable [
       {
         key = prefix + "H";
         mode = "n";
@@ -26,23 +27,21 @@ in {
           desc = "Lsp buf code_action";
         };
       }
-    ];
 
-    which-key.settings.spec = lib.optional pluginCfg.lsp.enable [
-      {
-        __unkeyed-1 = prefix;
-        group = "LSP";
-        icon = " ";
-        mode = ["n" "v"];
-      }
-    ];
-
-    keymaps = lib.optionals pluginCfg.lsp.enable [
       {
         mode = "n";
         key = prefix + "Q";
         action = "<cmd>LspInfo<cr>";
         options.desc = "Lsp Info";
+      }
+    ];
+
+    plugins.which-key.settings.spec = lib.optional cfg.enable [
+      {
+        __unkeyed-1 = prefix;
+        group = "LSP";
+        icon = " ";
+        mode = ["n" "v"];
       }
     ];
   };

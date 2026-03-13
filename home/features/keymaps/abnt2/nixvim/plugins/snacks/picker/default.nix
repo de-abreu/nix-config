@@ -1,9 +1,1 @@
-{
-  importAll,
-  snacksAction,
-  ...
-}: {
-  imports = importAll {dir = ./.;};
-
-  _module.args.pickerAction = func: snacksAction "picker.${func}" {};
-}
+{importAll, ...}: {imports = importAll {dir = ./.;};}

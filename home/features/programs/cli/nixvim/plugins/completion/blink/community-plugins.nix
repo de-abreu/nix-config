@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.nixvim = {
-    extraPackages = with pkgs; [gh wordnet glab];
+    extraPackages = with pkgs; [gh glab];
     plugins = let
       mkBlinkPlugin = {enable ? true, ...} @ args:
         {
@@ -11,8 +11,7 @@
     in {
       blink-cmp-git = mkBlinkPlugin {};
       blink-cmp-spell = mkBlinkPlugin {};
-      blink-cmp-words = mkBlinkPlugin {};
-      blink-copilot = mkBlinkPlugin {};
+      # blink-copilot = mkBlinkPlugin {};
       blink-emoji = mkBlinkPlugin {};
       blink-ripgrep = mkBlinkPlugin {};
     };
