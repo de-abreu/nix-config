@@ -1,27 +1,34 @@
 let
   prefix = "gc";
-in {
+in
+{
   programs.nixvim.keymaps = [
     {
       action = prefix + "c";
-      key = "<Leader>/";
-      options.desc = "Toggle comment line";
+      key = "<leader>/";
       mode = "n";
+      options = {
+        desc = "Toggle comment line";
+        remap = true;
+      };
     }
 
     {
       action = prefix;
-      key = "<Leader>/";
-      options.desc = "Toggle comment";
+      key = "<leader>/";
       mode = "x";
+      options = {
+        desc = "Toggle comment";
+        remap = true;
+      };
     }
 
     {
       action = "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
       key = prefix + "o";
       options = {
-        remap = true;
         desc = "Insert comment after";
+        remap = true;
       };
       mode = "n";
     }
@@ -30,8 +37,8 @@ in {
       action = "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
       key = prefix + "O";
       options = {
-        remap = true;
         desc = "Insert comment before";
+        remap = true;
       };
       mode = "n";
     }

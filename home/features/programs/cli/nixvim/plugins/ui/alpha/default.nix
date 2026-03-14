@@ -64,21 +64,10 @@ in
               local v = vim.version()
               local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch
 
-              -- 4. Count Plugins (Filtering out Tree-sitter grammars)
-              local plugin_dirs = vim.fn.globpath(vim.o.packpath, "pack/*/start/*", false, true)
-              local plugins_count = 0
-
-              for _, dir in ipairs(plugin_dirs) do
-                  -- Ignore any directory name that contains "tree-sitter-" or "treesitter-"
-                  if not string.match(dir, "tree%-sitter%-") and not string.match(dir, "treesitter%-") then
-                      plugins_count = plugins_count + 1
-                  end
-              end
-
-              -- 5. Update the Footer
+              -- 4. Update the Footer
               dashboard.section.footer.val = {
                   " ",
-                  " Nixvim " .. version .. "    " .. plugins_count .. " plugins    " .. s .. "s",
+                  " Nixvim " .. version .. "    " .. s .. "s",
               }
 
               -- Force redraw

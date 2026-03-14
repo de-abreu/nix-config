@@ -92,7 +92,7 @@ in
             action.__raw =
               # lua
               ''function() require("bufferline.commands").pick() end'';
-            options.desc = "Pick a buffer";
+            options.desc = "Jump to buffer";
           }
           {
             key = "<leader>bc";
