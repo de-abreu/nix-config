@@ -2,13 +2,15 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.nixvim.plugins.neogen;
-  prefix = "<leader>a";
+  prefix = "<leader>A";
   mkAction = type: {
     __raw = "function() require('neogen').generate({ type = '${type}' }) end";
   };
-in {
+in
+{
   programs.nixvim = {
     # --- Which-Key Grouping ---
     plugins.which-key.settings.spec = lib.optional cfg.enable [

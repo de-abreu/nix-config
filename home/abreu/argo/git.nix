@@ -3,9 +3,12 @@ let
   pubKeyFile = ".ssh/git.pub";
 in
 {
-  sops.secrets."ssh-keys/github/private" = {
-    path = "${config.home.homeDirectory}/.ssh/git";
-    mode = "0600";
+  sops.secrets = {
+    "ssh-keys/github/private" = {
+      path = "${config.home.homeDirectory}/.ssh/git";
+      mode = "0600";
+    };
+    "api-keys/github" = { };
   };
 
   home.file.${pubKeyFile}.text = ''
@@ -34,5 +37,7 @@ in
       };
     };
     gh.enable = true;
+    gh-dash.enable = true;
+    fish.shellInit = "export GITHUB_TOKEN=(cat ${config.sops.secrets."api-keys/github".path})";
   };
 }

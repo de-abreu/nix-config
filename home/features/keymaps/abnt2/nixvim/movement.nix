@@ -8,7 +8,11 @@
         expr = true;
         silent = true;
       };
-      mode = ["n" "o" "x"];
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
     }
 
     {
@@ -19,7 +23,11 @@
         expr = true;
         silent = true;
       };
-      mode = ["n" "o" "x"];
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
     }
 
     {
@@ -29,7 +37,11 @@
         desc = "Move cursor left";
         silent = true;
       };
-      mode = ["n" "o" "x"];
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
     }
 
     {
@@ -39,7 +51,66 @@
         desc = "Move cursor right";
         silent = true;
       };
-      mode = ["n" "o" "x"];
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
+    }
+
+    {
+      action = "gg^";
+      key = "gg";
+      options.desc = "Move cursor to the first character";
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
+    }
+
+    {
+      action = "GG$";
+      key = "G";
+      options.desc = "Move cursor to the last character";
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
+    }
+
+    {
+      action = "g^";
+      key = "^";
+      options.desc = "Move cursor to the first character linewise";
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
+    }
+
+    {
+      action = "g0";
+      key = "0";
+      options.desc = "Move cursor to the beggining of the line";
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
+    }
+
+    {
+      action = "g$";
+      key = "$";
+      options.desc = "Move cursor to the end of the line";
+      mode = [
+        "n"
+        "o"
+        "x"
+      ];
     }
   ];
 }

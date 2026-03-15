@@ -2,9 +2,18 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.nixvim.plugins.smart-splits;
-  resize-windows = map (m: m // {mode = "n";}) [
+  modes = {
+    mode = [
+      "n"
+      "i"
+      "x"
+      "t"
+    ];
+  };
+  resize-windows = map (m: m // modes) [
     {
       key = "<M-j>";
       action.__raw = "function() require('smart-splits').resize_left() end";
@@ -27,7 +36,7 @@
     }
   ];
 
-  move-cursor = map (m: m // {mode = "n";}) [
+  move-cursor = map (m: m // modes) [
     {
       key = "<C-j>";
       action.__raw = "function() require('smart-splits').move_cursor_left() end";
@@ -50,7 +59,7 @@
     }
   ];
 
-  swap-buffers = map (m: m // {mode = "n";}) [
+  swap-buffers = map (m: m // modes) [
     {
       key = "J";
       action.__raw = "function() require('smart-splits').swap_buf_left() end";
@@ -72,11 +81,10 @@
       options.desc = "Swap current buffer with the one to the right";
     }
   ];
-in {
+in
+{
   programs = {
-    nixvim.keymaps =
-      lib.optionals cfg.enable
-      (resize-windows ++ move-cursor ++ swap-buffers);
+    nixvim.keymaps = lib.optionals cfg.enable (resize-windows ++ move-cursor ++ swap-buffers);
 
     # Wezterm integration untouched
     wezterm.extraConfig."keybinds.smart-splits" = ./smart-splits.lua;

@@ -29,20 +29,6 @@
     }
 
     {
-      action = "gg^";
-      key = "gg";
-      options.desc = "Move cursor to the first character";
-      mode = "n";
-    }
-
-    {
-      action = "GG$";
-      key = "GG";
-      options.desc = "Move cursor to the last character";
-      mode = "n";
-    }
-
-    {
       action = ">gv";
       key = ">";
       options.desc = "Indent selection";
@@ -64,7 +50,7 @@
     }
 
     {
-      key = "<leader>o";
+      key = "<leader>O";
       action = "<cmd>only<CR>";
       options = {
         silent = true;

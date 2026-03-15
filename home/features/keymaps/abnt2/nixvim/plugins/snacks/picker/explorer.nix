@@ -56,10 +56,8 @@ in
       }
     ];
     plugins.snacks.settings.picker.sources.explorer.win.list.keys = {
-      l = "list_up";
       j = "explorer_close";
-      "ç" = "confirm";
-      "<cr>" = "confirm";
+      l = "list_up";
       h = "flash";
     };
   };

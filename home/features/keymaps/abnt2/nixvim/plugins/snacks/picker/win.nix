@@ -1,35 +1,9 @@
 let
   common = {
-    # Opening files
-    "ç" = [
-      "pick_win"
-      "jump"
-    ];
-    "<cr>" = [
-      "pick_win"
-      "jump"
-    ];
-    "<s-cr>" = false;
-
-    "<c-s>" = false;
-    "-" = [
-      "pick_win"
-      "edit_split"
-    ];
-
-    "<c-v>" = false;
-    "\\" = [
-      "pick_win"
-      "edit_vsplit"
-    ];
-
     # Movement
     "<c-j>" = false;
     "<c-k>" = "list_down";
     "<c-l>" = "list_up";
-    k = "list_down";
-    l = "list_up";
-    "<a-s>" = "flash";
 
     # Layout
     "<c-w>J" = "layout_left";
@@ -38,19 +12,13 @@ let
     "<c-w><S-Ç>" = "layout_right";
   };
 
-  # Upgraded wrapper to handle any mode
-  wrapKeys =
-    mode:
-    builtins.mapAttrs (
-      _: value:
-      if builtins.isList value then
-        {
-          __unkeyed-1 = value;
-          inherit mode;
-        }
-      else
-        value
-    );
+  navigation = {
+    "ç" = "confirm";
+    h = "flash";
+    l = "list_up";
+    k = "list_down";
+  };
+
 in
 {
   programs.nixvim.plugins.snacks.settings.picker = {
@@ -77,12 +45,25 @@ in
         end
       '';
 
-    win = {
-      input.keys = (wrapKeys [ "n" "i" ] common) // {
-        "<c-u>" = false;
-        "h" = "flash";
+    win =
+      let
+        # Upgraded wrapper to handle any mode
+        wrapKeys =
+          mode:
+          builtins.mapAttrs (
+            _: value:
+            if builtins.isList value then
+              {
+                __unkeyed-1 = value;
+                inherit mode;
+              }
+            else
+              value
+          );
+      in
+      {
+        input.keys = (wrapKeys [ "n" "i" ] common) // navigation // { "<c-u>" = false; };
+        list.keys = common // navigation;
       };
-      list.keys = wrapKeys [ "n" ] common;
-    };
   };
 }

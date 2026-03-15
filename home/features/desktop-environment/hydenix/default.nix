@@ -3,8 +3,9 @@
   importAll,
   inputs,
   ...
-}: {
-  imports = [inputs.hydenix.homeModules.default] ++ importAll {dir = ./.;};
+}:
+{
+  imports = [ inputs.hydenix.homeModules.default ] ++ importAll { dir = ./.; };
 
   hydenix.hm = {
     enable = true;
@@ -19,6 +20,7 @@
     spotify.enable = false;
     terminals.enable = false;
     hyprland = {
+      suppressWarnings = true;
       # See https://wiki.hyprland.org/Configuring/Monitors/
       monitors.overrideConfig = "monitor=, prefered, auto, 1";
     };

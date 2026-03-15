@@ -15,7 +15,10 @@ let
       ''
         function()
           _G.snacks_last_term_pos = '${position}'
-          Snacks.terminal.toggle(nil, { win = { position = '${position}' } })
+          Snacks.terminal.toggle(nil, {
+            id = "term_${position}", -- Assign a unique ID per orientation
+            win = { position = '${position}' }
+          })
         end
       '';
   };
@@ -27,10 +30,14 @@ let
       ''
         function()
           local pos = _G.snacks_last_term_pos or "float"
-          Snacks.terminal.toggle(nil, { win = { position = pos } })
+          Snacks.terminal.toggle(nil, {
+            id = "term_" .. pos, -- Target the specific ID for that orientation
+            win = { position = pos }
+          })
         end
       '';
   };
+
 in
 {
   programs.nixvim = {
@@ -75,17 +82,17 @@ in
         }
 
         {
-          mode = [
-            "n"
-            "i"
-            "t"
-          ];
           key = "<c-t>";
           action = toggleLastTerminal;
           options = {
             desc = "Toggle Terminal (Last/Float)";
             silent = true;
           };
+          mode = [
+            "n"
+            "i"
+            "t"
+          ];
         }
       ]
     );

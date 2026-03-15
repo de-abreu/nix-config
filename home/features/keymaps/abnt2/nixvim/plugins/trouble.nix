@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.nixvim.plugins.trouble;
   prefix = "<leader>x";
-in {
+in
+{
   programs.nixvim = {
     plugins.which-key.settings.spec = lib.optional cfg.enable [
       {
@@ -20,13 +22,13 @@ in {
       {
         mode = "n";
         key = prefix + "x";
-        action = "<cmd>Trouble preview_split toggle<cr>";
+        action = "<cmd>Trouble diagnostics toggle<cr>";
         options.desc = "Diagnostics toggle";
       }
       {
         mode = "n";
         key = prefix + "X";
-        action = "<cmd>Trouble preview_split toggle filter.buf=0<cr>";
+        action = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>";
         options.desc = "Buffer Diagnostics toggle";
       }
       {

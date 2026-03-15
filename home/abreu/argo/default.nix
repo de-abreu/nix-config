@@ -29,7 +29,7 @@
     defaultSopsFile = "${inputs.self}/secrets/users/abreu.yaml";
     secrets = {
       "api-keys/deepseek" = {};
-      "api-keys/tavily" = {};
+      "api-keys/opencode-go" = {};
     };
   };
 }

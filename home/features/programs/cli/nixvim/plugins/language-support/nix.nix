@@ -2,9 +2,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) getExe;
-in {
+in
+{
   programs.nixvim = {
     plugins = {
       lsp.servers = {
@@ -15,14 +17,14 @@ in {
       conform-nvim = {
         enable = true;
         settings = {
-          formatters_by_ft.nix = ["nixfmt"];
+          formatters_by_ft.nix = [ "nixfmt" ];
           formatters.nixfmt.command = getExe pkgs.nixfmt-rfc-style;
         };
       };
 
       lint = {
         enable = true;
-        lintersByFt.nix = ["deadnix"];
+        lintersByFt.nix = [ "deadnix" ];
         linters.deadnix.cmd = getExe pkgs.deadnix;
       };
 
