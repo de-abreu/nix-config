@@ -1,4 +1,3 @@
-
 {
   "neodev": {
     "library": {
@@ -16,6 +15,18 @@
   "lspconfig": {
     "lua_ls": {
       "Lua.format.enable": false
+    },
+    "nixd": {
+      "nixd": {
+        "options": {
+          "nixos-config": {
+            "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.argo.options"
+          },
+          "home-config": {
+            "expr": "(builtins.getFlake (builtins.toString ./.)).homeConfigurations.\"abreu@argo\".options"
+          }
+        }
+      }
     }
   }
 }

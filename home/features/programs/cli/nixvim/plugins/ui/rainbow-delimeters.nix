@@ -1,9 +1,12 @@
-{pkgs, ...}: {
-  programs.nixvim.extraPlugins = [pkgs.vimPlugins.rainbow-delimiters-nvim];
+{ pkgs, ... }:
+{
   extra.lz-n.plugins = [
     {
-      name = "rainbow-delimiters.nvim";
-      event = ["BufReadPre" "BufNewFile"];
+      plugin = pkgs.vimPlugins.rainbow-delimiters-nvim;
+      event = [
+        "BufReadPre"
+        "BufNewFile"
+      ];
     }
   ];
 }

@@ -30,6 +30,7 @@
       package = pkgs.unstable.opencode;
       enableMcpIntegration = true;
       settings = {
+        server.port = 8765;
         model = "opencode-go/glm-5";
         provider = {
           "opencode-go" = {

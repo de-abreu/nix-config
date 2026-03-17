@@ -3,7 +3,8 @@
   pkgs,
   ...
 }:
-with builtins; let
+with builtins;
+let
   transparent = foldl' (acc: el: acc + "windowrulev2=opacity 0.8 0.7 1.0, ${el}\n") "" [
     "class:^org.wezfurlong.wezterm$"
     "class:^org.pwmt.zathura$"
@@ -15,14 +16,16 @@ with builtins; let
     "title:^File Operation Progress$"
     "title:^Save as$"
     "class:^(xdg-desktop-portal-gtk)$"
+    "class:^(feh)$"
   ];
-in {
+in
+{
   # FIX: A patch legacy hyprland configuration that is incompatible with the
   # recent breaking changes.
 
   home.file.".local/share/hypr/" = lib.mkForce {
     recursive = true;
-    source = pkgs.runCommand "hyde-hypr-patched" {} ''
+    source = pkgs.runCommand "hyde-hypr-patched" { } ''
       # 1. Create the output directory
       mkdir -p $out
 

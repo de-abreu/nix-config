@@ -4,10 +4,6 @@
 
   programs.nixvim.plugins.blink-cmp = {
     enable = true;
-    lazyLoad.settings.event = [
-      "InsertEnter"
-      "CmdlineEnter"
-    ];
 
     settings = {
       # --- COMPLETION SETTINGS ---

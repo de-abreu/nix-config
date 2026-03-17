@@ -2,6 +2,10 @@
 
 Coding agent instructions for this NixOS configuration repository.
 
+## Documentation
+
+Before modifying configurations, check `docs/README.md` for the documentation index and `docs/architecture.md` for the flake structure overview. Documentation mirrors the config structure: `home/features/cli/fish` → `docs/home/features/cli/fish.md`.
+
 ## Project Overview
 
 This is a NixOS flake-based configuration using:

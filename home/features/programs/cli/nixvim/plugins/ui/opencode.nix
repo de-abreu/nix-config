@@ -51,10 +51,7 @@ in
         load_secret('${secrets."api-keys/deepseek".path}', "DEEPSEEK_API_KEY")
       '';
 
-    extraPackages = with pkgs; [
-      lsof
-      wezterm
-    ];
+    extraPackages = [ pkgs.wezterm ];
 
     plugins = {
       opencode = {

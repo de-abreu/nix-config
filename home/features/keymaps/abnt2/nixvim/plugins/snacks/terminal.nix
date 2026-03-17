@@ -81,6 +81,7 @@ in
           options.desc = "Open lazygit";
         }
 
+        # TODO: Solve ambiguity with the <c-t> keybinding used in the terminal interface.
         {
           key = "<c-t>";
           action = toggleLastTerminal;

@@ -1,8 +1,5 @@
 { importAll, ... }:
 {
-  imports = importAll {
-    dir = ./.;
-    exclude = [ "bilateral-shift.nix" ];
-  };
+  imports = importAll { dir = ./.; };
   console.keyMap = "br-abnt2";
 }

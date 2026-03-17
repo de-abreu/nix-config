@@ -1,3 +1,15 @@
+# Editor/Tool configs
+.neoconf/
+.opencode/
+scripts/
+
+# AI agent instructions
+AGENTS.md
+
+# Work in progress
 TODO.md
+bilateral-shift
+
+# Legacy configs kept for reference
 home/features/cli/
-*.bak # Some previous configurations kept as a reference
+*.bak

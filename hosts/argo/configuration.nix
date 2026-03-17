@@ -5,24 +5,26 @@
   inputs,
   outputs,
   config,
+  lib,
   pkgs,
   ...
-}: let
+}:
+let
   hostname = "argo";
-in {
-  imports =
-    [
-      inputs.hydenix.nixosModules.default # Hydenix desktop environment
-      inputs.sops-nix.nixosModules.sops # Sops secrets management
+in
+{
+  imports = [
+    inputs.hydenix.nixosModules.default # Hydenix desktop environment
+    inputs.sops-nix.nixosModules.sops # Sops secrets management
 
-      # Hardware modules
-      ./hardware-configuration.nix # Results of the hardware scan.
-      inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
-      inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
-      inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
-    ]
-    # Custom modules
-    ++ (builtins.attrValues outputs.nixosModules);
+    # Hardware modules
+    ./hardware-configuration.nix # Results of the hardware scan.
+    inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
+    inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
+    inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+  ]
+  # Custom modules
+  ++ (builtins.attrValues outputs.nixosModules);
 
   nixpkgs.overlays = [
     inputs.hydenix.overlays.default
@@ -42,7 +44,7 @@ in {
   hydenix = {
     enable = true;
     hostname = hostname;
-    timezone = "America/Sao_Paulo";
+    timezone = "America/Sao_Paulo"; # Required by hydenix; overridden by automatic-timezoned
     locale = "en_US.UTF-8";
     boot.enable = false;
     gaming.enable = false;
@@ -67,7 +69,7 @@ in {
     };
     kanata = {
       enable = true;
-      devices = ["/dev/input/by-path/platform-i8042-serio-0-event-kbd"];
+      devices = [ "/dev/input/by-path/platform-i8042-serio-0-event-kbd" ];
       addBinaryToPath = true;
     };
   };
@@ -75,7 +77,9 @@ in {
   sops = {
     defaultSopsFormat = "yaml";
     defaultSopsFile = "${inputs.self}/secrets/hosts/argo.yaml";
-    secrets.root_password = {neededForUsers = true;};
+    secrets.root_password = {
+      neededForUsers = true;
+    };
   };
 
   users.users.root.hashedPasswordFile = config.sops.secrets.root_password.path;
