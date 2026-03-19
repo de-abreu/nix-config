@@ -1,1 +1,3 @@
-{wezterm-override = import ./wezterm-override.nix;}
+{
+  wezterm-override = import ./wezterm-override.nix;
+}

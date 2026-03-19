@@ -1,3 +1,3 @@
 {
-  stylix.targets.librewolf.profileNames = ["default"];
+  stylix.targets.librewolf.profileNames = [ "default" ];
 }

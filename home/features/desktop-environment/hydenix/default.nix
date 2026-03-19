@@ -24,5 +24,6 @@
       # See https://wiki.hyprland.org/Configuring/Monitors/
       monitors.overrideConfig = "monitor=, prefered, auto, 1";
     };
+    waybar.enable = false;
   };
 }

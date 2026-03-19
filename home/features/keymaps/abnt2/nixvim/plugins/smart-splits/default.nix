@@ -59,28 +59,40 @@ let
     }
   ];
 
-  swap-buffers = map (m: m // modes) [
-    {
-      key = "J";
-      action.__raw = "function() require('smart-splits').swap_buf_left() end";
-      options.desc = "Swap the current buffer with the one to the left";
-    }
-    {
-      key = "K";
-      action.__raw = "function() require('smart-splits').swap_buf_down() end";
-      options.desc = "Swap the current buffer with the one below";
-    }
-    {
-      key = "L";
-      action.__raw = "function() require('smart-splits').swap_buf_up() end";
-      options.desc = "Swap current buffer with the one above";
-    }
-    {
-      key = "<S-Ç>";
-      action.__raw = "function() require('smart-splits').swap_buf_right() end";
-      options.desc = "Swap current buffer with the one to the right";
-    }
-  ];
+  swap-buffers =
+    map
+      (
+        m:
+        m
+        // {
+          mode = [
+            "n"
+            "x"
+          ];
+        }
+      )
+      [
+        {
+          key = "J";
+          action.__raw = "function() require('smart-splits').swap_buf_left() end";
+          options.desc = "Swap the current buffer with the one to the left";
+        }
+        {
+          key = "K";
+          action.__raw = "function() require('smart-splits').swap_buf_down() end";
+          options.desc = "Swap the current buffer with the one below";
+        }
+        {
+          key = "L";
+          action.__raw = "function() require('smart-splits').swap_buf_up() end";
+          options.desc = "Swap current buffer with the one above";
+        }
+        {
+          key = "<S-Ç>";
+          action.__raw = "function() require('smart-splits').swap_buf_right() end";
+          options.desc = "Swap current buffer with the one to the right";
+        }
+      ];
 in
 {
   programs = {

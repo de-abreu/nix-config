@@ -7,7 +7,7 @@
   imports =
     [
       ../../features/desktop-environment/hydenix
-      ../../features/desktop-environment/stylix/ayu-mirage-theme
+      ../../features/desktop-environment/stylix/astrodark-theme
       ../../features/keymaps/abnt2
       ../../features/programs
       ../../common.nix

@@ -11,8 +11,8 @@ in
 
     $d=[$hc|Audio]
     binddlt = , XF86AudioMute, $d toggle mute audio, exec, ${vctl} -o m
-    binddel = , XF86AudioLowerVolume, $d lower volume, exec, ${vctl} -o d
-    binddel = , XF86AudioRaiseVolume, $d raise volume, exec, ${vctl} -o i
+    binddel = , XF86AudioLowerVolume, $d lower volume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; ${vctl} -o d
+    binddel = , XF86AudioRaiseVolume, $d raise volume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; ${vctl} -o i
     binddl  = , F7,$d toggle microphone, exec, ${vctl} -i m
 
     $d=[$hc|Media]

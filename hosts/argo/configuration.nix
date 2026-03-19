@@ -44,7 +44,7 @@ in
   hydenix = {
     enable = true;
     hostname = hostname;
-    timezone = "America/Sao_Paulo"; # Required by hydenix; overridden by automatic-timezoned
+    timezone = "America/Sao_Paulo"; # Fallback, overridden by automatic-timezoned
     locale = "en_US.UTF-8";
     boot.enable = false;
     gaming.enable = false;
