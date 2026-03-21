@@ -6,7 +6,7 @@
   # This makes unstable packages accessible via `pkgs.unstable`
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
     };
   };
 }

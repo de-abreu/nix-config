@@ -18,8 +18,9 @@ let
   };
 in
 {
-  # INFO: Match the version installed in the terminal
   programs.nixvim = {
+
+    # INFO: Match the version installed in the terminal
     nixpkgs.overlays = [
       (final: prev: {
         opencode = pkgs.unstable.opencode;
@@ -68,6 +69,10 @@ in
           };
         };
       };
+      lualine.settings.lualine_z.sections.__unkeyed-1.__raw = "require('opencode').statusline";
     };
+
+    # INFO Enable experimental lsp integration
+    globals.opencode_opts.lsp.enabled = true;
   };
 }

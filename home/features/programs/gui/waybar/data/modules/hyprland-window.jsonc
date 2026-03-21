@@ -1,6 +1,6 @@
 {
     "hyprland/window": {
-        "format": " \uf303 {0}",
+        "format": " \uf313 {0}",
         "rotate": 0,
         "separate-outputs": true,
         "rewrite": {
