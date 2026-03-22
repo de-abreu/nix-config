@@ -74,7 +74,7 @@ in
       }
 
       {
-        __unkeyed-1 = "<C-u>";
+        __unkeyed-1 = "<M-u>";
         __unkeyed-2.__raw = "function() require('opencode').command('session.half.page.up') end";
         mode = [
           "n"
@@ -84,7 +84,7 @@ in
       }
 
       {
-        __unkeyed-1 = "<C-d>";
+        __unkeyed-1 = "<M-d>";
         __unkeyed-2.__raw = "function() require('opencode').command('session.half.page.down') end";
         mode = [
           "n"
@@ -94,21 +94,21 @@ in
       }
 
       {
-        __unkeyed-1 = "gg";
+        __unkeyed-1 = prefix + "g";
         __unkeyed-2.__raw = "function() require('opencode').command('session.first') end";
         mode = "n";
         desc = "Go to first message";
       }
 
       {
-        __unkeyed-1 = "G";
+        __unkeyed-1 = prefix + "G";
         __unkeyed-2.__raw = "function() require('opencode').command('session.last') end";
         mode = "n";
         desc = "Go to last message";
       }
 
       {
-        __unkeyed-1 = "<Esc>";
+        __unkeyed-1 = prefix + "S";
         __unkeyed-2.__raw = "function() require('opencode').command('session.interrupt') end";
         mode = "t";
         desc = "Interrupt session";
