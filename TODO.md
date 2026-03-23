@@ -2,7 +2,6 @@
 
 ## Hydenix
 
-- [ ] Refactor the annoying fish configuration
 - [ ] Substitute all occurrences of Arch Linux's logo for Nix's.
 
 ## Waybar
@@ -21,5 +20,9 @@
 
 - [ ] Enable session controls
 - [ ] Learn how to create a wrapper and implement it here.
+
+## Nixvim
+
+- [ ] Implement dictionaries for Portuguese and Romanian.
 
 ## Learn Flake-parts and the Dendritic Pattern

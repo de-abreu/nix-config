@@ -4,7 +4,7 @@
         "rotate": 0,
         "separate-outputs": true,
         "rewrite": {
-            "(.*)@archlinux:(.*)": "$1 \uf313 ",
+            "(.*)- fish": "$1 \uf795 ",
             "(.*) \u2014 Mozilla Firefox": "$1 \udb80\ude39 ",
             "(.*)Mozilla Firefox": "Firefox \udb80\ude39 ",
             "(.*) - Visual Studio Code": "$1 \udb82\ude1e ",
@@ -22,7 +22,7 @@
             "(.*)Github": "Github \ue709 ",
             "(.*)Spotify Free": "Spotify \udb81\udcc7 ",
             "(.*)Spotify Premiun": "Spotify \udb81\udcc7 ",
-            "(.*) - Nvim": "Nvim \ue6ae "
+            "(.*) - Nvim": " Nixvim \uf36f "
         },
         "max-length": 50
     }
