@@ -3,21 +3,21 @@
   outputs,
   config,
   ...
-}: {
-  imports =
-    [
-      ../../features/desktop-environment/hydenix
-      ../../features/desktop-environment/stylix/astrodark-theme
-      ../../features/keymaps/abnt2
-      ../../features/programs
-      ../../common.nix
-      ./git.nix
+}:
+{
+  imports = [
+    ../../features/desktop-environment/hydenix
+    ../../features/desktop-environment/stylix/astrodark-theme
+    ../../features/keymaps/abnt2
+    ../../features/programs
+    ../../common.nix
+    ./git.nix
 
-      inputs.sops-nix.homeManagerModules.sops
-      inputs.nixvim.homeModules.nixvim
-    ]
-    # Custom modules
-    ++ (builtins.attrValues outputs.homeModules);
+    inputs.sops-nix.homeManagerModules.sops
+    inputs.nixvim.homeModules.nixvim
+  ]
+  # Custom modules
+  ++ (builtins.attrValues outputs.homeModules);
 
   home = {
     username = "abreu";
@@ -25,11 +25,7 @@
   };
 
   sops = {
-    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     defaultSopsFile = "${inputs.self}/secrets/users/abreu.yaml";
-    secrets = {
-      "api-keys/deepseek" = {};
-      "api-keys/opencode-go" = {};
-    };
   };
 }

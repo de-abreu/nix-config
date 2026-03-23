@@ -20,7 +20,7 @@ in
     ];
 
     keymaps = lib.mkIf enable (
-      map (el: el // { mode = "n"; }) [
+      map (m: m // { mode = m.mode or "n"; }) [
         {
           action = mkAction "resume";
           key = prefix + "<space>";
@@ -40,6 +40,20 @@ in
           action = mkAction "lines";
           key = prefix + "b";
           options.desc = "Buffer lines";
+        }
+        {
+          action = mkAction "grep_buffers";
+          key = prefix + "B";
+          options.desc = "Grep open buffers";
+        }
+        {
+          action = mkAction "grep_word";
+          key = prefix + "w";
+          options.desc = "Visual selection or word";
+          mode = [
+            "n"
+            "x"
+          ];
         }
         {
           action = mkAction "command_history";

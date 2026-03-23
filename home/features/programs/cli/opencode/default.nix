@@ -12,7 +12,8 @@
 
   sops.secrets = lib.genAttrs [
     "api-keys/deepseek"
-    "api-keys/opencode-go"
+    "api-keys/opencode"
+    "api-keys/exa"
   ] (_: { });
 
   programs = {
@@ -22,7 +23,8 @@
       in
       ''
         export DEEPSEEK_API_KEY=(cat ${secrets."api-keys/deepseek".path})
-        export OPENCODE_API_KEY=(cat ${secrets."api-keys/opencode-go".path})
+        export OPENCODE_API_KEY=(cat ${secrets."api-keys/opencode".path})
+        export EXA_API_KEY=(cat ${secrets."api-keys/exa".path})
       '';
 
     opencode = {

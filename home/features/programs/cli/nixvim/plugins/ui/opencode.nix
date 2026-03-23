@@ -45,11 +45,9 @@ in
           end
         end
 
-        -- Inject the OpenCode API key
-        load_secret('${secrets."api-keys/opencode-go".path}', "OPENCODE_API_KEY")
-
-        -- Inject the DeepSeek API key
+        load_secret('${secrets."api-keys/opencode".path}', "OPENCODE_API_KEY")
         load_secret('${secrets."api-keys/deepseek".path}', "DEEPSEEK_API_KEY")
+        load_secret('${secrets."api-keys/exa".path}', "EXA_API_KEY")
       '';
 
     extraPackages = [ pkgs.wezterm ];
