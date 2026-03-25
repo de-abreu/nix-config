@@ -10,7 +10,7 @@
     ../../features/desktop-environment/stylix/astrodark-theme
     ../../features/keymaps/abnt2
     ../../features/programs
-    ../../common.nix
+    ../../common
     ./git.nix
 
     inputs.sops-nix.homeManagerModules.sops

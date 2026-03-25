@@ -7,6 +7,7 @@
   config,
   lib,
   pkgs,
+  experimentalFeatures,
   ...
 }:
 let
@@ -28,6 +29,9 @@ in
 
   nixpkgs.overlays = [
     inputs.hydenix.overlays.default
+    outputs.overlays.additions
+    outputs.overlays.unstable-packages
+    outputs.overlays.firefox-addons
   ];
 
   # Bootloader configuration for legacy boot mode
@@ -82,5 +86,8 @@ in
     };
   };
 
-  users.users.root.hashedPasswordFile = config.sops.secrets.root_password.path;
+  users = {
+    users.root.hashedPasswordFile = config.sops.secrets.root_password.path;
+    mutableUsers = false;
+  };
 }

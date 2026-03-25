@@ -4,7 +4,7 @@
         "rotate": 0,
         "separate-outputs": true,
         "rewrite": {
-            "(.*)- fish": "$1 \uf795 ",
+            "(.*)- fish": "$1 \ue795 ",
             "(.*) \u2014 Mozilla Firefox": "$1 \udb80\ude39 ",
             "(.*)Mozilla Firefox": "Firefox \udb80\ude39 ",
             "(.*) - Visual Studio Code": "$1 \udb82\ude1e ",
