@@ -43,7 +43,7 @@ nix flake update
 │   └── common/            # Shared system config
 ├── home/
 │   ├── abreu/             # User configuration
-│   ├── common.nix         # Shared home settings
+│   ├── common/            # Shared home settings
 │   └── features/          # Modular feature sets
 │       ├── cli/           # Astronvim, Nixvim, Fish, etc.
 │       ├── desktop-environment/  # Hydenix, Stylix
