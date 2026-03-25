@@ -19,8 +19,7 @@ Documentation mirrors the configuration directory structure:
 ```
 docs/
 ├── hosts/argo.md          ← hosts/argo/
-├── home/features/cli/     ← home/features/cli/
-├── modules/nixos/kanata.md ← modules/nixos/kanata/
+├── home/features/programs/cli/nixvim.md  ← home/features/programs/cli/nixvim/
 └── ...
 ```
 
@@ -54,7 +53,7 @@ Each documentation file follows this template:
 ## Finding Documentation
 
 ### For AI Agents
-1. From a config path, map directly: `home/features/cli/fish` → `docs/home/features/cli/fish.md`
+1. From a config path, map directly: `home/features/programs/cli/nixvim` → `docs/home/features/programs/cli/nixvim.md`
 2. Start at [architecture.md](architecture.md) for high-level structure
 3. Check `# INFO:` comments in Nix files for quick context
 

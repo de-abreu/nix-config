@@ -72,13 +72,6 @@ hosts/argo/default.nix
 
 ```
 home/features/
-    ├── cli/              # Command-line tools
-    │   ├── astronvim/    # Neovim distribution
-    │   ├── fish/         # Shell
-    │   ├── nixvim/       # Nix-based Neovim config
-    │   ├── starship/     # Prompt
-    │   └── direnv/       # Directory env
-    │
     ├── desktop-environment/
     │   ├── hydenix/      # Hyprland desktop
     │   └── stylix/       # System theming

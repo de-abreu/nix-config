@@ -45,7 +45,6 @@ nix flake update
 │   ├── abreu/             # User configuration
 │   ├── common/            # Shared home settings
 │   └── features/          # Modular feature sets
-│       ├── cli/           # Astronvim, Nixvim, Fish, etc.
 │       ├── desktop-environment/  # Hydenix, Stylix
 │       ├── keymaps/      # ABNT2 keyboard mappings
 │       └── programs/      # CLI and GUI programs
