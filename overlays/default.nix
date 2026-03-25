@@ -8,6 +8,10 @@
     };
   };
 
+  modifications = final: _prev: {
+    opencode = final.unstable.opencode;
+  };
+
   firefox-addons = final: _prev: {
     firefox-addons = inputs.firefox-addons.packages.${final.stdenv.hostPlatform.system};
   };

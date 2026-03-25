@@ -20,13 +20,6 @@ in
 {
   programs.nixvim = {
 
-    # INFO: Match the version installed in the terminal
-    nixpkgs.overlays = [
-      (final: prev: {
-        opencode = pkgs.unstable.opencode;
-      })
-    ];
-
     extraConfigLuaPre =
       let
         inherit (config.sops) secrets;

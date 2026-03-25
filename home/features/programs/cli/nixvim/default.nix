@@ -6,6 +6,7 @@
     nixvim = {
       enable = true;
       defaultEditor = true;
+      nixpkgs.useGlobalPackages = true;
     };
     fish.shellAbbrs."nv" = "nvim";
   };

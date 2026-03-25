@@ -29,10 +29,9 @@ in
 
   nixpkgs.overlays = [
     inputs.hydenix.overlays.default
-    outputs.overlays.additions
-    outputs.overlays.unstable-packages
-    outputs.overlays.firefox-addons
-  ];
+  ]
+  # Custom overlays
+  ++ builtins.attrValues outputs.overlays;
 
   # Bootloader configuration for legacy boot mode
   boot = {

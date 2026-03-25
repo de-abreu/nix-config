@@ -1,13 +1,16 @@
 {
   config,
+  lib,
   importAll,
   inputs,
   outputs,
   pkgs,
   ...
-}: let
+}:
+let
   username = "abreu";
-in {
+in
+{
   imports = [
     inputs.hydenix.inputs.home-manager.nixosModules.home-manager
   ];
@@ -15,14 +18,18 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     description = "Abreu";
-    extraGroups = ["networkmanager" "wheel" "video"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+    ];
 
     # INFO: The following line explicitly installs the home-manager CLI tool.
     # Even though it should not be used for system updates in a NixOS settings,
     # it is still useful to read documentation (`man home-configuration.nix`) and
     # the inspection of the current generation.
     packages = [
-      inputs.hydenix.inputs.home-manager.packages.${pkgs.system}.default
+      inputs.hydenix.inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default
       pkgs.sops
     ];
     hashedPasswordFile = config.sops.secrets."root_password".path;
@@ -37,10 +44,19 @@ in {
 
   home-manager = {
     useUserPackages = true;
-    useGlobalPkgs = true;
+    useGlobalPkgs = false;
     extraSpecialArgs = { inherit inputs outputs importAll; };
-    users.${username} =
-      import
-      "${inputs.self}/home/${username}/${config.networking.hostName}";
+    sharedModules = [
+      (
+        { osConfig, ... }:
+        lib.mkIf (osConfig ? nixpkgs) {
+          nixpkgs = {
+            config = lib.mapAttrs (_: v: lib.mkDefault v) osConfig.nixpkgs.config;
+            overlays = lib.mkOrder 900 osConfig.nixpkgs.overlays;
+          };
+        }
+      )
+    ];
+    users.${username} = import "${inputs.self}/home/${username}/${config.networking.hostName}";
   };
 }

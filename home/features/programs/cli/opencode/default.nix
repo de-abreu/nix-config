@@ -29,7 +29,6 @@
 
     opencode = {
       enable = true;
-      package = pkgs.unstable.opencode;
       enableMcpIntegration = true;
       settings = {
         server.port = 8765;
