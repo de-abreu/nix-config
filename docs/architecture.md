@@ -46,7 +46,7 @@ flake.nix
                                               │
                                               ├── configuration.nix
                                               │       │
-                                              │       ├── imports home/common.nix
+                                              │       ├── imports home/common/
                                               │       └── imports home/abreu/
                                               │
                                               └── hardware-configuration.nix
