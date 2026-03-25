@@ -89,21 +89,6 @@
         </child>
 
         <child>
-            <object class="GtkMenuItem" id="waybar-menu">
-                <property name="label">  Waybar</property>
-                <child type="submenu">
-                    <object class="GtkMenu">
-                        <child>
-                            <object class="GtkMenuItem" id="waybar-restart">
-                                <property name="label">󰜉  Restart</property>
-                            </object>
-                        </child>
-                    </object>
-                </child>
-            </object>
-        </child>
-
-        <child>
             <object class="GtkMenuItem" id="workflows_menu">
                 <property name="label">  Workflows</property>
                 <child type="submenu">
@@ -161,6 +146,12 @@
         <child>
             <object class="GtkMenuItem" id="keybinds-hint">
                 <property name="label">  Keybinds</property>
+            </object>
+        </child>
+
+        <child>
+            <object class="GtkMenuItem" id="waybar-restart">
+                <property name="label">󰜉  Restart</property>
             </object>
         </child>
 
