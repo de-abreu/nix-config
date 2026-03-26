@@ -23,7 +23,7 @@
       lib.stringToCharacters hexcode
       |> map mapHexChar
       |> lib.concatStringsSep " "
-      |> (seq: "(macro C-S-u ${seq} ent)");
+      |> (seq: "(macro C-S-u ${seq} 50 ent)");
   in {
     sourceKeys = ["ç" "a" "s" "t" "i" "e" "o" "u" "f"];
 
