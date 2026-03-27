@@ -11,6 +11,7 @@
         fish_config theme choose "ayu Mirage"
         set --universal pure_color_success green
         set --universal pure_enable_nixdevshell true
+        set --universal pure_symbol_nixdevshell_prefix " "
       '';
     plugins = [
       {

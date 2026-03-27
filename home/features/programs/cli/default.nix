@@ -2,8 +2,9 @@
   importAll,
   pkgs,
   ...
-}: {
-  imports = importAll {dir = ./.;};
+}:
+{
+  imports = importAll { dir = ./.; };
 
   home.packages = with pkgs; [
     coreutils # GNU Core utilities
