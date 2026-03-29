@@ -3,11 +3,14 @@
   lib,
   pkgs,
   ...
-}: let
-  isWordsEnabled =
-    (config.programs.nixvim.plugins ? blink-cmp-words && config.programs.nixvim.plugins.blink-cmp-words.enable)
-    || (lib.elem pkgs.vimPlugins.blink-cmp-words config.programs.nixvim.extraPlugins);
-in {
+}:
+let
+  isWordsEnabled = lib.any (p: p.__unkeyed-1 == "blink-cmp-words") config.extra.lz-n.plugins;
+  isAvanteEnabled = lib.any (
+    p: p.__unkeyed-1 == "blink-cmp-avante"
+  ) config.extra.lz-n.plugins;
+in
+{
   programs.nixvim.plugins.blink-cmp.settings.sources = {
     default.__raw =
       # lua
@@ -29,36 +32,34 @@ in {
           ${lib.optionalString (lib.elem pkgs.vimPlugins.blink-cmp-yanky config.programs.nixvim.extraPlugins) "table.insert(common_sources, 'yank')"}
           ${lib.optionalString config.programs.nixvim.plugins.blink-ripgrep.enable "table.insert(common_sources, 'ripgrep')"}
           ${lib.optionalString (lib.elem pkgs.vimPlugins.blink-cmp-npm-nvim config.programs.nixvim.extraPlugins) "if vim.fn.expand('%:t') == 'package.json' then table.insert(common_sources, 'npm') end"}
+          ${lib.optionalString isAvanteEnabled "table.insert(common_sources, 'avante')"}
 
           -- Special context handling
           local success, node = pcall(vim.treesitter.get_node)
           if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
             local comment_sources = { 'buffer', 'spell' }
             ${lib.optionalString (
-          config.programs.nixvim.plugins.blink-cmp-dictionary.enable
-          || isWordsEnabled
-        ) "table.insert(comment_sources, 'dictionary')"}
+              config.programs.nixvim.plugins.blink-cmp-dictionary.enable || isWordsEnabled
+            ) "table.insert(comment_sources, 'dictionary')"}
             return comment_sources
           elseif vim.bo.filetype == 'gitcommit' then
             local git_sources = { 'buffer', 'spell' }
             ${lib.optionalString (
-          config.programs.nixvim.plugins.blink-cmp-dictionary.enable
-          || isWordsEnabled
-        ) "table.insert(git_sources, 'dictionary')"}
+              config.programs.nixvim.plugins.blink-cmp-dictionary.enable || isWordsEnabled
+            ) "table.insert(git_sources, 'dictionary')"}
             ${lib.optionalString config.programs.nixvim.plugins.blink-cmp-git.enable "table.insert(git_sources, 'git')"}
             ${lib.optionalString (lib.elem pkgs.vimPlugins.blink-cmp-conventional-commits config.programs.nixvim.extraPlugins) "table.insert(git_sources, 'conventional_commits')"}
             return git_sources
-          ${
-          lib.optionalString config.programs.nixvim.plugins.easy-dotnet.enable # Lua
-          
-          ''
-            elseif vim.bo.filetype == "cs" or vim.bo.filetype == "fsharp" or vim.bo.filetype == "vb" or vim.bo.filetype == "razor" or vim.bo.filetype == "xml" then
-              -- For .NET filetypes, add easy-dotnet to the sources
-              local dotnet_sources = vim.deepcopy(common_sources)
-              table.insert(dotnet_sources, 'easy-dotnet')
-              return dotnet_sources
-          ''
-        }
+          ${lib.optionalString config.programs.nixvim.plugins.easy-dotnet.enable # Lua
+
+            ''
+              elseif vim.bo.filetype == "cs" or vim.bo.filetype == "fsharp" or vim.bo.filetype == "vb" or vim.bo.filetype == "razor" or vim.bo.filetype == "xml" then
+                -- For .NET filetypes, add easy-dotnet to the sources
+                local dotnet_sources = vim.deepcopy(common_sources)
+                table.insert(dotnet_sources, 'easy-dotnet')
+                return dotnet_sources
+            ''
+          }
           else
             return common_sources
           end
@@ -93,7 +94,7 @@ in {
 
       lsp = {
         score_offset = 80;
-        fallbacks = []; # Allow buffer to show independently
+        fallbacks = [ ]; # Allow buffer to show independently
         transform_items.__raw =
           # lua
           ''
@@ -128,19 +129,20 @@ in {
       };
 
       conventional_commits =
-        lib.mkIf (lib.elem pkgs.vimPlugins.blink-cmp-conventional-commits config.programs.nixvim.extraPlugins)
-        {
-          name = "Conventional Commits";
-          module = "blink-cmp-conventional-commits";
-          score_offset = 68;
-          enabled.__raw =
-            # lua
-            ''
-              function()
-                return vim.bo.filetype == 'gitcommit'
-              end
-            '';
-        };
+        lib.mkIf
+          (lib.elem pkgs.vimPlugins.blink-cmp-conventional-commits config.programs.nixvim.extraPlugins)
+          {
+            name = "Conventional Commits";
+            module = "blink-cmp-conventional-commits";
+            score_offset = 68;
+            enabled.__raw =
+              # lua
+              ''
+                function()
+                  return vim.bo.filetype == 'gitcommit'
+                end
+              '';
+          };
 
       copilot = lib.mkIf config.programs.nixvim.plugins.blink-copilot.enable {
         name = "copilot";
@@ -159,7 +161,11 @@ in {
         score_offset = 8;
         opts = {
           dictionary_search_threshold = 3;
-          definition_pointers = ["!" "&" "^"];
+          definition_pointers = [
+            "!"
+            "&"
+            "^"
+          ];
         };
       };
 
@@ -206,12 +212,14 @@ in {
         };
       };
 
-      nerdfont = lib.mkIf (lib.elem pkgs.vimPlugins.blink-nerdfont-nvim config.programs.nixvim.extraPlugins) {
-        module = "blink-nerdfont";
-        name = "Nerd Fonts";
-        score_offset = 68;
-        opts.insert = true;
-      };
+      nerdfont =
+        lib.mkIf (lib.elem pkgs.vimPlugins.blink-nerdfont-nvim config.programs.nixvim.extraPlugins)
+          {
+            module = "blink-nerdfont";
+            name = "Nerd Fonts";
+            score_offset = 68;
+            opts.insert = true;
+          };
 
       npm = lib.mkIf (lib.elem pkgs.vimPlugins.blink-cmp-npm-nvim config.programs.nixvim.extraPlugins) {
         name = "npm";
@@ -227,7 +235,7 @@ in {
             end
           '';
         opts = {
-          ignore = {};
+          ignore = { };
           only_semantic_versions = true;
           only_latest_version = false;
         };
@@ -255,6 +263,12 @@ in {
         module = "blink-yanky";
         score_offset = 69;
         max_items = 3;
+      };
+
+      avante = lib.mkIf isAvanteEnabled {
+        name = "Avante";
+        module = "blink-cmp-avante";
+        score_offset = 50;
       };
     };
   };

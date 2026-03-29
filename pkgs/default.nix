@@ -1,3 +1,7 @@
-{pkgs ? import <nixpkgs> {}, ...}: {
-  screenshot = pkgs.callPackage ./screenshot {};
+{
+  pkgs ? import <nixpkgs> { },
+  ...
+}:
+{
+  screenshot = pkgs.callPackage ./screenshot { };
 }

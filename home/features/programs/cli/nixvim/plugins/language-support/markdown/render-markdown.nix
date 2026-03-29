@@ -12,5 +12,6 @@
         "markdown"
       ];
     };
+    settings.file_types = [ "markdown" ];
   };
 }

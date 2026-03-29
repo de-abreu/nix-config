@@ -14,9 +14,16 @@ let
   };
 in
 {
-  extra.lz-n.plugins = [
+  programs.nixvim.extraPlugins = [
     {
       plugin = beacon;
+      optional = true;
+    }
+  ];
+
+  extra.lz-n.plugins = [
+    {
+      __unkeyed-1 = "beacon.nvim";
       event = "DeferredUIEnter";
     }
   ];

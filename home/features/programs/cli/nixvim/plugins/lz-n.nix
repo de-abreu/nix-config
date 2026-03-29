@@ -9,7 +9,7 @@
       lzn-auto-require.enable = true;
       lz-n = {
         enable = true;
-        settings.plugins = config.extra.lz-n.plugins;
+        plugins = config.extra.lz-n.plugins;
       };
     };
   };
