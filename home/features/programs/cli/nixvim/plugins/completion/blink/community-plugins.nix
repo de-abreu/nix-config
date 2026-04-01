@@ -1,13 +1,10 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
-    extraPackages = with pkgs; [gh glab];
+    extraPackages = [ pkgs.gh pkgs.glab ];
     plugins = let
-      mkBlinkPlugin = {enable ? true, ...} @ args:
-        {
-          inherit enable;
-          lazyLoad.settings.event = ["InsertEnter" "CmdlineEnter"];
-        }
-        // (builtins.removeAttrs args ["enable"]);
+      mkBlinkPlugin = { enable ? true, ... } @ args:
+        { inherit enable; } // (builtins.removeAttrs args ["enable"]);
     in {
       blink-cmp-git = mkBlinkPlugin {};
       blink-cmp-spell = mkBlinkPlugin {};

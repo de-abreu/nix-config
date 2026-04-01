@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Pre-commit hook to remind about documentation updates
+# Install: cpthis to .git/hooks/pre-commit
+
+# Check if any .nix files were modified
+NIX_CHANGED=$(git diff --cached --name-only --diff-filter=ACMR '*.nix' 2>/dev/null | head -1)
+
+if [ -n "$NIX_CHANGED" ]; then
+    # Check if docs/ was also modified
+    DOCS_CHANGED=$(git diff --cached --name-only --diff-filter=ACMR 'docs/*.md' 2>/dev/null | head -1)
+    
+    if [ -z "$DOCS_CHANGED" ]; then
+        echo ""
+        echo "⚠️  Reminder: Nix files changed but no docs/ updates."
+        echo "   Consider updating documentation in docs/"
+        echo "   See docs/README.md for documentation structure."
+        echo ""
+    fi
+fi
+
+exit 0

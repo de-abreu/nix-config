@@ -2,6 +2,7 @@
 {
   importAll,
   inputs,
+  lib,
   ...
 }:
 {
@@ -22,8 +23,11 @@
     hyprland = {
       suppressWarnings = true;
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitors.overrideConfig = "monitor=, prefered, auto, 1";
+      monitors.overrideConfig = "monitor=, preferred, auto, 1";
     };
     waybar.enable = false;
   };
+  home.activation.setLockScreen = lib.dm.dag.entryAfter [
+    "writeBoundary"
+  ] "hyde-shell hyprlock --background";
 }

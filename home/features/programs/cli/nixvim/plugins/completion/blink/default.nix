@@ -6,7 +6,6 @@
     enable = true;
 
     settings = {
-      # --- COMPLETION SETTINGS ---
       completion = {
         list.selection.preselect = false;
         ghost_text.enabled = true;
@@ -14,14 +13,8 @@
         accept.auto_brackets = {
           enabled = true;
           override_brackets_for_filetypes = {
-            lua = [
-              "{"
-              "}"
-            ];
-            nix = [
-              "{"
-              "}"
-            ];
+            lua = ["{" "}"];
+            nix = ["{" "}"];
           };
         };
 
@@ -34,7 +27,6 @@
           border = "rounded";
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
 
-          # Smart direction logic (sticky menu)
           direction_priority.__raw =
             # lua
             ''
@@ -52,7 +44,7 @@
             '';
 
           draw = {
-            treesitter = [ "lsp" ];
+            treesitter = ["lsp"];
             columns.__raw =
               # lua
               ''
@@ -64,12 +56,8 @@
               '';
             components.kind_icon = {
               ellipsis = false;
-              text.__raw =
-                # lua
-                "function(ctx) return _G.get_kind_icon(ctx).text end";
-              highlight.__raw =
-                # lua
-                "function(ctx) return _G.get_kind_icon(ctx).highlight end";
+              text.__raw = "function(ctx) return _G.get_kind_icon(ctx).text end";
+              highlight.__raw = "function(ctx) return _G.get_kind_icon(ctx).highlight end";
             };
           };
         };
@@ -80,7 +68,6 @@
         };
       };
 
-      # --- ROOT LEVEL SETTINGS ---
       signature = {
         enabled = true;
         window.border = "rounded";
@@ -89,11 +76,7 @@
       fuzzy = {
         implementation = "prefer_rust";
         prebuilt_binaries.download = false;
-        sorts = [
-          "exact"
-          "score"
-          "sort_text"
-        ];
+        sorts = ["exact" "score" "sort_text"];
       };
 
       cmdline.completion = {

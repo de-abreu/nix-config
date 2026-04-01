@@ -2,10 +2,8 @@
   config,
   lib,
   ...
-}:
-let
+}:let
   cfg = config.programs.nixvim.plugins.snacks;
-  avante = config.programs.nixvim.plugins.avante;
 in
 {
   programs.nixvim = {
@@ -56,58 +54,10 @@ in
         options.desc = "Toggle Explorer Focus";
       }
     ];
-    plugins.snacks.settings.picker = {
-      actions = lib.mkIf avante.enable {
-        explorer_to_avante.__raw = ''
-          function(picker)
-            local ok, avante = pcall(require, "avante")
-            if not ok then
-              vim.notify("Avante not available", vim.log.levels.WARN, { title = "Snacks Explorer" })
-              return
-            end
-
-            local sidebar = avante.get()
-            if not sidebar or not sidebar:is_open() then
-              vim.notify("Open Avante sidebar first", vim.log.levels.WARN, { title = "Snacks Explorer" })
-              return
-            end
-
-            local added = 0
-            for _, item in ipairs(picker:selected()) do
-              if item.file then
-                sidebar.file_selector:add_selected_file(item.file)
-                added = added + 1
-              end
-            end
-
-            if added == 0 then
-              local current = picker:current()
-              if current and current.file then
-                sidebar.file_selector:add_selected_file(current.file)
-                added = 1
-              end
-            end
-
-            if added > 0 then
-              vim.notify(
-                "Added " .. added .. " file(s) to Avante",
-                vim.log.levels.INFO,
-                { title = "Snacks Explorer" }
-              )
-            else
-              vim.notify("No files to add", vim.log.levels.WARN, { title = "Snacks Explorer" })
-            end
-          end
-        '';
-      };
-      sources.explorer.win.list.keys = {
-        j = "explorer_close";
-        l = "list_up";
-        h = "flash";
-      }
-      // lib.optionalAttrs avante.enable {
-        "<M-a>" = "explorer_to_avante";
-      };
+    plugins.snacks.settings.picker.sources.explorer.win.list.keys = {
+      j = "explorer_close";
+      l = "list_up";
+      h = "flash";
     };
   };
 }

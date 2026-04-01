@@ -3,7 +3,6 @@ let
 in
 {
   programs.nixvim.plugins = {
-    hardtime.settings.restricted_keys.h.__raw = "false";
     flash.lazyLoad.settings.keys = [
       {
         __unkeyed-1 = "h";
@@ -67,5 +66,10 @@ in
         desc = "Flash Line";
       }
     ];
+    hardtime.settings.restricted_keys.h.__raw = "false";
+    snacks.settings.picker = {
+      input.keys.h = "flash";
+      lists.keys.h = "flash";
+    };
   };
 }

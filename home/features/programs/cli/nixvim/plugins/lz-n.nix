@@ -1,7 +1,8 @@
-{config, lib, ...}: {
+{ config, lib, ... }:
+{
   options.extra.lz-n.plugins = lib.mkOption {
     type = lib.types.listOf lib.types.anything;
-    default = [];
+    default = [ ];
     description = "Collector to lazy load extra plugins with lz-n";
   };
   config = {

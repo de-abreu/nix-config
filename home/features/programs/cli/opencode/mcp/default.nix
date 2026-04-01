@@ -1,1 +1,9 @@
-{importAll, ...}: { imports = importAll {dir = ./.;};}
+{ importAll, ... }:
+{
+  imports = importAll { dir = ./.; };
+
+  programs = {
+    mcp.enable = true;
+    opencode.enableMcpIntegration = true;
+  };
+}

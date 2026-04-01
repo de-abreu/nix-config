@@ -28,4 +28,7 @@ in
 
     $d=[$hc|Power]
     binddlt = , XF86PowerOff, $d suspend, exec, ${screenlock}; systemctl suspend
+
+    $d=[$hc|Display]
+    bindd = , XF86Display, $d toggle mirror/extend, exec, monitor-toggle
   ''
