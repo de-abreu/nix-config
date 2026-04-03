@@ -12,6 +12,12 @@
         "markdown"
       ];
     };
-    settings.file_types = [ "markdown" ];
+    settings = {
+      file_types = [ "markdown" ];
+      # Keep Setext headings (===, ---) as-is instead of rendering as ATX (#)
+      heading.setext = false;
+      # Show concealed text (e.g., HTML comments) as greyed out instead of hidden
+      win_options.conceallevel.rendered = 2;
+    };
   };
 }

@@ -2,7 +2,6 @@
 {
   importAll,
   inputs,
-  lib,
   ...
 }:
 {
@@ -27,7 +26,4 @@
     };
     waybar.enable = false;
   };
-  home.activation.setLockScreen = lib.dm.dag.entryAfter [
-    "writeBoundary"
-  ] "hyde-shell hyprlock --background";
 }

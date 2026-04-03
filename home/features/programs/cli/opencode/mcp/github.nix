@@ -1,14 +1,9 @@
 {
-  config,
   lib,
   pkgs,
   ...
 }:
 let
-  envVar = "GITHUB_PERSONAL_ACCESS_TOKEN";
-  secretsPath = "api-keys/github";
-  inherit (config.sops) secrets;
-
   writeTools = [
     "github_create_or_update_file"
     "github_delete_file"
@@ -28,26 +23,23 @@ let
     "github_assign_copilot_to_issue"
     "github_request_copilot_review"
   ];
+  envVar = "GITHUB_PERSONAL_ACCESS_TOKEN";
+  apiKey.${envVar} = "api-keys/github";
 in
 {
-  sops.secrets."api-keys/github" = { };
-
   programs = {
-    fish.shellInit =
-      # fish
-      ''
-        export ${envVar}=(cat ${secrets.${secretsPath}.path})
-      '';
-
-    opencode.settings = {
-      permission = lib.genAttrs writeTools (_: "deny");
-      agent.build.permission = lib.genAttrs writeTools (_: "allow");
+    opencode = {
+      apiKeys = apiKey;
+      settings = {
+        permission = lib.genAttrs writeTools (_: "deny");
+        agent.build.permission = lib.genAttrs writeTools (_: "allow");
+      };
     };
 
     mcp.servers.github = {
       command = lib.getExe pkgs.github-mcp-server;
       args = [ "stdio" ];
-      env.GITHUB_PERSONAL_ACCESS_TOKEN = "{env:${envVar}}";
+      env.${envVar} = "{env:${envVar}}";
     };
   };
 }
