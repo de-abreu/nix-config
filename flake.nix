@@ -29,6 +29,11 @@
     stylix.url = "github:nix-community/stylix/release-25.11";
     systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: import ./flake-outputs.nix inputs;

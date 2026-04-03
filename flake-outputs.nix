@@ -36,6 +36,7 @@ let
     "nix-command"
     "flakes"
     "pipe-operators"
+    "flake-parts"
   ];
 in
 {
