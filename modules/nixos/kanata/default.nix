@@ -1,13 +1,23 @@
 {
+  config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkOption types;
-  inherit (types) attrsOf either listOf int str package;
-in {
-  imports = [./config.nix];
+  inherit (types)
+    attrsOf
+    either
+    listOf
+    int
+    str
+    package
+    ;
 
+  cfg = config.programs.kanata;
+in
+{
   options.programs.kanata = {
     enable = mkEnableOption "Kanata advanced keyboard customization";
 
@@ -33,7 +43,7 @@ in {
 
     localKeys = mkOption {
       type = attrsOf int;
-      default = {};
+      default = { };
       description = "Map of custom key names to scancodes (deflocalkeys-linux).";
       example = {
         "ç" = 39;
@@ -43,14 +53,21 @@ in {
 
     sourceKeys = mkOption {
       type = listOf str;
-      default = [];
+      default = [ ];
       description = "List of source keys to be intercepted (defsrc).";
-      example = ["esc" "caps" "a" "s" "d" "f"];
+      example = [
+        "esc"
+        "caps"
+        "a"
+        "s"
+        "d"
+        "f"
+      ];
     };
 
     variables = mkOption {
       type = attrsOf (either int str);
-      default = {};
+      default = { };
       description = "Global variables (defvar).";
       example = {
         tap-timeout = 200;
@@ -61,7 +78,7 @@ in {
 
     aliases = mkOption {
       type = attrsOf str;
-      default = {};
+      default = { };
       description = "Alias definitions (defalias).";
       example = {
         esctrl = "(tap-hold 200 200 esc lctl)";
@@ -71,7 +88,7 @@ in {
 
     layers = mkOption {
       type = attrsOf (attrsOf str);
-      default = {};
+      default = { };
       description = "Layer definitions using deflayermap. Key is layer name.";
       example = {
         base = {
@@ -94,4 +111,5 @@ in {
       example = "base";
     };
   };
+  config = import ./config.nix { inherit cfg lib; };
 }

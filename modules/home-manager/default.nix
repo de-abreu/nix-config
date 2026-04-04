@@ -1,6 +1,5 @@
 {
   stylix_presenterm = import ./stylix/presenterm;
-  presenterm = import ./presenterm.nix;
-  wezterm-override = import ./wezterm-override.nix;
+  presenterm = import ./presenterm;
+  wezterm-override = import ./wezterm-override;
 }
-
