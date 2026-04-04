@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wrappers = {
+      url = "github:Lassulus/wrappers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim.url = "github:nix-community/nixvim/nixos-25.11";
     stylix.url = "github:nix-community/stylix/release-25.11";
     systems.url = "github:nix-systems/default-linux";
