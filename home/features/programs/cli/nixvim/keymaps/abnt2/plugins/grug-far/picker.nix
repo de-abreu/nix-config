@@ -1,5 +1,5 @@
 {
-  programs.nixvim.plugins.plugins.snacks.settings.picker =
+  programs.nixvim.plugins.snacks.settings.picker =
     let
       bindings = {
         input.keys = {
@@ -36,6 +36,6 @@
         '';
 
       win = bindings;
-      sources.explorer.win7 = bindings;
+      sources.explorer.win = bindings;
     };
 }

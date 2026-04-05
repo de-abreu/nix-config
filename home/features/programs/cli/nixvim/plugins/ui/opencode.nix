@@ -54,8 +54,6 @@ in
           };
         };
       };
-      snacks.settings.picker.actions.opencode_send.__raw =
-        "function(...) return require('opencode').snacks_picker_send(...) end";
       lualine.settings.lualine_z.sections.__unkeyed-1.__raw = "require('opencode').statusline";
     };
 
