@@ -1,20 +1,21 @@
 # Home Common
 
-> **Config:** `home/common/`
-> **Purpose:** Shared Home Manager configuration applied to all users
+> **Config:** `home/common/` **Purpose:** Shared Home Manager configuration
+> applied to all users
 
 ## Overview
 
-The `home/common/` directory contains Home Manager modules that apply to all users on the system. Each file is auto-imported via `importAll`.
+The `home/common/` directory contains Home Manager modules that apply to all
+users on the system.
 
 ## Modules
 
-| File | Purpose |
-|------|---------|
-| `default.nix` | Auto-imports all modules in the directory |
-| `flakePath.nix` | Sets `_module.args.flakePath` to the config location |
-| `mimeAppsList.nix` | Forces MIME type associations to be managed declaratively |
-| `opencode.nix` | Configures OpenCode AI agent with NixOS-specific instructions |
+| File               | Purpose                                                       |
+| ------------------ | ------------------------------------------------------------- |
+| `default.nix`      | Auto-imports all modules in the directory                     |
+| `flakePath.nix`    | Sets `_module.args.flakePath` to the config location          |
+| `mimeAppsList.nix` | Forces MIME type associations to be managed declaratively     |
+| `opencode.nix`     | Configures OpenCode AI agent with NixOS-specific instructions |
 
 ## Key Patterns
 
@@ -24,7 +25,8 @@ The `home/common/` directory contains Home Manager modules that apply to all use
 _module.args.flakePath = "${config.xdg.configHome}/nix-config";
 ```
 
-This makes `flakePath` available as a module argument throughout the configuration.
+This makes `flakePath` available as a module argument throughout the
+configuration.
 
 ### MIME Apps
 
@@ -37,8 +39,8 @@ Ensures Home Manager can overwrite user MIME associations without conflict.
 ## Dependencies
 
 - Required by: `home/abreu/` (imported first)
-- Uses: `importAll` helper for auto-importing modules
 
 ## References
 
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
+

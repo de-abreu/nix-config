@@ -1,27 +1,29 @@
 # Architecture
 
-> **Flake entry:** `flake.nix`
-> **Purpose:** Declarative NixOS system configuration with Home Manager integration
+> **Flake entry:** `flake.nix` **Purpose:** Declarative NixOS system
+> configuration with Home Manager integration
 
 ## Overview
 
-This configuration uses Nix flakes to manage a NixOS system. It separates concerns into:
+This configuration uses Nix flakes to manage a NixOS system. It separates
+concerns into:
+
 - **System-level** configuration via NixOS modules (`hosts/`)
 - **User-level** configuration via Home Manager (`home/`)
 - **Reusable modules** for both scopes (`modules/`)
 
 ## Flake Inputs
 
-| Input | Branch | Purpose |
-|-------|--------|---------|
-| `nixpkgs` | nixos-25.11 | Stable package set |
-| `nixpkgs-unstable` | nixos-unstable | Latest packages (optional) |
-| `home-manager` | release-25.11 | User-level configuration |
-| `sops-nix` | master | Secrets management (age encryption) |
-| `hydenix` | master | Hyprland desktop environment |
-| `nixvim` | nixos-25.11 | Neovim configuration |
-| `stylix` | release-25.11 | System-wide theming |
-| `nixos-hardware` | master | Hardware-specific tweaks |
+| Input              | Branch         | Purpose                             |
+| ------------------ | -------------- | ----------------------------------- |
+| `nixpkgs`          | nixos-25.11    | Stable package set                  |
+| `nixpkgs-unstable` | nixos-unstable | Latest packages (optional)          |
+| `home-manager`     | release-25.11  | User-level configuration            |
+| `sops-nix`         | master         | Secrets management (age encryption) |
+| `hydenix`          | master         | Hyprland desktop environment        |
+| `nixvim`           | nixos-25.11    | Neovim configuration                |
+| `stylix`           | release-25.11  | System-wide theming                 |
+| `nixos-hardware`   | master         | Hardware-specific tweaks            |
 
 ## Flake Outputs
 
@@ -84,20 +86,6 @@ home/features/
         └── gui/
 ```
 
-## Import Helper: `importAll`
-
-The `importAll` function auto-imports Nix files from a directory:
-
-```nix
-imports = importAll { dir = ./.; };
-```
-
-This recursively imports all `.nix` files except `default.nix`. Optionally exclude files:
-
-```nix
-imports = importAll { dir = ./.; exclude = [ "file.nix" ]; };
-```
-
 ## Key Patterns
 
 ### Secrets (sops-nix)
@@ -138,3 +126,4 @@ in {
 - [Hydenix](https://github.com/richen604/hydenix)
 - [Nixvim](https://github.com/nix-community/nixvim)
 - [Stylix](https://github.com/danthorst/stylix)
+

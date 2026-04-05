@@ -126,22 +126,39 @@ in {
 
 ### Importing Modules
 
-Use the `importAll` helper for auto-importing:
+The module `import-tree` recursively imports all nix files in a directory tree,
+with some exceptions.
+
+Use import-tree anywhere you have an imports list:
 
 ```nix
-{ importAll, ... }: {
-  imports = importAll { dir = ./.; };
+{ config, ... }: {
+  imports = [ (import-tree ./modules) ];
 }
 ```
 
-For conditional imports:
+This recursively discovers all `.nix` files under `./modules` and imports them.
 
-```nix
-imports = importAll {
-  dir = ./.;
-  exclude = [ " undesired.nix " ];
-};
+#### What Gets Imported?
+
+Given this tree:
+
 ```
+modules/
+  networking.nix
+  desktop/
+    sway.nix
+  _private/
+    helper.nix
+```
+
+`import-tree ./modules` imports `networking.nix` and `desktop/sway.nix`. The
+`_private/` directory is skipped because paths with `/_` are ignored by default.
+
+> [!TIP]
+>
+> Use `/_` prefixed directories for helper files, library code, or anything you
+> don’t want auto-imported.
 
 ### Comments
 
@@ -229,8 +246,6 @@ Create a module in `home/features/programs/cli/`:
 }
 ```
 
-Then import in `default.nix` or use `importAll`.
-
 ### Adding a New Host
 
 1. Create `hosts/hostname/` directory
@@ -240,7 +255,7 @@ Then import in `default.nix` or use `importAll`.
    ```nix
    nixosConfigurations.hostname = lib.nixosSystem {
      modules = [ ./hosts/hostname ];
-     specialArgs = { inherit inputs outputs importAll experimentalFeatures; };
+     specialArgs = { inherit inputs outputs experimentalFeatures; };
    };
    ```
 
@@ -260,4 +275,3 @@ Then import in `default.nix` or use `importAll`.
 - `.sops.yaml` - Sops configuration
 - `secrets/users/abreu.yaml` - User secrets (encrypted)
 - `secrets/hosts/argo.yaml` - Host secrets (encrypted)
-

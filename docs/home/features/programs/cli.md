@@ -1,31 +1,30 @@
 # CLI Programs
 
-> **Config:** `home/features/programs/cli/`
-> **Purpose:** Command-line tool configurations
+> **Config:** `home/features/programs/cli/` **Purpose:** Command-line tool
+> configurations
 
 ## Overview
 
-This directory contains configurations for various CLI tools. Each file is a Home Manager program module that's auto-imported via `importAll`.
+This directory contains configurations for various CLI tools.
 
 ## Tools Configured
 
-| Tool | Purpose |
-|------|---------|
-| bat | Cat with syntax highlighting |
-| bottom | System monitor |
-| eza | Modern ls replacement |
-| fastfetch | System info display |
-| fd | Fast find |
-| gpg | GnuPG configuration |
-| lazygit | Git TUI |
-| nh | Nix helper |
-| tealdeer | TLDR client |
+| Tool      | Purpose                      |
+| --------- | ---------------------------- |
+| bat       | Cat with syntax highlighting |
+| bottom    | System monitor               |
+| eza       | Modern ls replacement        |
+| fastfetch | System info display          |
+| fd        | Fast find                    |
+| gpg       | GnuPG configuration          |
+| lazygit   | Git TUI                      |
+| nh        | Nix helper                   |
+| tealdeer  | TLDR client                  |
 
 ## Structure
 
 ```
 cli/
-├── default.nix    # Auto-imports all .nix files
 ├── bat.nix        # Cat replacement
 ├── bottom.nix     # System monitor
 ├── eza.nix        # Ls replacement
@@ -41,12 +40,13 @@ cli/
 
 1. Create `home/features/programs/cli/<tool>.nix`
 2. Use Home Manager `programs.<tool>` options
-3. File is auto-imported via `importAll`
 
 ## References
 
-- [Home Manager Appendix A](https://nix-community.github.io/home-manager/options.xhtml) - Program options
+- [Home Manager Appendix A](https://nix-community.github.io/home-manager/options.xhtml) -
+  Program options
 
 ## DetailedDocumentation
 
 - [nixvim.md](nixvim.md) - Complete Neovim configuration with all plugins
+
