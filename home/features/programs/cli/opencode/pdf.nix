@@ -7,6 +7,8 @@
       poppler-utils   # pdftotext, pdfimages, etc.
       qpdf            # PDF manipulation (merge, split, rotate)
       tesseract       # OCR engine for scanned PDFs
+      imagemagick     # Image manipulation (magick command)
+      pdftk           # PDF toolkit (merge, split, rotate)
 
       # Python environment with PDF libraries
       (python3.withPackages (ps: with ps; [
