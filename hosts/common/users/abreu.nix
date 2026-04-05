@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  importAll,
   inputs,
   outputs,
   pkgs,
@@ -45,7 +44,7 @@ in
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = false;
-    extraSpecialArgs = { inherit inputs outputs importAll; };
+    extraSpecialArgs = { inherit inputs outputs; };
     sharedModules = [
       (
         { osConfig, ... }:

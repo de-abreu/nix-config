@@ -54,6 +54,6 @@ in
       recursive = true;
     };
 
-    "waybar/includes/includes.json".text = import ./includes.nix { inherit config lib; };
+    "waybar/includes/includes.json".text = import ./_includes.nix { inherit config lib; };
   };
 }

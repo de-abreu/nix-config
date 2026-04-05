@@ -14,6 +14,7 @@
       loaded_perl_provider = 0; # Perl
       loaded_python_provider = 0; # Python 2
     };
-    opts = import ./opts.nix;
+    lsp = import ./_lsp.nix;
+    opts = import ./_opts.nix;
   };
 }

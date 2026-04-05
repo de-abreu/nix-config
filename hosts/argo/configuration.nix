@@ -7,31 +7,32 @@
   config,
   lib,
   pkgs,
-  experimentalFeatures,
   ...
 }:
 let
   hostname = "argo";
 in
 {
-  imports = [
-    inputs.hydenix.nixosModules.default # Hydenix desktop environment
-    inputs.sops-nix.nixosModules.sops # Sops secrets management
+  imports =
+    with inputs;
+    [
+      hydenix.nixosModules.default # Hydenix desktop environment
+      sops-nix.nixosModules.sops # Sops secrets management
 
-    # Hardware modules
-    ./hardware-configuration.nix # Results of the hardware scan.
-    inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
-    inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
-    inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
-  ]
-  # Custom modules
-  ++ (builtins.attrValues outputs.nixosModules);
+      # Hardware modules
+      ./hardware-configuration.nix # Results of the hardware scan.
+      nixos-hardware.nixosModules.common-cpu-intel # Intel CPU
+      nixos-hardware.nixosModules.common-pc-laptop # Laptops
+      nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+    ]
+    # Custom modules
+    ++ (lib.attrValues outputs.nixosModules);
 
   nixpkgs.overlays = [
     inputs.hydenix.overlays.default
   ]
   # Custom overlays
-  ++ builtins.attrValues outputs.overlays;
+  ++ lib.attrValues outputs.overlays;
 
   # Bootloader configuration for legacy boot mode
   boot = {

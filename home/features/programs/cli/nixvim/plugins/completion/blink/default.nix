@@ -1,7 +1,4 @@
-{ importAll, ... }:
 {
-  imports = importAll { dir = ./.; };
-
   programs.nixvim.plugins.blink-cmp = {
     enable = true;
 
@@ -13,8 +10,14 @@
         accept.auto_brackets = {
           enabled = true;
           override_brackets_for_filetypes = {
-            lua = ["{" "}"];
-            nix = ["{" "}"];
+            lua = [
+              "{"
+              "}"
+            ];
+            nix = [
+              "{"
+              "}"
+            ];
           };
         };
 
@@ -44,7 +47,7 @@
             '';
 
           draw = {
-            treesitter = ["lsp"];
+            treesitter = [ "lsp" ];
             columns.__raw =
               # lua
               ''
@@ -76,7 +79,11 @@
       fuzzy = {
         implementation = "prefer_rust";
         prebuilt_binaries.download = false;
-        sorts = ["exact" "score" "sort_text"];
+        sorts = [
+          "exact"
+          "score"
+          "sort_text"
+        ];
       };
 
       cmdline.completion = {

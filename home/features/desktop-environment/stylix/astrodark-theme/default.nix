@@ -1,14 +1,9 @@
 {
-  inputs,
   pkgs,
   ...
 }:
 {
-  imports = [
-    inputs.stylix.homeModules.stylix
-    ./overrides
-    ../common.nix
-  ];
+  imports = [ ../common.nix ];
 
   stylix = with pkgs; {
     enable = true;

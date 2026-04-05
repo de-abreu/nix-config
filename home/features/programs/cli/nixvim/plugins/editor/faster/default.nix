@@ -1,39 +1,20 @@
 {
-  config,
-  importAll,
-  ...
-}: {
-  imports = importAll {dir = ./.;};
-
   programs.nixvim.plugins = {
     faster = {
       enable = true;
       lazyLoad.settings.event = "DeferredUIEnter";
 
-      settings.behaviours = let
-        cfg = config.programs.nixvim.plugins;
-        optionalPlugins = plugins:
-          builtins.filter (name: cfg.${name}.enable or false) plugins
-          |> map (builtins.replaceStrings ["-"] ["_"]);
-      in {
+      settings.behaviours = {
         bigfile = {
           on = true;
-          features_disabled =
-            [
-              "filetype"
-              "lsp"
-              "matchparen"
-              "syntax"
-              "treesitter"
-              "vimopts"
-            ]
-            ++ optionalPlugins [
-              "bufferline"
-              "gitsigns"
-              "blink-indent"
-              "noice"
-              "snacks"
-            ];
+          features_disabled = [
+            "filetype"
+            "lsp"
+            "matchparen"
+            "syntax"
+            "treesitter"
+            "vimopts"
+          ];
           filesize = 2;
           pattern = "*";
           extra_patterns = [
@@ -54,16 +35,7 @@
             }
           ];
         };
-
-        bigfile_hugefiles = {
-          on = true;
-          features_disabled = optionalPlugins [
-            "lualine"
-            "bufferline"
-            "blink-indent"
-            "noice"
-          ];
-        };
+        bigfile_hugefiles.on = true;
       };
     };
   };

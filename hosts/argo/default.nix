@@ -1,6 +1,7 @@
+{ inputs, ... }:
 {
   imports = [
     ./configuration.nix
-    ../common
+    (inputs.import-tree ../common)
   ];
 }

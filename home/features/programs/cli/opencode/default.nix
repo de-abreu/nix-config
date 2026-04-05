@@ -1,6 +1,5 @@
 {
   config,
-  importAll,
   inputs,
   lib,
   pkgs,
@@ -16,8 +15,6 @@ let
     ;
 in
 {
-  imports = importAll { dir = ./.; };
-
   options.programs.opencode = {
     apiKeys = mkOption {
       type = attrsOf str;
@@ -67,6 +64,10 @@ in
             server.port = 8765;
             default_agent = "plan";
             model = "opencode-go/glm-5";
+            plugin = [
+              "@zenobius/opencode-skillful"
+              "@mohak34/opencode-notifier@latest"
+            ];
           };
         };
       };

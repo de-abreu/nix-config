@@ -1,6 +1,7 @@
-{treesitter, ...}: {
+{ config, ... }:
+{
   programs.nixvim.plugins.treesitter-context = {
-    inherit (treesitter) enable;
+    inherit (config.programs.nixvim.plugins.treesitter) enable;
     lazyLoad.settings.event = "DeferredUIEnter";
 
     settings = {

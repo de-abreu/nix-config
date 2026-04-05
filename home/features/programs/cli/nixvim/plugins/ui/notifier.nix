@@ -1,5 +1,5 @@
 let
-  icons = import ./lib/icons.nix;
+  icons = import ./_icons.nix;
 in {
   programs.nixvim.plugins.snacks.settings.notifier = {
     enable = true;

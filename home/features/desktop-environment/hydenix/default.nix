@@ -1,11 +1,10 @@
 # INFO: Hydenix desktop environment
 {
-  importAll,
   inputs,
   ...
 }:
 {
-  imports = [ inputs.hydenix.homeModules.default ] ++ importAll { dir = ./.; };
+  imports = [ inputs.hydenix.homeModules.default ];
 
   hydenix.hm = {
     enable = true;

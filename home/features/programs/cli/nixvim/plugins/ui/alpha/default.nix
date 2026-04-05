@@ -6,9 +6,9 @@
   ...
 }:
 let
-  alpha-ascii = import ./alpha-ascii.nix { inherit pkgs; };
-  mkDashboardButton = import ./mkDashboardButton.nix { inherit config lib; };
-  icons = import ../lib/icons.nix;
+  alpha-ascii = import ./_alpha-ascii.nix { inherit pkgs; };
+  mkDashboardButton = import ./_mkDashboardButton.nix { inherit config lib; };
+  icons = import ../_icons.nix;
 in
 {
   programs.nixvim = {

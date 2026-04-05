@@ -1,6 +1,7 @@
-{treesitter, ...}: {
+{ config, ... }:
+{
   programs.nixvim.plugins.treesitter-textobjects = {
-    inherit (treesitter) enable;
+    inherit (config.programs.nixvim.plugins.treesitter) enable;
     settings = {
       select = {
         enable = true;

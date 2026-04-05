@@ -1,1 +1,0 @@
-{importAll, ...}: {imports = importAll {dir = ./.;};}

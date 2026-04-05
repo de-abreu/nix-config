@@ -1,10 +1,5 @@
 # INFO: Smart and user-friendly command line shell. Includes features like syntax highlighting, autosuggest-as-you-type, and fancy tab completions.
 {
-  imports = [
-    ./integrations
-    ./plugins.nix
-  ];
-
   programs.fish = {
     enable = true;
     shellAbbrs = {

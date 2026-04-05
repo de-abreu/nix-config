@@ -4,31 +4,9 @@ inputs@{
   systems,
   ...
 }:
-with builtins;
 let
   inherit (self) outputs;
   lib = nixpkgs.lib;
-
-importAll =
-     with lib;
-     with builtins;
-     {
-       dir,
-       exclude ? [ ],
-     }:
-     readDir dir
-     |> filterAttrs (
-       name: type:
-       let
-         isNixFile = hasSuffix ".nix" name && name != "default.nix";
-         isDirectory = type == "directory";
-         hasDefaultNix = isDirectory && pathExists (dir + "/${name}/default.nix");
-         isNotExcluded = !(elem name exclude);
-       in
-       (isNixFile || hasDefaultNix) && isNotExcluded
-     )
-     |> attrNames
-     |> map (name: dir + "/${name}");
 
   pkgsFor = lib.genAttrs (import systems) (system: import nixpkgs { inherit system; });
 
@@ -54,7 +32,6 @@ in
       inherit
         inputs
         outputs
-        importAll
         experimentalFeatures
         ;
     };

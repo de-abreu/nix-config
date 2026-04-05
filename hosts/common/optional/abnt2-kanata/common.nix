@@ -1,4 +1,5 @@
 {
+  console.keyMap = "br-abnt2";
   programs.kanata = {
     localKeys."ç" = 39;
 
