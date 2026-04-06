@@ -15,7 +15,6 @@ let
     ;
 in
 {
-  imports = [ ./pdf.nix ];
   options.programs.opencode = {
     apiKeys = mkOption {
       type = attrsOf str;

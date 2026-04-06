@@ -5,20 +5,20 @@
   ...
 }:
 {
-  imports =
-    with inputs;
-    [
-      (import-tree ../../features/desktop-environment/hydenix)
-      (import-tree ../../features/desktop-environment/stylix/astrodark-theme)
-      (import-tree ../../features/keymaps/abnt2)
-      (import-tree ../../features/programs)
-      (import-tree ../../common)
+  imports = [
+    (inputs.import-tree [
+      ../../features/desktop-environment/hydenix
+      ../../features/desktop-environment/stylix/astrodark-theme
+      ../../features/keymaps/abnt2
+      ../../features/programs
+      ../../common
       ./git.nix
+    ])
 
-      sops-nix.homeManagerModules.sops
-    ]
-    # Custom modules
-    ++ (builtins.attrValues outputs.homeModules);
+    inputs.sops-nix.homeManagerModules.sops
+  ]
+  # Custom modules
+  ++ (builtins.attrValues outputs.homeModules);
 
   home = {
     username = "abreu";
