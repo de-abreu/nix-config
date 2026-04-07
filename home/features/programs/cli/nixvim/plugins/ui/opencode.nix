@@ -8,7 +8,6 @@ let
   snacks = config.programs.nixvim.plugins.snacks;
   opencode = config.programs.opencode;
   port = toString (opencode.settings.server.port or "");
-  opencode_cmd = "opencode --port ${port}";
   snacks_terminal_opts = config.lib.nixvim.lua.toLuaObject {
     win = {
       position = "right";
@@ -48,9 +47,9 @@ in
           auto_reload = true;
           port = port;
           server = lib.mkIf snacks.enable {
-            start.__raw = "function() require('snacks.terminal').open('${opencode_cmd}', ${snacks_terminal_opts}) end";
-            stop.__raw = "function() require('snacks.terminal').get('${opencode_cmd}', ${snacks_terminal_opts}):close() end";
-            toggle.__raw = "function() require('snacks.terminal').toggle('${opencode_cmd}', ${snacks_terminal_opts}) end";
+            start.__raw = "function() require('snacks.terminal').open('opencode', ${snacks_terminal_opts}) end";
+            stop.__raw = "function() require('snacks.terminal').get('opencode', ${snacks_terminal_opts}):close() end";
+            toggle.__raw = "function() require('snacks.terminal').toggle('opencode', ${snacks_terminal_opts}) end";
           };
         };
       };

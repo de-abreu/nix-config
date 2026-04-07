@@ -66,7 +66,7 @@ in
             options.desc = "Previous buffer";
           }
           {
-            key = "<leader>bç";
+            key = "]b";
             action.__raw =
               # lua
               ''
@@ -77,7 +77,7 @@ in
             options.desc = "Move buffer tab right";
           }
           {
-            key = "<leader>bj";
+            key = "[b";
             action.__raw =
               # lua
               ''
@@ -88,7 +88,7 @@ in
             options.desc = "Move buffer tab left";
           }
           {
-            key = "<leader>bb";
+            key = "<leader>j";
             action.__raw =
               # lua
               ''function() require("bufferline.commands").pick() end'';
