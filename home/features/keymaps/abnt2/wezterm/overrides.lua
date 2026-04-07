@@ -1,7 +1,8 @@
 ---@diagnostic disable: undefined-field
 
-local wezterm, module = require "wezterm", {}
+local wezterm = require "wezterm"
 local act = wezterm.action
+local module = {}
 
 function module.apply_to_config(config)
   -- Set leader key
