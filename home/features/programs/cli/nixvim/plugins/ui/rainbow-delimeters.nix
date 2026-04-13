@@ -1,11 +1,18 @@
 { pkgs, ... }:
 {
-  programs.nixvim.extraPlugins = [
-    {
-      plugin = pkgs.vimPlugins.rainbow-delimiters-nvim;
-      optional = true;
-    }
-  ];
+  programs.nixvim = {
+    globals.rainbow_delimiters.blacklist = [
+      "markdown"
+      "markdown_inline"
+    ];
+
+    extraPlugins = [
+      {
+        plugin = pkgs.vimPlugins.rainbow-delimiters-nvim;
+        optional = true;
+      }
+    ];
+  };
 
   extra.lz-n.plugins = [
     {
@@ -14,17 +21,6 @@
         "BufReadPre"
         "BufNewFile"
       ];
-
-      # INFO: Disable rainbow delimeters on Markdown files, it will error out.
-      after = ''
-        function()
-          require('rainbow-delimiters').setup {
-            filetypes = {
-              markdown = {}
-            }
-          }
-        end
-      '';
     }
   ];
 }
