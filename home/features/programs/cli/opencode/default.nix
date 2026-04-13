@@ -68,11 +68,24 @@ in
               "@zenobius/opencode-skillful"
               "@mohak34/opencode-notifier@latest"
             ];
+            autoupdate = false;
           };
         };
       };
 
-      home.sessionVariables.OPENCODE_EXPERIMENTAL = "true";
+      home = {
+        # INFO: Workaround. Without it the database was rebuilt every time the session was opened.
+        activation.createOpencodeSymlink =
+          let
+            dataHome = "${config.xdg.dataHome}/opencode";
+          in
+          lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            $DRY_RUN_CMD ln -sfn $VERBOSE_ARG \
+              "${dataHome}/opencode-stable.db" \
+              "${dataHome}/opencode.db"
+          '';
+        sessionVariables.OPENCODE_EXPERIMENTAL = "true";
+      };
       xdg.configFile."opencode/instructions" = {
         source = ./instructions;
         recursive = true;

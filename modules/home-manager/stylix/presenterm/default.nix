@@ -91,20 +91,20 @@ in
           colors.foreground = base09;
         };
         h3 = {
-          prefix = "▒▒▒";
-          colors.foreground = base0A;
+          prefix = "▒▒▒▒";
+          colors.foreground = base0B;
         };
         h4 = {
           prefix = "░░░░░";
-          colors.foreground = base0B;
+          colors.foreground = base0C;
         };
         h5 = {
           prefix = "░░░░░░";
-          colors.foreground = base0C;
+          colors.foreground = base0D;
         };
         h6 = {
           prefix = "░░░░░░░";
-          colors.foreground = base0D;
+          colors.foreground = base0E;
         };
       };
 

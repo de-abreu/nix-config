@@ -14,6 +14,17 @@
         "BufReadPre"
         "BufNewFile"
       ];
+
+      # INFO: Disable rainbow delimeters on Markdown files, it will error out.
+      after = ''
+        function()
+          require('rainbow-delimiters').setup {
+            filetypes = {
+              markdown = {}
+            }
+          }
+        end
+      '';
     }
   ];
 }

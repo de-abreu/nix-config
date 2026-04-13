@@ -30,6 +30,7 @@ in
       "Viewer"
     ];
     mimeType = mimeTypes;
+    icon = "feh";
   };
 
   xdg.mimeApps.defaultApplications = lib.foldr (

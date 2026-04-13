@@ -82,7 +82,13 @@ in
       presenterm-wrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = cfg.package;
-        runtimeInputs = [ pkgs.python3Packages.weasyprint ];
+        runtimeInputs = with pkgs; [
+          bat # Enables codeblocks with syntax highlighting
+          mermaid-cli # Enables rendering mermaid diagrams
+          python3Packages.weasyprint # Enables exporting presentations
+          typst # Enables Latex rendering
+          pandoc
+        ];
       };
     in
     import ./config.nix {
