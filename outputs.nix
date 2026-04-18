@@ -1,16 +1,16 @@
 inputs@{
   nixpkgs,
   self,
-  linux,
+  systems,
   ...
 }:
 let
   inherit (self) outputs;
   lib = nixpkgs.lib;
 
-  pkgsFor = lib.genAttrs (import linux) (system: import nixpkgs { inherit system; });
+  pkgsFor = lib.genAttrs (import systems) (system: import nixpkgs { inherit system; });
 
-  forEachSystem = f: lib.genAttrs (import linux) (system: f pkgsFor.${system});
+  forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
   experimentalFeatures = [
     "nix-command"
     "flakes"

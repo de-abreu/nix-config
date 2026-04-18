@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     wrappers = {
       url = "github:Lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,11 +57,6 @@
       flake = false;
     };
 
-    fish-ssh-agent = {
-      url = "github:danhper/fish-ssh-agent/f10d95775352931796fd17f54e6bf2f910163d1b";
-      flake = false;
-    };
-
     # INFO: Desktop environment
     hydenix = {
       url = "github:richen604/hydenix";
@@ -77,8 +67,19 @@
     stylix.url = "github:nix-community/stylix/release-25.11";
 
     # INFO: System and hardware
-    linux.url = "github:nix-systems/default-linux";
+    systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    # INFO: Others
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    fish-ssh-agent = {
+      url = "github:danhper/fish-ssh-agent/f10d95775352931796fd17f54e6bf2f910163d1b";
+      flake = false;
+    };
   };
 
   outputs = inputs: import ./outputs.nix inputs;
