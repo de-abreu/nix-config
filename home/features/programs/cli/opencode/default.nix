@@ -63,11 +63,6 @@ in
           settings = {
             server.port = 8765;
             default_agent = "plan";
-            model = "opencode-go/glm-5";
-            plugin = [
-              "@zenobius/opencode-skillful"
-              "@mohak34/opencode-notifier@latest"
-            ];
             autoupdate = false;
           };
         };

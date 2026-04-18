@@ -3,6 +3,7 @@
   programs.presenterm = {
     enable = true;
     package = pkgs.unstable.presenterm;
+
     settings = {
       options = {
         list_item_newlines = 2;
@@ -14,5 +15,12 @@
         exec_replace.enable = true;
       };
     };
+
+    render = {
+      latex.enable = true;
+      mermaid.enable = true;
+    };
+
+    exportPdf.enable = true;
   };
 }

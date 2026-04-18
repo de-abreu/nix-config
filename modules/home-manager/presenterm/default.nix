@@ -76,19 +76,38 @@ in
           or an attribute set that will be converted to YAML.
         '';
       };
+
+      render = {
+        latex = {
+          enable = mkEnableOption "LaTeX rendering support via typst and pandoc";
+        };
+        mermaid = {
+          enable = mkEnableOption "Mermaid diagram rendering support";
+        };
+      };
+
+      exportPdf = {
+        enable = mkEnableOption "PDF export support via weasyprint";
+      };
     };
   config =
     let
       presenterm-wrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = cfg.package;
-        runtimeInputs = with pkgs; [
-          bat # Enables codeblocks with syntax highlighting
-          mermaid-cli # Enables rendering mermaid diagrams
-          python3Packages.weasyprint # Enables exporting presentations
-          typst # Enables Latex rendering
-          pandoc
-        ];
+        runtimeInputs =
+          with pkgs;
+          with lib;
+          optionals cfg.render.latex.enable [
+            typst
+            pandoc
+          ]
+          ++ optionals cfg.render.mermaid.enable [
+            mermaid-cli
+          ]
+          ++ optionals cfg.exportPdf.enable [
+            python3Packages.weasyprint
+          ];
       };
     in
     import ./config.nix {

@@ -16,6 +16,8 @@ in
 
       You are operating on a NixOS system version ${lib.version}. The system's configuration and the home environment of its users are managed through a flake located at the `${flakePath}` folder.
 
+      In cases were the installation of packages is required, NEVER execute an imperative installation of any package without explicit consent. ALWAYS search for a declarative, nix-based approach using either the system's configuration or a local, project-wide, approach using devenv.
+
       > [!warn] Editing AGENTS.md
       > Even though this file (${config.xdg.configHome}/opencode/AGENTS.md) is mutable, it is also being managed through Home-Manager and, as such, changes must be added to `${flakePath}/home/features/programs/cli/opencode/default.nix` in order to persist in newer generations. Offer to update the nix configuration accordingly whenever the user asks for changes to be made in this file.
 
