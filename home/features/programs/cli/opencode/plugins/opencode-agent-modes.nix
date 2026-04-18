@@ -28,6 +28,9 @@ in
     "opencode-agent-modes@latest"
   ];
 
-  home.file.".config/opencode/agent-mode-switcher.json".source =
-    jsonFormat.generate "agent-mode-switcher.json" agentModeConfig;
+  home.file.".config/opencode/agent-mode-switcher.json" = {
+    source = jsonFormat.generate "agent-mode-switcher.json" agentModeConfig;
+    force = true;
+    mutable = true;
+  };
 }

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -16,19 +17,14 @@ let
     };
   };
 
-  # INFO: Fetching opencode-nvim from GitHub instead of nixpkgs because the
+  # INFO: Using flake input for opencode-nvim because the
   # nixpkgs version (2025-11-20) is outdated and lacks the `snacks_picker_send`
   # function which was added in Feb 2026 (PR #152).
   # TODO: Remove this overlay once nixpkgs includes opencode.nvim >= v0.6.0.
   opencode-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "opencode.nvim";
     version = "2026-03-29";
-    src = pkgs.fetchFromGitHub {
-      owner = "nickjvandyke";
-      repo = "opencode.nvim";
-      rev = "v0.6.0";
-      hash = "sha256-Lm0/59MWndrpU6D4+Gdpgnel7B3Q6jR3z6cgSUF2XuQ=";
-    };
+    src = inputs.opencode-nvim;
   };
 in
 {

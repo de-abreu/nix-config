@@ -3,10 +3,11 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
-  alpha-ascii = import ./_alpha-ascii.nix { inherit pkgs; };
+  alpha-ascii = import ./_alpha-ascii.nix { inherit pkgs inputs; };
   mkDashboardButton = import ./_mkDashboardButton.nix { inherit config lib; };
   icons = import ../_icons.nix;
 in

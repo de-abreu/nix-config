@@ -1,5 +1,5 @@
 # PDF processing tools for opencode skills
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   programs.opencode.extraPackages = with pkgs; [
     # Command-line utilities
@@ -24,6 +24,8 @@
     ))
   ];
 
-  xdg.configFile."opencode/skills/pdf/".source = ./skills;
+  # Reference PDF skill directly from the flake input
+  xdg.configFile."opencode/skills/pdf/".source =
+    "${inputs.anthropics-skills}/skills/pdf";
 }
 

@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, inputs, ... }:
+{
   programs.fish.plugins =
     (map
       (plugin: {
@@ -36,12 +37,7 @@
       {
         # INFO: Add a ssh key to the ssh-agent through the "ssh-add" command.
         name = "fish-ssh-agent";
-        src = pkgs.fetchFromGitHub {
-          owner = "danhper";
-          repo = "fish-ssh-agent";
-          rev = "f10d95775352931796fd17f54e6bf2f910163d1b";
-          hash = "sha256-cFroQ7PSBZ5BhXzZEKTKHnEAuEu8W9rFrGZAb8vTgIE=";
-        };
+        src = inputs.fish-ssh-agent;
       }
     ];
 }

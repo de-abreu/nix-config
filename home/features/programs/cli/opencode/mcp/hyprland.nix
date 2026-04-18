@@ -1,11 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 let
-  hyprmcp = pkgs.fetchFromGitHub {
-    owner = "stefanoamorelli";
-    repo = "hyprmcp";
-    rev = "13d5195e6a474078183cb031771be7a71b330bb6";
-    sha256 = "13mkpamrcghf46nd0gch17cxwi4k2qqq1wc0hndbl61jdwr319h7";
-  };
+  hyprmcp = inputs.hyprmcp;
 in
 {
   programs.mcp.servers.hyprmcp = {
