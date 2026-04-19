@@ -136,10 +136,7 @@ in
         background = base01;
       };
 
-      footer = {
-        style = "template";
-        right = "{current_slide} / {total_slides}";
-      };
+      footer.style = "empty";
 
       modals.selection_colors.foreground = base09;
 
