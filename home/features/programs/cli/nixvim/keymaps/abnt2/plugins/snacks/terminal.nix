@@ -14,25 +14,9 @@ let
       # lua
       ''
         function()
-          _G.snacks_last_term_pos = '${position}'
           Snacks.terminal.toggle(nil, {
             id = "term_${position}", -- Assign a unique ID per orientation
             win = { position = '${position}' }
-          })
-        end
-      '';
-  };
-
-  # Helper to toggle the last used terminal (defaults to float)
-  toggleLastTerminal = {
-    __raw =
-      # lua
-      ''
-        function()
-          local pos = _G.snacks_last_term_pos or "float"
-          Snacks.terminal.toggle(nil, {
-            id = "term_" .. pos, -- Target the specific ID for that orientation
-            win = { position = pos }
           })
         end
       '';
@@ -84,9 +68,9 @@ in
         # TODO: Solve ambiguity with the <c-t> keybinding used in the terminal interface.
         {
           key = "<c-t>";
-          action = toggleLastTerminal;
+          action = toggleTerminal "float";
           options = {
-            desc = "Toggle Terminal (Last/Float)";
+            desc = "Toggle Floating Terminal";
             silent = true;
           };
           mode = [
