@@ -42,11 +42,15 @@ in
         settings = {
           auto_reload = true;
           port = port;
-          server = lib.mkIf snacks.enable {
-            start.__raw = "function() require('snacks.terminal').open('opencode', ${snacks_terminal_opts}) end";
-            stop.__raw = "function() require('snacks.terminal').get('opencode', ${snacks_terminal_opts}):close() end";
-            toggle.__raw = "function() require('snacks.terminal').toggle('opencode', ${snacks_terminal_opts}) end";
-          };
+          server =
+            let
+              opencodeCmd = lib.getExe opencode.package;
+            in
+            lib.mkIf snacks.enable {
+              start.__raw = "function() require('snacks.terminal').open('${opencodeCmd}', ${snacks_terminal_opts}) end";
+              stop.__raw = "function() require('snacks.terminal').get('${opencodeCmd}', ${snacks_terminal_opts}):close() end";
+              toggle.__raw = "function() require('snacks.terminal').toggle('${opencodeCmd}', ${snacks_terminal_opts}) end";
+            };
         };
       };
       lualine.settings.lualine_z.sections.__unkeyed-1.__raw = "require('opencode').statusline";
