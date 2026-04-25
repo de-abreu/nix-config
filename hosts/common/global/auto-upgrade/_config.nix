@@ -41,12 +41,7 @@ lib.mkIf cfg.enable {
       nixos-rebuild switch --flake ${flakeDir}#${config.networking.hostName}
 
       echo "[auto-upgrade] Fixing lock file ownership..."
-<<<<<<< HEAD
-      chown ${cfg.flakeOwner}:users flake.lock
-||||||| parent of c6775ac (feat(auto-upgrade): Make the auto-upgrade module compatible with a local flake use)
-=======
       chown ${cfg.owner}:users flake.lock
->>>>>>> c6775ac (feat(auto-upgrade): Make the auto-upgrade module compatible with a local flake use)
 
       echo "[auto-upgrade] Completed successfully!"
       echo "[auto-upgrade] Remember to commit the lock file when ready:"

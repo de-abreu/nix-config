@@ -7,12 +7,7 @@
 }:
 let
   cfg = config.flake.autoUpgrade;
-<<<<<<< HEAD
-  flakeDir = "/home/${cfg.flakeOwner}/.config/nix-config";
-||||||| parent of c6775ac (feat(auto-upgrade): Make the auto-upgrade module compatible with a local flake use)
-=======
   flakeDir = "/home/${cfg.owner}/.config/nix-config";
->>>>>>> c6775ac (feat(auto-upgrade): Make the auto-upgrade module compatible with a local flake use)
 in
 {
   options.flake.autoUpgrade = {
