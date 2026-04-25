@@ -9,13 +9,13 @@ let
   prefix = "<leader>t";
 
   # Helper to open a specific terminal and remember its position
-  toggleTerminal = position: {
+  toggleTerminal = position: count: {
     __raw =
       # lua
       ''
         function()
           Snacks.terminal.toggle(nil, {
-            id = "term_${position}", -- Assign a unique ID per orientation
+            count = ${toString count},
             win = { position = '${position}' }
           })
         end
@@ -37,7 +37,7 @@ in
       map (m: m // { mode = m.mode or "n"; }) [
         {
           key = prefix + "f";
-          action = toggleTerminal "float";
+          action = toggleTerminal "float" 1;
           options = {
             desc = "Floating Terminal";
             silent = true;
@@ -45,7 +45,7 @@ in
         }
         {
           key = prefix + "v";
-          action = toggleTerminal "right";
+          action = toggleTerminal "right" 2;
           options = {
             desc = "Vertical Split Terminal";
             silent = true;
@@ -53,7 +53,7 @@ in
         }
         {
           key = prefix + "h";
-          action = toggleTerminal "bottom";
+          action = toggleTerminal "bottom" 3;
           options = {
             desc = "Horizontal Split Terminal";
             silent = true;
@@ -68,7 +68,7 @@ in
         # TODO: Solve ambiguity with the <c-t> keybinding used in the terminal interface.
         {
           key = "<c-t>";
-          action = toggleTerminal "float";
+          action = toggleTerminal "float" 1;
           options = {
             desc = "Toggle Floating Terminal";
             silent = true;
