@@ -58,4 +58,11 @@ in
     ];
     users.${username} = import "${inputs.self}/home/${username}/${config.networking.hostName}";
   };
+
+  flake.autoUpgrade = {
+    enable = true;
+    owner = username;
+    dates = "weekly";
+    randomizedDelaySec = "1h";
+  };
 }
