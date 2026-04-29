@@ -1,10 +1,9 @@
 # INFO: Java language support using nvim-java
 # nvim-java automatically manages: jdtls, lombok, java-test, java-debug-adapter, spring-boot-tools
-# NOTE: JDK should be provided by the project's dev flake or system configuration
-{ pkgs, ... }:
 {
   programs.nixvim = {
-    # Suppress lspconfig deprecation warnings from nvim-java (still uses require('lspconfig'))
+
+    # Suppresses lspconfig deprecation warnings from nvim-java: its stable version still uses `require('lspconfig')`
     extraConfigLuaPre = ''
       local orig_deprecate = vim.deprecate
       vim.deprecate = function(name, banner, ...)
@@ -18,6 +17,7 @@
     plugins.java = {
       enable = true;
       lazyLoad.settings.event = [ "DeferredUIEnter" ];
+      # NOTE: JDK should be provided at the project's dev flake
       settings.jdk.auto_install = false;
     };
   };
