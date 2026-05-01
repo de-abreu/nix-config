@@ -14,12 +14,9 @@
       score_offset = 100;
     };
 
-    conform-nvim = {
-      enable = true;
-      settings = {
-        formatters_by_ft.lua = [ "stylua" ];
-        formatters.stylua.command = lib.getExe pkgs.stylua;
-      };
+    conform-nvim.settings = {
+      formatters_by_ft.lua = [ "stylua" ];
+      formatters.stylua.command = lib.getExe pkgs.stylua;
     };
   };
 }
