@@ -6,9 +6,7 @@
 }:
 let
   isWordsEnabled = lib.any (p: p.__unkeyed-1 == "blink-cmp-words") config.extra.lz-n.plugins;
-  isAvanteEnabled = lib.any (
-    p: p.__unkeyed-1 == "blink-cmp-avante"
-  ) config.extra.lz-n.plugins;
+  isAvanteEnabled = lib.any (p: p.__unkeyed-1 == "blink-cmp-avante") config.extra.lz-n.plugins;
 in
 {
   programs.nixvim.plugins.blink-cmp.settings.sources = {
@@ -119,13 +117,6 @@ in
               return ctx.trigger.initial_kind ~= 'trigger_character'
             end
           '';
-      };
-
-      # Community sources
-      lazydev = lib.mkIf config.programs.nixvim.plugins.lazydev.enable {
-        name = "LazyDev";
-        module = "lazydev.integrations.blink";
-        score_offset = 100;
       };
 
       conventional_commits =

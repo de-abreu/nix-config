@@ -15,7 +15,7 @@
         local module = {}
 
         function module.apply_to_config(config)
-          -- Colorscheme
+          -- Modify the Ayu Mirage default theme
           local theme = "Ayu Mirage"
           local custom = wezterm.color.get_builtin_schemes()[theme]
           custom.background = "${base00}"

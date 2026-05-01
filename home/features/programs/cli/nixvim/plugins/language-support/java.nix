@@ -18,7 +18,23 @@
       enable = true;
       lazyLoad.settings.event = [ "DeferredUIEnter" ];
       # NOTE: JDK should be provided at the project's dev flake
-      settings.jdk.auto_install = false;
+      settings = {
+        jdk.auto_install = false;
+
+        # NOTE: An empty `.root` file can be added to any folder to have it initialize jdtls where there are no project management solutions being used.
+        root_markers = [
+          "settings.gradle"
+          "settings.gradle.kts"
+          "pom.xml"
+          "build.gradle"
+          "mvnw"
+          "gradlew"
+          "build.gradle"
+          "build.gradle.kts"
+          ".git"
+          ".root"
+        ];
+      };
     };
   };
 

@@ -1,24 +1,36 @@
 {
-  programs.nixvim.plugins = {
-    dap = {
-      enable = true;
+  pkgs,
+  ...
+}:
+{
+  programs.nixvim = {
+    extraPlugins = [ pkgs.vimPlugins.blink-compat ];
 
-      # Load when any of these Neovim commands are executed
-      lazyLoad.settings.cmd = [
-        "DapContinue"
-        "DapStepOver"
-        "DapStepInto"
-        "DapStepOut"
-        "DapToggleBreakpoint"
-        "DapToggleRepl"
-        "DapTerminate"
-      ];
-    };
+    plugins = {
+      dap = {
+        enable = true;
 
-    blink-cmp.settings.sources.providers.dap = {
-      name = "dap";
-      module = "blink.compat.source";
-      score_offset = 100;
+        # Load when any of these Neovim commands are executed
+        lazyLoad.settings.cmd = [
+          "DapContinue"
+          "DapStepOver"
+          "DapStepInto"
+          "DapStepOut"
+          "DapToggleBreakpoint"
+          "DapToggleRepl"
+          "DapTerminate"
+        ];
+      };
+
+      blink-compat = {
+        enable = true;
+      };
+
+      blink-cmp.settings.sources.providers.dap = {
+        name = "dap";
+        module = "blink.compat.source";
+        score_offset = 100;
+      };
     };
   };
 }
