@@ -1,63 +1,87 @@
-# INFO: Java language support using nvim-java
-# nvim-java automatically manages: jdtls, lombok, java-test, java-debug-adapter, spring-boot-tools
+# INFO: Java language support using nvim-jdtls
+# DAP bundles are extracted from vscode extensions.
 { lib, pkgs, ... }:
 {
   programs.nixvim = {
-
-    # Suppresses lspconfig deprecation warnings from nvim-java: its stable version still uses `require('lspconfig')`
-    extraConfigLuaPre = ''
-      local orig_deprecate = vim.deprecate
-      vim.deprecate = function(name, banner, ...)
-        if (name and name:match("lspconfig")) or (banner and banner:match("lspconfig")) then
-          return
-        end
-        return orig_deprecate(name, banner, ...)
-      end
-    '';
-
     plugins = {
-      java = {
+      jdtls = {
         enable = true;
-        lazyLoad.settings.event = [ "DeferredUIEnter" ];
-        # NOTE: JDK should be provided at the project's dev flake
-        settings = {
-          jdk.auto_install = false;
 
-          # NOTE: An empty `.root` file can be added to any folder to have it initialize jdtls where there are no project management solutions being used.
-          root_markers = [
-            "settings.gradle"
-            "settings.gradle.kts"
-            "pom.xml"
-            "build.gradle"
-            "mvnw"
-            "gradlew"
-            "build.gradle"
-            "build.gradle.kts"
-            ".git"
-            ".root"
+        settings = {
+          cmd = [
+            "jdtls"
+            "-Xms1g"
+            "-javaagent:${pkgs.lombok}/share/java/lombok.jar"
+            {
+              __raw = "'-data', vim.fn.stdpath('data') .. '/java/workspace-root/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')";
+            }
           ];
+
+          root_dir.__raw = "vim.fs.root(0, {'.git', 'mvnw', 'gradlew', '.root'})";
+
+          settings.java = {
+            eclipse = {
+              downloadSources = true;
+            };
+            configuration.updateBuildConfiguration = "interactive";
+            maven.downloadSources = true;
+            implementationsCodeLens.enabled = true;
+            referencesCodeLens.enabled = true;
+            inlayHints.parameterNames.enabled = "all";
+            signatureHelp.enabled = true;
+            completion.favoriteStaticMembers = [
+              "org.hamcrest.MatcherAssert.assertThat"
+              "org.hamcrest.Matchers.*"
+              "org.hamcrest.CoreMatchers.*"
+              "org.junit.jupiter.api.Assertions.*"
+              "java.util.Objects.requireNonNull"
+              "java.util.Objects.requireNonNullElse"
+              "org.mockito.Mockito.*"
+            ];
+            sources.organizeImports = {
+              starThreshold = 9999;
+              staticStarThreshold = 9999;
+            };
+          };
+
+          init_options.bundles.__raw =
+            let
+              java-debug = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+              java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+            in
+            # lua
+            ''
+              vim.list_extend(
+                vim.split(vim.fn.glob("${java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/*.jar"), "\n"),
+                vim.split(vim.fn.glob("${java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar"), "\n")
+              )
+            '';
         };
       };
+
       conform-nvim.settings = {
         formatters_by_ft.java = [ "google-java-format" ];
-        formatters.google-java-format.command = lib.getExe pkgs.google-java-format;
+        formatters.google-java-format = {
+          command = lib.getExe pkgs.google-java-format;
+          timeout = 10000;
+        };
       };
     };
-  };
 
-  # nvim-java requires mason to manage its installation of java dependencies. This configuration sets up the proper registries
-  extra.lz-n.plugins = [
-    {
-      __unkeyed-1 = "mason.nvim";
-      event = [ "DeferredUIEnter" ];
-      after.__raw = ''
-        require('mason').setup({
-          registries = {
-            'github:nvim-java/mason-registry',
-            'github:mason-org/mason-registry',
-          },
-        })
-      '';
-    }
-  ];
+    autoCmd = [
+      {
+        event = "LspAttach";
+        pattern = "*.java";
+        callback.__raw = ''
+          function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client and client.name == "jdtls" then
+              require('dap')
+              require('jdtls.dap').setup_dap_main_class_configs()
+            end
+          end
+        '';
+      }
+    ];
+  };
 }
