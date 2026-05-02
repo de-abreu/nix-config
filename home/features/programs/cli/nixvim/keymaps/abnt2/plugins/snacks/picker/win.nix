@@ -18,11 +18,18 @@ let
     k = "list_down";
   };
 
+  splits = {
+    "<c-s>" = false;
+    "-" = "edit_split";
+
+    "<c-v>" = false;
+    "\\" = "edit_vsplit";
+  };
+
 in
 {
   programs.nixvim.plugins.snacks.settings.picker.win =
     let
-      # Upgraded wrapper to handle any mode
       wrapKeys =
         mode:
         builtins.mapAttrs (
@@ -39,6 +46,6 @@ in
     {
 
       input.keys = (wrapKeys [ "n" "i" ] common) // navigation // { "<c-u>" = false; };
-      list.keys = common // navigation;
+      list.keys = common // navigation // splits;
     };
 }
