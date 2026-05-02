@@ -21,6 +21,7 @@ in
       "networkmanager"
       "wheel"
       "video"
+      "vboxusers"
     ];
 
     # INFO: The following line explicitly installs the home-manager CLI tool.
