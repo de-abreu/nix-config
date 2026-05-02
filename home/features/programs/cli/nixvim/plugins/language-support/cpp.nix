@@ -2,11 +2,12 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) getExe';
-in {
+in
+{
   programs.nixvim = {
-    extraPackages = [pkgs.cmake-format];
     lsp.servers = {
       cmake.enable = true;
 
@@ -43,15 +44,20 @@ in {
     plugins = {
       conform-nvim.settings = {
         formatters_by_ft = {
-          cpp = ["clang-format"];
-          cmake = ["cmake-format"];
+          cpp = [ "clang-format" ];
+          cmake = [ "cmake_format" ];
+        };
+
+        formatters = {
+          clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
+          cmake_format.command = lib.getExe' pkgs.cmake-format "cmake-format";
         };
       };
 
       lint = {
         lintersByFt = {
-          cpp = ["clangtidy"];
-          cmake = ["cmakelint"];
+          cpp = [ "clangtidy" ];
+          cmake = [ "cmakelint" ];
         };
 
         linters = {
