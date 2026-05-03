@@ -12,12 +12,13 @@
             "jdtls"
             "-Xms1g"
             "-javaagent:${pkgs.lombok}/share/java/lombok.jar"
+            "-data"
             {
-              __raw = "'-data', vim.fn.stdpath('data') .. '/java/workspace-root/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')";
+              __raw = "vim.fn.stdpath('data') .. '/java/workspace-root/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')";
             }
           ];
 
-          root_dir.__raw = "vim.fs.root(0, {'.git', 'mvnw', 'gradlew', '.root'})";
+          root_dir.__raw = "vim.fs.root(0, {'.root', 'mvnw', 'gradlew'})";
 
           settings.java = {
             eclipse = {
@@ -47,14 +48,10 @@
           init_options.bundles.__raw =
             let
               java-debug = pkgs.vscode-extensions.vscjava.vscode-java-debug;
-              java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
             in
             # lua
             ''
-              vim.list_extend(
-                vim.split(vim.fn.glob("${java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/*.jar"), "\n"),
-                vim.split(vim.fn.glob("${java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar"), "\n")
-              )
+              vim.split(vim.fn.glob("${java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/*.jar"), "\n")
             '';
         };
       };

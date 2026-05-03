@@ -66,7 +66,13 @@ in
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox = {
+    host = {
+      enable = true;
+      enableKvm = true;
+      addNetworkInterface = false;
+    };
+  };
 
   programs = {
     adjust_kbd_backlight = {

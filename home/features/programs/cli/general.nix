@@ -9,13 +9,5 @@
     ripgrep # search for text within various files
     devenv # create development environments tailored to specific projects.
     nix-prefetch-git # prefetch git repository data (to then add to nix configs)
-
-    # Requirements to fetch, compress, and uncompress files
-    wget
-    curl
-    gnutar
-    gzip
-    unzip
-    zip
   ];
 }
