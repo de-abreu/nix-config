@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 {
   programs.librewolf = {
     enable = true;
@@ -9,7 +9,6 @@
     profiles.default = {
       id = 0;
       isDefault = true;
-      extensions.packages = [ pkgs.firefox-addons.zotero-connector ];
       settings = {
         "extensions.autoDisableScopes" = 0;
         "browser.toolbars.bookmarks.visibility" = "never";

@@ -32,12 +32,17 @@
     };
 
     alpha-ascii-nvim = {
-      url = "github:nhattVim/alpha-ascii.nvim/8cc22c23c5f0b79bf582340927ce454463c5dfac";
+      url = "github:nhattVim/alpha-ascii.nvim/main";
       flake = false;
     };
 
     beacon-nvim = {
-      url = "github:DanilaMihailov/beacon.nvim/098ff96c33874339d5e61656f3050dbd587d6bd5";
+      url = "github:DanilaMihailov/beacon.nvim/master";
+      flake = false;
+    };
+
+    qalc-nvim = {
+      url = "github:Apeiros-46B/qalc.nvim/main";
       flake = false;
     };
 
@@ -53,7 +58,7 @@
     };
 
     hyprmcp = {
-      url = "github:stefanoamorelli/hyprmcp/13d5195e6a474078183cb031771be7a71b330bb6";
+      url = "github:stefanoamorelli/hyprmcp/master";
       flake = false;
     };
 
@@ -77,7 +82,7 @@
     };
 
     fish-ssh-agent = {
-      url = "github:danhper/fish-ssh-agent/f10d95775352931796fd17f54e6bf2f910163d1b";
+      url = "github:danhper/fish-ssh-agent/master";
       flake = false;
     };
   };

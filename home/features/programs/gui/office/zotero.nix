@@ -1,5 +1,9 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.zotero];
-  # The zotero extension for Chromium
-  programs.chromium.extensions = [{id = "ekhagklcjbdpajgpjgmbionohlpdbjgc";}];
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.zotero ];
+  # Browser extensions
+  programs = {
+    chromium.extensions = [ { id = "ekhagklcjbdpajgpjgmbionohlpdbjgc"; } ];
+    librewolf.profiles.default.extensions.packages = [ pkgs.firefox-addons.zotero-connector ];
+  };
 }

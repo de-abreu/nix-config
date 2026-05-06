@@ -12,8 +12,8 @@
       },
       "original": {
         "owner": "nhattVim",
+        "ref": "main",
         "repo": "alpha-ascii.nvim",
-        "rev": "8cc22c23c5f0b79bf582340927ce454463c5dfac",
         "type": "github"
       }
     },
@@ -113,8 +113,8 @@
       },
       "original": {
         "owner": "DanilaMihailov",
+        "ref": "master",
         "repo": "beacon.nvim",
-        "rev": "098ff96c33874339d5e61656f3050dbd587d6bd5",
         "type": "github"
       }
     },
@@ -168,8 +168,8 @@
       },
       "original": {
         "owner": "danhper",
+        "ref": "master",
         "repo": "fish-ssh-agent",
-        "rev": "f10d95775352931796fd17f54e6bf2f910163d1b",
         "type": "github"
       }
     },
@@ -412,8 +412,8 @@
       },
       "original": {
         "owner": "stefanoamorelli",
+        "ref": "master",
         "repo": "hyprmcp",
-        "rev": "13d5195e6a474078183cb031771be7a71b330bb6",
         "type": "github"
       }
     },
@@ -714,6 +714,23 @@
         "type": "github"
       }
     },
+    "qalc-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769694237,
+        "narHash": "sha256-E1fUczmZ7B852OHxdPz7U0Zdhvl/qihp0cXZv/5HHts=",
+        "owner": "Apeiros-46B",
+        "repo": "qalc.nvim",
+        "rev": "33198ba0533d6a514f9a48cb472e40407c2ea9f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Apeiros-46B",
+        "ref": "main",
+        "repo": "qalc.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "alpha-ascii-nvim": "alpha-ascii-nvim",
@@ -730,6 +747,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "opencode-nvim": "opencode-nvim",
+        "qalc-nvim": "qalc-nvim",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "systems": "systems_4",
