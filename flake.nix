@@ -27,7 +27,7 @@
     nixvim.url = "github:nix-community/nixvim/nixos-25.11";
 
     opencode-nvim = {
-      url = "github:nickjvandyke/opencode.nvim/v0.6.0";
+      url = "github:nickjvandyke/opencode.nvim/main";
       flake = false;
     };
 

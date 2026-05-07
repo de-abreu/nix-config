@@ -17,13 +17,10 @@ let
     };
   };
 
-  # INFO: Using flake input for opencode-nvim because the
-  # nixpkgs version (2025-11-20) is outdated and lacks the `snacks_picker_send`
-  # function which was added in Feb 2026 (PR #152).
-  # TODO: Remove this overlay once nixpkgs includes opencode.nvim >= v0.6.0.
+  # INFO: Following the latest release.
   opencode-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "opencode.nvim";
-    version = "2026-03-29";
+    version = "main";
     src = inputs.opencode-nvim;
   };
 in
