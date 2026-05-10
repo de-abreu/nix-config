@@ -10,7 +10,8 @@ let
 
   pkgsFor = lib.genAttrs (import systems) (system: import nixpkgs { inherit system; });
 
-  forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+
   experimentalFeatures = [
     "nix-command"
     "flakes"

@@ -1,5 +1,5 @@
 local wezterm = require "wezterm"
-local unicode_input = wezterm.plugin.require "https://github.com/de-abreu/wezterm-unicode-input"
+local unicode_input = require "plugins.wezterm-unicode-input"
 local module = {}
 
 function module.apply_to_config(config)

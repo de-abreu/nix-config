@@ -52,6 +52,13 @@ lib.mkIf cfg.enable {
         source = tomlFormat.generate "${name}.toml" { colors = value; };
       }
     ) cfg.colorSchemes)
+
+    # INFO: 4. WezTerm plugins — symlinked into $XDG_CONFIG_HOME/wezterm/plugins/<name>/
+    (lib.mapAttrs' (name: src:
+      lib.nameValuePair "wezterm/plugins/${name}" {
+        source = "${src}/plugin";
+      }
+    ) cfg.plugins)
   ];
 
   programs.bash.initExtra = lib.mkIf cfg.enableBashIntegration shellIntegrationStr;

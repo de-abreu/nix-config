@@ -2,7 +2,7 @@
 ---@diagnostic disable: undefined-global
 
 local wezterm, module = require("wezterm"), {}
-local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+local tabline = require("plugins.tabline-wez")
 
 local function leader(window)
 	return window:leader_is_active() and string.format(" %s  ", wezterm.nerdfonts.md_trello) or " "

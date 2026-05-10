@@ -9,13 +9,14 @@
     (inputs.import-tree [
       ../../features/desktop-environment/hydenix
       ../../features/desktop-environment/stylix/astrodark-theme
-      ../../features/keymaps/abnt2
+      ../../features/keymaps
       ../../features/programs
       ../../common
       ./git.nix
     ])
 
     inputs.sops-nix.homeManagerModules.sops
+    inputs.vortriz-nur.homeModules.zotero
   ]
   # Custom modules
   ++ (builtins.attrValues outputs.homeModules);

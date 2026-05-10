@@ -18,7 +18,7 @@ in
   programs = {
     git = {
       enable = true;
-      lfs.enable = true; # Large file storage
+      lfs.enable = true;
       settings = {
         user = {
           name = "Abreu";
@@ -38,6 +38,5 @@ in
     };
     gh.enable = true;
     gh-dash.enable = true;
-    fish.shellInit = "export GITHUB_TOKEN=(cat ${config.sops.secrets."api-keys/github".path})";
   };
 }

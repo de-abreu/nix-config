@@ -68,6 +68,23 @@ in
       '';
     };
 
+    plugins = mkOption {
+      type = attrsOf path;
+      default = { };
+      example = literalExpression ''
+        {
+          tabline-wez = inputs.tabline-wez;
+        }
+      '';
+      description = ''
+        Attribute set mapping plugin names to source paths (typically
+        flake inputs). Each source must contain a {file}`plugin/init.lua`
+        file. The module will symlink each plugin into
+        {file}`$XDG_CONFIG_HOME/wezterm/plugins/<name>/`, making it
+        accessible via {lua}`require("plugins.<name>")`.
+      '';
+    };
+
     enableBashIntegration = lib.hm.shell.mkBashIntegrationOption { inherit config; };
     enableZshIntegration = lib.hm.shell.mkZshIntegrationOption { inherit config; };
   };

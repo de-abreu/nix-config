@@ -1,4 +1,8 @@
 {
+  inputs,
+  ...
+}:
+{
   programs.wezterm = {
     enable = true;
     extraConfig = {
@@ -7,6 +11,7 @@
       "scrollback-nvim" = ./scrollback-nvim.lua;
       "tab-bar" = ./tab-bar.lua;
     };
+    plugins = { inherit (inputs) tabline-wez; };
   };
 
   home.sessionVariables.TERMINAL = "wezterm";

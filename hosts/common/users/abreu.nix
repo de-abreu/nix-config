@@ -8,13 +8,17 @@
 }:
 let
   username = "abreu";
+  flakePath = "/home/${username}/.config/nix-config";
 in
 {
+  _module.args.flakePath = flakePath;
   imports = [
     inputs.hydenix.inputs.home-manager.nixosModules.home-manager
   ];
 
+  programs.fish.enable = true;
   users.users.${username} = {
+    shell = config.programs.fish.package;
     isNormalUser = true;
     description = "Abreu";
     extraGroups = [
@@ -45,7 +49,7 @@ in
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = false;
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = { inherit inputs outputs flakePath; system = pkgs.stdenv.hostPlatform.system; };
     sharedModules = [
       (
         { osConfig, ... }:

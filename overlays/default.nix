@@ -15,4 +15,6 @@
   firefox-addons = final: _prev: {
     firefox-addons = inputs.firefox-addons.packages.${final.stdenv.hostPlatform.system};
   };
+
+  yazi-plugins = inputs.nix-yazi-plugins.overlays.default;
 }

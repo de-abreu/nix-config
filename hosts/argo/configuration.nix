@@ -13,6 +13,9 @@ let
   hostname = "argo";
 in
 {
+  # INFO: System architecture
+  nixpkgs.hostPlatform.system = "x86_64-linux";
+
   imports =
     with inputs;
     [

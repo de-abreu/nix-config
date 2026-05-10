@@ -6,10 +6,13 @@
 {
   hyprmode ? false,
 }:
-with config.home.sessionVariables;
 let
   mod = if hyprmode then "" else "$mainMod";
   screenshot = lib.getExe pkgs.screenshot;
+  filebrowser = config.home.sessionVariables.FILEBROWSER or "yazi";
+  browser = config.home.sessionVariables.BROWSER or "firefox";
+  terminal = config.home.sessionVariables.TERMINAL or "kitty";
+  sysMonitor = config.home.sessionVariables.SYS_MONITOR or "htop";
 in
 #hyprlang
 ''
@@ -27,11 +30,11 @@ in
   bindd = ${mod}, $apostrophe, $d Power options, exec, $toDefault; pkill -x rofi || hyde-shell logoutlaunch
 
   $d = [$l|Shortcuts]
-  bindd = ${mod}, T, $d open terminal, exec, $toDefault; ${TERMINAL}
+  bindd = ${mod}, T, $d open terminal, exec, $toDefault; ${terminal}
   bindd = ${mod} Control, T, $d Toggle dropdown terminal, exec, $toDefault; hyde-shell pypr console
-  bindd = ${mod}, E, $d open file explorer, exec, $toDefault; ${FILEBROWSER}
-  bindd = ${mod}, B, $d open web browser, exec, $toDefault; ${BROWSER}
-  bindd = ${mod}, S, $d open system monitor, exec, $toDefault; ${SYS_MONITOR}
+  bindd = ${mod}, E, $d open file explorer, exec, $toDefault; ${filebrowser}
+  bindd = ${mod}, B, $d open web browser, exec, $toDefault; ${browser}
+  bindd = ${mod}, S, $d open system monitor, exec, $toDefault; ${sysMonitor}
   bindd = ${mod} Shift, G, $d open game launcher , exec, $toDefault; hyde-shell gamelauncher # run game launcher for steam and lutris
   bindd = ${mod} Alt, G, $d game mode , exec, $toDefault; hyde-shell gamemode # disable hypr effects for gamemode
   bindd = , $printScreen, $d take a screenshot, exec, $toDefault; ${screenshot}

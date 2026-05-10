@@ -23,7 +23,20 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    # INFO: Nixvim and vim plugins
+    # INFO: Desktop environment
+    hydenix = {
+      url = "github:richen604/hydenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    stylix.url = "github:nix-community/stylix/release-25.11";
+
+    # INFO: System and hardware
+    systems.url = "github:nix-systems/default-linux";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    # INFO: Nixvim
     nixvim.url = "github:nix-community/nixvim/nixos-25.11";
 
     opencode-nvim = {
@@ -46,7 +59,7 @@
       flake = false;
     };
 
-    # INFO: OpenCode and related tools
+    # INFO: OpenCode
     anthropics-skills = {
       url = "github:anthropics/skills";
       flake = false;
@@ -62,25 +75,55 @@
       flake = false;
     };
 
-    # INFO: Desktop environment
-    hydenix = {
-      url = "github:richen604/hydenix";
+    # INFO: Yazi
+    nix-yazi-plugins = {
+      url = "github:lordkekz/nix-yazi-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
 
-    stylix.url = "github:nix-community/stylix/release-25.11";
+    cd-git-root = {
+      url = "github:ciarandg/cd-git-root.yazi";
+      flake = false;
+    };
 
-    # INFO: System and hardware
-    systems.url = "github:nix-systems/default-linux";
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    faster-piper = {
+      url = "github:alberti42/faster-piper.yazi";
+      flake = false;
+    };
 
-    # INFO: Others
+    sshfs = {
+      url = "github:uhs-robert/sshfs.yazi";
+      flake = false;
+    };
+
+    # INFO: WezTerm
+    tabline-wez = {
+      url = "github:michaelbrusegard/tabline.wez";
+      flake = false;
+    };
+
+    smart-splits-nvim = {
+      url = "github:mrjones2014/smart-splits.nvim";
+      flake = false;
+    };
+
+    wezterm-unicode-input = {
+      url = "github:de-abreu/wezterm-unicode-input";
+      flake = false;
+    };
+
+    # INFO: Zotero
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vortriz-nur = {
+      url = "github:Vortriz/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # INFO: Fish
     fish-ssh-agent = {
       url = "github:danhper/fish-ssh-agent/master";
       flake = false;
