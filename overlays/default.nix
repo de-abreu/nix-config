@@ -18,8 +18,10 @@
     yazi = final.unstable.yazi;
     opencode = final.unstable.opencode;
     yaziPlugins = prev.yaziPlugins // {
-      max-preview = prev.yaziPlugins.max-preview.overrideAttrs (old: {
-        buildPhase = old.buildPhase + ''
+      smart-switch = final.callPackage ../pkgs/smart-switch { };
+      smart-tab = final.callPackage ../pkgs/smart-tab { };
+      max-preview = prev.yaziPlugins.max-preview.overrideAttrs (_: {
+        postInstall = ''
           substituteInPlace $out/main.lua --replace-fail 'app_emit' 'emit'
         '';
       });

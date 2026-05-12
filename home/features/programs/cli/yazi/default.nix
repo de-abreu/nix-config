@@ -13,10 +13,8 @@
     shellWrapperName = "y";
 
     plugins = {
-      inherit (pkgs.yaziPlugins) mount smart-paste;
+      inherit (pkgs.yaziPlugins) mount smart-paste smart-switch smart-tab;
       inherit (inputs) cd-git-root;
-      smart-switch = ./plugins/smart-switch;
-      smart-tab = ./plugins/smart-tab;
     };
     yaziPlugins = {
       enable = true;
