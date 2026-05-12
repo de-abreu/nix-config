@@ -62,7 +62,7 @@
                 '';
               key = prefix + "c";
               options = {
-                desc = "Find Config File";
+                desc = "Config File";
                 silent = true;
               };
             }
@@ -70,7 +70,13 @@
             {
               action = mkAction "files";
               key = prefix + "f";
-              options.desc = "Find Files";
+              options.desc = "Files";
+            }
+
+            {
+              action = mkAction "keymaps";
+              key = prefix + "k";
+              options.desc = "Keymaps";
             }
 
             {
@@ -82,13 +88,13 @@
             {
               action = mkAction "git_files";
               key = prefix + "g";
-              options.desc = "Find Git Files";
+              options.desc = "Git Files";
             }
 
             {
               action = mkAction "projects";
               key = prefix + "p";
-              options.desc = "Find Projects";
+              options.desc = "Projects";
             }
 
             {

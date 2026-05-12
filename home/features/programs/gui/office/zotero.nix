@@ -6,18 +6,16 @@
   ...
 }:
 let
+  userJs = "${config.home.homeDirectory}/.zotero/zotero/${config.home.username}/user.js";
   zoteroAddons = inputs.vortriz-nur.legacyPackages.${system}.zoteroAddons;
 in
 {
-  sops.secrets = {
-    "api-keys/zotero" = { };
-    "mail/usp" = { };
-  };
 
   programs.zotero = {
     enable = true;
+    package = pkgs.unstable.zotero;
 
-    profiles.default = {
+    profiles.${config.home.username} = {
       isDefault = true;
 
       extensions = with zoteroAddons; [
@@ -25,28 +23,34 @@ in
         zotero-scipdf
         zotmoov
       ];
-
-      settings = {
-        # Better BibTeX
-        "extensions.zotero.betterBibTeX.autoPinInCitations" = true;
-        "extensions.zotero.betterBibTeX.citekeyFormat" = "[auth][year]";
-
-        # Data directory
-        "extensions.zotero.dataDir" = config.xdg.userDirs.documents;
-        "extensions.zotero.useDataDir" = true;
-
-        # Skip first-run wizard
-        "extensions.zotero.firstRun2" = false;
-      };
-
-      extraConfig = builtins.readFile config.sops.templates."zotero-prefs.js".file;
     };
   };
 
-  sops.templates."zotero-prefs.js".content = ''
-    user_pref("extensions.zotero.sync.server.username", "${config.sops.placeholder."mail/usp"}");
-    user_pref("extensions.zotero.sync.server.apiKey", "${config.sops.placeholder."api-keys/zotero"}");
-  '';
+  sops = {
+    secrets = {
+      "zotero/username" = { };
+      "zotero/apiKey" = { };
+    };
+    templates."zotero-user-js" = {
+      mode = "0600";
+      path = userJs;
+      content =
+        let
+          username = config.sops.placeholder."zotero/username";
+          apiKey = config.sops.placeholder."zotero/apiKey";
+        in
+        # js
+        ''
+          user_pref("extensions.zotero.sync.server.username", "${username}");
+          user_pref("extensions.zotero.sync.server.apiKey", "${apiKey}");
+          user_pref("extensions.zotero.betterBibTeX.autoPinInCitations", true);
+          user_pref("extensions.zotero.betterBibTeX.citekeyFormat", "[auth][year]");
+          user_pref("extensions.zotero.dataDir", "${config.xdg.userDirs.documents}/Zotero");
+          user_pref("extensions.zotero.firstRun2", false);
+          user_pref("extensions.zotero.useDataDir", true);
+        '';
+    };
+  };
 
   # Browser extensions
   programs = {
@@ -54,4 +58,3 @@ in
     librewolf.profiles.default.extensions.packages = [ pkgs.firefox-addons.zotero-connector ];
   };
 }
-

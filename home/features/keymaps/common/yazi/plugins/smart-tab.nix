@@ -1,18 +1,14 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   cfg = config.programs.yazi.plugins;
-  plugin = "lazygit";
+  plugin = "smart-tab";
 in
 {
   programs.yazi.keymap.mgr.prepend_keymap = lib.mkIf (lib.hasAttr plugin cfg) [
     {
-      on = [ "t" "l" ];
+      on = [ "t" "t" ];
       run = "plugin ${plugin}";
-      desc = "Open lazygit";
+      desc = "Create a tab and enter the hovered directory";
     }
   ];
 }

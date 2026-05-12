@@ -17,18 +17,9 @@ in
 
   programs = {
     git = {
-      enable = true;
-      lfs.enable = true;
-      settings = {
-        user = {
-          name = "Abreu";
-          email = "87032834+de-abreu@users.noreply.github.com";
-        };
-        init.defaultBranch = "main";
-        push.autoSetupRemote = true;
-        pull.rebase = true;
-        merge.conflictStyle = "zdiff3";
-        rerere.enabled = true;
+      settings.user = {
+        name = "Abreu";
+        email = "87032834+de-abreu@users.noreply.github.com";
       };
       signing = {
         format = "ssh";
@@ -36,7 +27,6 @@ in
         signByDefault = true;
       };
     };
-    gh.enable = true;
-    gh-dash.enable = true;
   };
 }
+

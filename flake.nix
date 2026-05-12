@@ -78,7 +78,7 @@
     # INFO: Yazi
     nix-yazi-plugins = {
       url = "github:lordkekz/nix-yazi-plugins";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     cd-git-root = {
@@ -91,8 +91,13 @@
       flake = false;
     };
 
-    sshfs = {
-      url = "github:uhs-robert/sshfs.yazi";
+    smart-arrow = {
+      url = "github:jessefarinacci/smart-arrow.yazi";
+      flake = false;
+    };
+
+    yaziline = {
+      url = "github:llanosrocas/yaziline.yazi";
       flake = false;
     };
 

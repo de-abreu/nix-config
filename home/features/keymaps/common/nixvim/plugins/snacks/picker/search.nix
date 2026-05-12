@@ -100,11 +100,6 @@
               options.desc = "Jumps";
             }
             {
-              action = mkAction "keymaps";
-              key = prefix + "k";
-              options.desc = "Keymaps";
-            }
-            {
               action = mkAction "loclist";
               key = prefix + "l";
               options.desc = "Location List";

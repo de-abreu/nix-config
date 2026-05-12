@@ -13,10 +13,10 @@
     shellWrapperName = "y";
 
     plugins = {
-      inherit (pkgs.yaziPlugins)
-        mount
-        smart-paste
-        ;
+      inherit (pkgs.yaziPlugins) mount smart-paste;
+      inherit (inputs) cd-git-root;
+      smart-switch = ./plugins/smart-switch;
+      smart-tab = ./plugins/smart-tab;
     };
     yaziPlugins = {
       enable = true;
@@ -25,27 +25,11 @@
         chmod.enable = true;
         copy-file-contents.enable = true;
         full-border.enable = true;
-        jump-to-char.enable = true;
         ouch.enable = true;
-        recycle-bin.enable = true;
-        rich-preview.enable = true;
         smart-filter.enable = true;
-        relative-motions = {
-          enable = true;
-          show_numbers = "relative";
-          show_motion = true;
-        };
-        max-preview = {
-          enable = true;
-          keys.toggle = {
-            on = [ "p" ];
-            run = "plugin max-preview";
-            desc = "Maximize or restore preview";
-          };
-        };
+        max-preview.enable = true;
       };
     };
   };
   home.sessionVariables.FILEBROWSER = "yazi";
 }
-

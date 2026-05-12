@@ -1,4 +1,3 @@
-{ flakePath, ... }:
 {
   programs.yazi.keymap =
     let
@@ -16,18 +15,8 @@
       ];
     in
     {
-      mgr.prepend_keymap = common ++ [
+      mgr.prepend_keymap = [
         # Navigation
-        {
-          on = "j";
-          run = "leave";
-          desc = "Go to parent directory";
-        }
-        {
-          on = "ç";
-          run = "enter";
-          desc = "Enter child directory";
-        }
         {
           on = "J";
           run = "back";
@@ -37,6 +26,11 @@
           on = "Ç";
           run = "forward";
           desc = "Go to next directory";
+        }
+        {
+          on = "h";
+          run = "filter";
+          desc = "Jump to match";
         }
 
         # Seeking
@@ -50,39 +44,14 @@
           run = "seek -5";
           desc = "Seek up 5 units in the preview";
         }
+
         {
-          on = "h";
+          on = "H";
           run = "hidden toggle";
           desc = "Toggle the visibility of hidden files";
         }
-
-        # Shortcuts
-        {
-          on = [
-            "g"
-            "n"
-          ];
-          run = "cd ${flakePath}";
-          desc = "Go to Nix configuration";
-        }
-
-        {
-          on = [
-            "g"
-            "r"
-          ];
-          run = ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'';
-          desc = "Go to the root of the git repo";
-        }
-
-        # Issuing commands
-        {
-          on = "!";
-          for = "unix";
-          run = ''shell "$SHELL" --block'';
-          desc = "Open $SHELL here";
-        }
       ];
+
       tasks.prepend_keymap = common;
       spot.prepend_keymap = common ++ [
         {
@@ -108,11 +77,6 @@
           run = "move 1";
           desc = "Move forward a character";
         }
-        {
-          on = "<Esc>";
-          run = "close";
-          desc = "Cancel input";
-        }
       ];
       confirm.prepend_keymap = common;
       cmp.prepend_keymap = [
@@ -127,12 +91,6 @@
           desc = "Move cursor up";
         }
       ];
-      help.prepend_keymap = common ++ [
-        {
-          on = "/";
-          run = "filter";
-          desc = "Apply filter to help items";
-        }
-      ];
+      help.prepend_keymap = common;
     };
 }
