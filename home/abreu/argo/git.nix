@@ -1,3 +1,4 @@
+# TODO: Merge this configuration with the one defined in cli/git, using sops.template to generate the final config file instead of home-manager's git.settings.
 { config, ... }:
 let
   pubKeyFile = ".ssh/git.pub";
@@ -29,4 +30,3 @@ in
     };
   };
 }
-

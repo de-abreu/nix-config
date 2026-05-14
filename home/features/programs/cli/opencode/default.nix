@@ -15,6 +15,7 @@ let
     ;
 in
 {
+  # TODO: Experiment with using sops.template to generate an ~/.config/opencode/auth.json file for the api keys, instead of haveing be exported at ever launch using a pre-hook.
   options.programs.opencode = {
     apiKeys = mkOption {
       type = attrsOf str;

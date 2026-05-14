@@ -46,6 +46,10 @@ in
       1. First try running the command directly
       2. If it fails with "command not found", retry with `,` prefix
       3. Comma caches package resolutions for fast subsequent runs
+
+      ## Safety rules
+
+      Unless told otherwise, always use the edit tool to edit files. _Never use sed_ unless explicitly told to do so.
     '';
     mutable = true;
     force = true;
