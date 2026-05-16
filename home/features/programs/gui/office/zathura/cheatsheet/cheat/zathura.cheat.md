@@ -222,9 +222,13 @@ echo "q / ^q"
 
 echo "Esc / ^c"
 
+# Open PDF picker — e
+
+echo "e"
+
 # Open this cheatsheet — H
 
-echo "F1"
+echo "H"
 
 ## Fullscreen mode
 
