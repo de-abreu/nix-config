@@ -69,14 +69,6 @@ in
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableKvm = true;
-      addNetworkInterface = false;
-    };
-  };
-
   programs = {
     adjust_kbd_backlight = {
       enable = true;
@@ -91,10 +83,8 @@ in
 
   sops = {
     defaultSopsFormat = "yaml";
-    defaultSopsFile = "${inputs.self}/secrets/hosts/argo.yaml";
-    secrets.root_password = {
-      neededForUsers = true;
-    };
+    defaultSopsFile = "${inputs.self}/secrets/hosts/${config.networking.hostName}.yaml";
+    secrets.root_password.neededForUsers = true;
   };
 
   users = {

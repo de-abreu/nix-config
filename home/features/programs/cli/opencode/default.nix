@@ -15,7 +15,6 @@ let
     ;
 in
 {
-  # TODO: Experiment with using sops.template to generate an ~/.config/opencode/auth.json file for the api keys, instead of haveing be exported at ever launch using a pre-hook.
   options.programs.opencode = {
     apiKeys = mkOption {
       type = attrsOf str;
@@ -47,7 +46,7 @@ in
             readonly ${name}
           '') cfg.apiKeys
           |> concatStringsSep "\n";
-        runtimeInputs = cfg.extraPackages ++ optionals (cfg ? settings.plugins) [ pkgs.bun ];
+        runtimeInputs = cfg.extraPackages ++ optionals (cfg ? settings.plugin) [ pkgs.bun ];
         flags = optionalAttrs (cfg ? settings.server.port) {
           "--port" = toString cfg.settings.server.port;
         };

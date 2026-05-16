@@ -8,6 +8,7 @@ let
   transparent = foldl' (acc: el: acc + "windowrulev2=opacity 0.8 0.7 1.0, ${el}\n") "" [
     "class:^org.wezfurlong.wezterm$"
     "class:^org.pwmt.zathura$"
+    "title:^(\.navi-wrapped)"
   ];
   floating = foldl' (acc: el: acc + "windowrulev2=float, ${el}\n") "" [
     "title:^Calculator$"
@@ -17,6 +18,7 @@ let
     "title:^Save as$"
     "class:^(xdg-desktop-portal-gtk)$"
     "class:^(feh)$"
+    "class:^(floating)$"
   ];
 in
 {
