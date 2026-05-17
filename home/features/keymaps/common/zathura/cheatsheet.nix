@@ -5,8 +5,10 @@
   ...
 }:
 let
-  inherit (config.programs) navi zathura;
+  inherit (config.programs) navi zathura wezterm;
   inherit (lib) mkIf getExe;
+
+  wezterm-floating = getExe wezterm.floatingPackage;
 
   hyprlandEnabled =
     (config.wayland.windowManager.hyprland.enable) || (config.hydenix.hm.hyprland.enable or false);
@@ -29,7 +31,7 @@ let
       active_win=$(hyprctl activewindow -j | jq -r '.address')
 
       # shellcheck disable=SC2016
-      ${zathura.floatingWindow "bash -c '${getExe navi.package} --query \"zathura \" > \"$1\"' _ \"$navi_out\""}
+      ${wezterm-floating} bash -c '${getExe navi.package} --query "zathura " > "$1"' _ "$navi_out"
 
       if [ ! -s "$navi_out" ]; then
         exit 0
@@ -90,26 +92,6 @@ let
         Super)      wtype "''${mods[@]}" -k Super_L ;;
         Tab)        wtype "''${mods[@]}" -k Tab ;;
         Print)      wtype "''${mods[@]}" -k Print ;;
-        KPUp)       wtype "''${mods[@]}" -k KP_Up ;;
-        KPDown)     wtype "''${mods[@]}" -k KP_Down ;;
-        KPLeft)     wtype "''${mods[@]}" -k KP_Left ;;
-        KPRight)    wtype "''${mods[@]}" -k KP_Right ;;
-        KPBegin)    wtype "''${mods[@]}" -k KP_Begin ;;
-        KPPrior|KPPageUp)   wtype "''${mods[@]}" -k KP_Page_Up ;;
-        KPNext|KPPageDown)  wtype "''${mods[@]}" -k KP_Page_Down ;;
-        KPHome)     wtype "''${mods[@]}" -k KP_Home ;;
-        KPEnd)      wtype "''${mods[@]}" -k KP_End ;;
-        KPInsert)   wtype "''${mods[@]}" -k KP_Insert ;;
-        KPDelete)   wtype "''${mods[@]}" -k KP_Delete ;;
-        KPMultiply) wtype "''${mods[@]}" -k KP_Multiply ;;
-        KPAdd)      wtype "''${mods[@]}" -k KP_Add ;;
-        KPSubtract) wtype "''${mods[@]}" -k KP_Subtract ;;
-        KPDivide)   wtype "''${mods[@]}" -k KP_Divide ;;
-        Button1)    wtype "''${mods[@]}" -k BTN_LEFT ;;
-        Button2)    wtype "''${mods[@]}" -k BTN_MIDDLE ;;
-        Button3)    wtype "''${mods[@]}" -k BTN_RIGHT ;;
-        Button4)    wtype "''${mods[@]}" -k BTN_SIDE ;;
-        Button5)    wtype "''${mods[@]}" -k BTN_EXTRA ;;
         F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12)
                     wtype "''${mods[@]}" -k "$remaining" ;;
         *)

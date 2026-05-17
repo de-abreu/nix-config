@@ -5,8 +5,11 @@
   ...
 }:
 let
-  inherit (config.programs) yazi zathura;
+  inherit (config.programs) yazi zathura wezterm;
   inherit (lib) getExe;
+
+  wezterm-floating = getExe wezterm.floatingPackage;
+
   pdfPicker = pkgs.writeShellScriptBin "yazi-pdf-picker" ''
     tmp=$(mktemp /tmp/yazi-pdf-XXXXXX)
     trap "rm -f $tmp" EXIT
@@ -17,7 +20,6 @@ let
   '';
 in
 {
-  programs.zathura.mappings."e" = ''
-    feedkeys ":exec ${zathura.floatingWindow (getExe pdfPicker)}<Return>"
-  '';
+  programs.zathura.mappings."e" =
+    ''feedkeys ":exec ${wezterm-floating} ${getExe pdfPicker}<Return>" '';
 }
