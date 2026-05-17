@@ -49,7 +49,10 @@ in
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = false;
-    extraSpecialArgs = { inherit inputs outputs flakePath; system = pkgs.stdenv.hostPlatform.system; };
+    extraSpecialArgs = {
+      inherit inputs outputs flakePath;
+      system = pkgs.stdenv.hostPlatform.system;
+    };
     sharedModules = [
       (
         { osConfig, ... }:
@@ -62,12 +65,5 @@ in
       )
     ];
     users.${username} = import "${inputs.self}/home/${username}/${config.networking.hostName}";
-  };
-
-  flake.autoUpgrade = {
-    enable = true;
-    owner = username;
-    dates = "weekly";
-    randomizedDelaySec = "1h";
   };
 }

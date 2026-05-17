@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -21,6 +22,18 @@ let
 
   cfg = config.programs.wezterm;
   tomlFormat = pkgs.formats.toml { };
+
+  wezterm-floating = inputs.wrappers.lib.wrapPackage {
+    inherit pkgs;
+    package = cfg.package;
+    binName = "wezterm-floating";
+    args = [
+      "--config" "enable_tab_bar=false"
+      "--config" "initial_cols=120"
+      "--config" "initial_rows=40"
+      "start" "--class" "floating" "--" "$@"
+    ];
+  };
 in
 {
   meta.maintainers = [
@@ -87,6 +100,13 @@ in
 
     enableBashIntegration = lib.hm.shell.mkBashIntegrationOption { inherit config; };
     enableZshIntegration = lib.hm.shell.mkZshIntegrationOption { inherit config; };
+
+    floatingPackage = mkOption {
+      type = types.package;
+      default = wezterm-floating;
+      description = "Wezterm wrapped with floating window defaults for transient commands.";
+      internal = true;
+    };
   };
 
   config = import ./config.nix { inherit cfg lib tomlFormat; };
