@@ -5,8 +5,8 @@
   ...
 }:
 let
-  inherit (config.programs) yazi wezterm zathura;
-  inherit (lib) mkIf getExe;
+  inherit (config.programs) yazi zathura;
+  inherit (lib) getExe;
   pdfPicker = pkgs.writeShellScriptBin "yazi-pdf-picker" ''
     tmp=$(mktemp /tmp/yazi-pdf-XXXXXX)
     trap "rm -f $tmp" EXIT
@@ -17,9 +17,7 @@ let
   '';
 in
 {
-  config = mkIf (yazi.enable && wezterm.enable) {
-    programs.zathura.mappings."e" = ''
-      feedkeys ":exec ${getExe wezterm.package} --config enable_tab_bar=false --config 'window_close_confirmation=\"NeverPrompt\"' start --class floating -- ${getExe pdfPicker}<Return>"
-    '';
-  };
+  programs.zathura.mappings."e" = ''
+    feedkeys ":exec ${zathura.floatingWindow (getExe pdfPicker)}<Return>"
+  '';
 }
