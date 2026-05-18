@@ -28,5 +28,8 @@ in
         signByDefault = true;
       };
     };
+    fish.shellInit = ''
+      export GH_TOKEN=(cat ${config.sops.secrets."api-keys/github".path})
+    '';
   };
 }
