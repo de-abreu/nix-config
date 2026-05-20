@@ -19,8 +19,17 @@
           # lua
           ''
             function(picker)
+              local list = picker.list
+              local visible_count = math.max(0, math.min(list:count() - (list.top or 1) + 1, list.state.height))
+              if visible_count == 0 then return end
+              local pattern
+              if list.reverse then
+                pattern = "^\\%>" .. (list.state.height - visible_count) .. "l"
+              else
+                pattern = "^\\%<" .. (visible_count + 1) .. "l"
+              end
               require("flash").jump({
-                pattern = "^",
+                pattern = pattern,
                 label = { after = { 0, 0 } },
                 search = {
                   mode = "search",
