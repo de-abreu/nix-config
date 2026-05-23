@@ -59,6 +59,11 @@
       flake = false;
     };
 
+    sshfs-nvim = {
+      url = "github:uhs-robert/sshfs.nvim/main";
+      flake = false;
+    };
+
     # INFO: OpenCode
     anthropics-skills = {
       url = "github:anthropics/skills";

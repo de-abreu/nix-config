@@ -929,6 +929,7 @@
         "smart-arrow": "smart-arrow",
         "smart-splits-nvim": "smart-splits-nvim",
         "sops-nix": "sops-nix",
+        "sshfs-nvim": "sshfs-nvim",
         "stylix": "stylix",
         "systems": "systems_5",
         "tabline-wez": "tabline-wez",
@@ -1006,6 +1007,23 @@
       "original": {
         "owner": "mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sshfs-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778118641,
+        "narHash": "sha256-Vcdjd0WbeSFIeRyCxzHNdFwC33l3hKAvZ3kKCDTDHco=",
+        "owner": "uhs-robert",
+        "repo": "sshfs.nvim",
+        "rev": "57f586251d788dae38fd12998b9a208f7d54c1ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uhs-robert",
+        "ref": "main",
+        "repo": "sshfs.nvim",
         "type": "github"
       }
     },
