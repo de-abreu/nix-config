@@ -4,5 +4,5 @@ let
   enabled = cfg.enable && cfg.enableFishIntegration;
 in
 {
-  programs.navi.settings.cheats.paths = lib.mkIf enabled [ (toString ./cheat) ];
+  programs.cheatsheet.entries.navi-fish = lib.mkIf (config.programs.cheatsheet.enable && enabled) ./cheat/navi.cheat.md;
 }

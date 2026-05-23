@@ -9,7 +9,7 @@ in
       fish.shellInit = ''
         fzf_configure_bindings --directory=ctrl-f
       '';
-      navi.settings.cheats.paths = [ (toString ./cheat) ];
+      cheatsheet.entries.fzf-fish = lib.mkIf config.programs.cheatsheet.enable ./cheat/fzf.cheat.md;
     };
   };
 }

@@ -13,6 +13,10 @@ let
   browser = config.home.sessionVariables.BROWSER or "firefox";
   terminal = config.home.sessionVariables.TERMINAL or "kitty";
   sysMonitor = config.home.sessionVariables.SYS_MONITOR or "htop";
+  cheatsheetCmd = if (config.programs.cheatsheet.enable or false) then
+                     lib.getExe config.programs.cheatsheet.package
+                   else
+                     "pkill -x rofi || hyde-shell keybinds_hint c";
 in
 #hyprlang
 ''
@@ -22,7 +26,7 @@ in
   $rofi-launch=hyde-shell rofilaunch
   bindd = ${mod}, space, $d Application finder, exec, $toDefault; pkill -x rofi || $rofi-launch d
   bindd = ${mod}, TAB, $d Window switcher, exec, $toDefault; pkill -x rofi || $rofi-launch w
-  bindd = ${mod}, slash, $d Keybind cheatsheet, exec, $toDefault; pkill -x rofi || hyde-shell keybinds_hint c
+  bindd = ${mod}, slash, $d Keybind cheatsheet, exec, $toDefault; ${cheatsheetCmd}
   bindd = ${mod}, comma, $d Emoji picker, exec, $toDefault; pkill -x rofi || hyde-shell emoji-picker
   bindd = ${mod}, period, $d Gliph picker, exec, $toDefault; pkill -x rofi || hyde-shell glyph-picker
   bindd = ${mod}, V, $d Clipboard history, exec, $toDefault; pkill -x rofi || hyde-shell cliphist -c

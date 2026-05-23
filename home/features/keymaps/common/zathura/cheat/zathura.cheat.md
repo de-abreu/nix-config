@@ -1,14 +1,14 @@
 % zathura, pdf, viewer, cheatsheet, keybinds
 
-## Navigation — ABNT2 overrides: K=next, L=prev, j=left, k=down, l=up, ç=right
+## Navigation — ABNT2 overrides: K=Page_Down, L=Page_Up, j=Left, k=Down, l=Up, ç=Right
 
-# Next page — K / PgDn
+# Next page — K / Page_Down
 
-echo "K / PgDn"
+echo "K / Page_Down"
 
-# Previous page — L / PgUp
+# Previous page — L / Page_Up
 
-echo "L / PgUp"
+echo "L / Page_Up"
 
 # Scroll left — j / Left
 
@@ -26,33 +26,33 @@ echo "l / Up"
 
 echo "ç / Right"
 
-# Half page left — ^t
+# Half page left — C-t
 
-echo "^t"
+echo "C-t"
 
-# Half page down — ^d
+# Half page down — C-d
 
-echo "^d"
+echo "C-d"
 
-# Half page up — ^u
+# Half page up — C-u
 
-echo "^u"
+echo "C-u"
 
-# Half page right — ^y
+# Half page right — C-y
 
-echo "^y"
+echo "C-y"
 
 # Full page left — t
 
 echo "t"
 
-# Full page down — ^f / Space
+# Full page down — C-f / space
 
-echo "^f / Space"
+echo "C-f / space"
 
-# Full page up — ^b / S-Space
+# Full page up — C-b / S-space
 
-echo "^b / S-Space"
+echo "C-b / S-space"
 
 # Full page right — y
 
@@ -78,21 +78,21 @@ echo "P"
 
 echo "H"
 
-# Jump list backward — ^o
+# Jump list backward — C-o
 
-echo "^o"
+echo "C-o"
 
-# Jump list forward — ^i
+# Jump list forward — C-i
 
-echo "^i"
+echo "C-i"
 
-# Bisect forward — ^j
+# Bisect forward — C-j
 
-echo "^j"
+echo "C-j"
 
-# Bisect backward — ^k
+# Bisect backward — C-k
 
-echo "^k"
+echo "C-k"
 
 ## Search
 
@@ -126,9 +126,9 @@ echo "s"
 
 echo "r"
 
-# Recolor (invert) — ^r
+# Recolor (invert) — C-r
 
-echo "^r"
+echo "C-r"
 
 # Reload document — R
 
@@ -150,13 +150,13 @@ echo "F5"
 
 echo "F11"
 
-# Toggle inputbar — ^m
+# Toggle inputbar — C-m
 
-echo "^m"
+echo "C-m"
 
-# Toggle statusbar — ^n
+# Toggle statusbar — C-n
 
-echo "^n"
+echo "C-n"
 
 # Zoom in — + / zI
 
@@ -214,13 +214,13 @@ echo "O"
 
 echo "Tab"
 
-# Quit — q / ^q
+# Quit — q / C-q
 
-echo "q / ^q"
+echo "q / C-q"
 
-# Abort — Esc / ^c
+# Abort — Escape / C-c
 
-echo "Esc / ^c"
+echo "Escape / C-c"
 
 # Open PDF picker — e
 
@@ -240,13 +240,13 @@ echo "K"
 
 echo "J"
 
-# Fullscreen: page down — Space
+# Fullscreen: page down — space
 
-echo "Space"
+echo "space"
 
-# Fullscreen: page up — S-Space / BackSpace
+# Fullscreen: page up — S-space / BackSpace
 
-echo "S-Space / BackSpace"
+echo "S-space / BackSpace"
 
 # Fullscreen: first page — gg
 
@@ -274,9 +274,9 @@ echo "F11"
 
 echo "k / j"
 
-# Index: scroll up/down half — ^u / ^d
+# Index: scroll up/down half — C-u / C-d
 
-echo "^u / ^d"
+echo "C-u / C-d"
 
 # Index: expand entry — l / Right / zo
 
@@ -302,17 +302,17 @@ echo "zC"
 
 echo "zM / H"
 
-# Index: select entry — Space / Return / ^j
+# Index: select entry — space / Return / C-j
 
-echo "Space / Return / ^j"
+echo "space / Return / C-j"
 
 # Index: first/last — gg / G
 
 echo "gg / G"
 
-# Index: close — Tab / Esc
+# Index: close — Tab / Escape
 
-echo "Tab / Esc"
+echo "Tab / Escape"
 
 ## Commands
 

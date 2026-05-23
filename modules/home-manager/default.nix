@@ -1,4 +1,5 @@
 {
+  cheatsheet = import ./cheatsheet;
   stylix_presenterm = import ./stylix/presenterm;
   presenterm = import ./presenterm;
   qalculate = import ./qalculate;

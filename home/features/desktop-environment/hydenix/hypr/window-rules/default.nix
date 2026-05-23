@@ -5,21 +5,27 @@
 }:
 with builtins;
 let
-  transparent = foldl' (acc: el: acc + "windowrulev2=opacity 0.8 0.7 1.0, ${el}\n") "" [
-    "class:^org.wezfurlong.wezterm$"
-    "class:^org.pwmt.zathura$"
-    "title:^(\.navi-wrapped)"
-  ];
-  floating = foldl' (acc: el: acc + "windowrulev2=float, ${el}\n") "" [
-    "title:^Calculator$"
-    "title:^Choose Files$"
-    "title:^Confirm to replace files$"
-    "title:^File Operation Progress$"
-    "title:^Save as$"
-    "class:^(xdg-desktop-portal-gtk)$"
-    "class:^(feh)$"
-    "class:^(floating)$"
-  ];
+  both = [ "class:^(floating)$" ];
+  transparent =
+    [
+      "class:^org.wezfurlong.wezterm$"
+      "class:^org.pwmt.zathura$"
+      "title:^(\.navi-wrapped)"
+    ]
+    ++ both
+    |> foldl' (acc: el: acc + "windowrulev2=opacity 0.8 0.7 1.0, ${el}\n") "";
+  floating =
+    [
+      "title:^Calculator$"
+      "title:^Choose Files$"
+      "title:^Confirm to replace files$"
+      "title:^File Operation Progress$"
+      "title:^Save as$"
+      "class:^(xdg-desktop-portal-gtk)$"
+      "class:^(feh)$"
+    ]
+    ++ both
+    |> foldl' (acc: el: acc + "windowrulev2=float, ${el}\n") "";
 in
 {
   # FIX: A patch legacy hyprland configuration that is incompatible with the
