@@ -110,7 +110,7 @@ in
           ];
       };
     in
-    import ./config.nix {
+    import ./_config.nix {
       inherit
         cfg
         lib

@@ -109,5 +109,5 @@ in
     };
   };
 
-  config = import ./config.nix { inherit cfg lib tomlFormat; };
+  config = import ./_config.nix { inherit cfg lib tomlFormat; };
 }
