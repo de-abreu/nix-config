@@ -23,8 +23,11 @@
             "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.argo.options"
           },
           "home-config": {
-            "expr": "(builtins.getFlake (builtins.toString ./.)).homeConfigurations.\"abreu@argo\".options"
+            "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.argo.options.home-manager.users.type.getSubOptions []"
           }
+        },
+        "nixpkgs": {
+          "expr": "(builtins.getFlake (builtins.toString ./.)).inputs.nixpkgs.legacyPackages.x86_64-linux"
         }
       }
     }
