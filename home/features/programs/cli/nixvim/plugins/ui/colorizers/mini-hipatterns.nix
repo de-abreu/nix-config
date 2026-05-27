@@ -22,19 +22,19 @@
       enable = true;
       settings.highlighters = {
         fixme = {
-          pattern.__raw = "_G.in_comment('FIXME')";
+          pattern.__raw = "_G.in_comment('FIXME:?')";
           group = "MiniHipatternsFixme";
         };
         hack = {
-          pattern.__raw = "_G.in_comment('HACK')";
+          pattern.__raw = "_G.in_comment('HACK:?')";
           group = "MiniHipatternsHack";
         };
         todo = {
-          pattern.__raw = "_G.in_comment('TODO')";
+          pattern.__raw = "_G.in_comment('TODO:?')";
           group = "MiniHipatternsTodo";
         };
         note = {
-          pattern.__raw = "_G.in_comment('NOTE')";
+          pattern.__raw = "_G.in_comment('NOTE:?')";
           group = "MiniHipatternsNote";
         };
       };

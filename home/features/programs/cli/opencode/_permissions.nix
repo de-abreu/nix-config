@@ -10,6 +10,7 @@
         "*" = "ask";
         explore = "allow";
       };
+      bash."sudo *" = "deny";
     };
     agent = {
       build.permission = {
@@ -24,4 +25,3 @@
     };
   };
 }
-

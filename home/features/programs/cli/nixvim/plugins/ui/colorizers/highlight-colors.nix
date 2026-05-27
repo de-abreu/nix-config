@@ -1,5 +1,14 @@
 {
   programs.nixvim.plugins = {
+    highlight-colors = {
+      enable = true;
+      settings = {
+        render = "virtual"; # Renders a beautiful little square icon next to the code!
+        enable_named_colors = true;
+        enable_tailwind = true; # Automatically understands things like `bg-red-500`
+      };
+    };
+
     blink-cmp.settings.completion.menu.draw.components.kind-icon = {
       text.__raw =
         # lua
@@ -35,14 +44,6 @@
           	return highlight
           end
         '';
-    };
-    highlight-colors = {
-      enable = true;
-      settings = {
-        render = "virtual"; # Renders a beautiful little square icon next to the code!
-        enable_named_colors = true;
-        enable_tailwind = true; # Automatically understands things like `bg-red-500`
-      };
     };
   };
 }

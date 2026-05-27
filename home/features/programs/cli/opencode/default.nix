@@ -61,9 +61,10 @@ in
           enable = true;
           package = opencode-wrapped;
           settings = {
-            server.port = 8765;
-            default_agent = "plan";
             autoupdate = false;
+            default_agent = "plan";
+            server.port = 8765;
+            permission.bash."sudo *" = "deny";
           };
         };
       };
