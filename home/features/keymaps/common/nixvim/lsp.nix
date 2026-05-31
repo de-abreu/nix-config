@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.nixvim.plugins.lsp;
   prefix = "<leader>l";
-in {
+in
+{
   programs.nixvim = {
     keymapsOnEvents.LspAttach = lib.mkIf cfg.enable [
       {
@@ -36,12 +38,29 @@ in {
       }
     ];
 
+    lsp.servers.clangd.config.onAttach.function =
+      # lua
+      ''
+        vim.keymap.set(
+          'n',
+          'gh',
+          "<cmd>ClangdSwitchSourceHeader<cr>",
+          {
+            desc = "Switch Source/Header (C/C++)",
+            buffer = bufnr
+          }
+        )
+      '';
+
     plugins.which-key.settings.spec = lib.optional cfg.enable [
       {
         __unkeyed-1 = prefix;
         group = "LSP";
         icon = " ";
-        mode = ["n" "v"];
+        mode = [
+          "n"
+          "v"
+        ];
       }
     ];
   };

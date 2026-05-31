@@ -26,10 +26,11 @@
   fileencoding = "utf-8";
   modeline = true; # Scan for editor directives like 'vim: set ft=nix:'
   modelines = 100; # Scan first/last 100 lines for modelines
+  exrc = true; # Allow project-local .nvim.lua config files
 
   # Identation and formatting
   tabstop = 2; # Follow shiftwidth
-  shiftwidth = 2;
+  shiftwidth = 0;
   expandtab = true;
   autoindent = true;
   copyindent = true;

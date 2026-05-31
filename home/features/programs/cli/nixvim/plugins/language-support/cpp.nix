@@ -14,6 +14,12 @@ in
       clangd = {
         enable = true;
         config = {
+          root_markers = [
+            ".clangd"
+            "compile_commands.json"
+            "compile_flags.txt"
+            ".git"
+          ];
           settings.init_options = {
             usePlaceholders = true;
             completeUnimported = true;
@@ -23,23 +29,21 @@ in
             "${getExe' pkgs.clang-tools "clangd"}"
             "--background-index"
             "--clang-tidy"
-            "--header-insertion=iwyu"
             "--completion-style=detailed"
             "--function-arg-placeholders"
             "--fallback-style=llvm"
           ];
-
-          onAttach.function =
-            # lua
-            ''
-              vim.keymap.set('n', 'gh', "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "Switch Source/Header (C/C++)", buffer = bufnr })
-
-              require("clangd_extensions.inlay_hints").setup_autocmd()
-              require("clangd_extensions.inlay_hints").set_inlay_hints()
-            '';
         };
       };
     };
+
+    autoCmd = [
+      {
+        event = "FileType";
+        pattern = [ "c" "cpp" ];
+        command = "setlocal tabstop=4";
+      }
+    ];
 
     plugins = {
       conform-nvim.settings = {
@@ -97,7 +101,7 @@ in
       };
 
       dap = {
-        adapters.executables.lldb.command = getExe' pkgs.lldb "llbd-vscode";
+        adapters.executables.lldb.command = getExe' pkgs.lldb "lldb-vscode";
 
         configurations.cpp = [
           {
