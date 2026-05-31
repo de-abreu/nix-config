@@ -18,9 +18,11 @@ in
 
   programs = {
     git = {
-      settings.user = {
-        name = "Abreu";
-        email = "87032834+de-abreu@users.noreply.github.com";
+      settings = {
+        user = {
+          name = "Abreu";
+          email = "87032834+de-abreu@users.noreply.github.com";
+        };
       };
       signing = {
         format = "ssh";
