@@ -1,6 +1,11 @@
 {
-  programs.nixvim.plugins.snacks.settings.explorer = {
-    enabled = true;
-    layout.preview = "main";
+  programs.nixvim.plugins.snacks.settings = {
+    explorer.enabled = true;
+
+    picker.sources.explorer = {
+      cycle = true;
+      auto_close = true;
+      layout.preview = "main";
+    };
   };
 }
