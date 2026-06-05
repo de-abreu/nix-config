@@ -4,4 +4,5 @@
 }:
 {
   screenshot = pkgs.callPackage ./screenshot { };
+  presenter = pkgs.callPackage ./presenter { };
 }
