@@ -891,11 +891,11 @@
     "opencode-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1780704541,
-        "narHash": "sha256-1vZT3yc9aVi9JuCz1RovdOlBj+v5RJ6FJZ3IeOZflCw=",
+        "lastModified": 1780806085,
+        "narHash": "sha256-+OsXKIG7FR0yiZDqa1CCqWJ/Rz5ZT+Cw1/qRi04tnGU=",
         "owner": "nickjvandyke",
         "repo": "opencode.nvim",
-        "rev": "248208f73d973736d8f59d9a2e7b7cf43b1179ba",
+        "rev": "e4e5894f0d115365c977fddb3081e1d26912aed8",
         "type": "github"
       },
       "original": {

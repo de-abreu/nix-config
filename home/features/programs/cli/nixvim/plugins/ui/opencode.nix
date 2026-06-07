@@ -8,19 +8,12 @@
 let
   snacks = config.programs.nixvim.plugins.snacks;
   opencode = config.programs.opencode;
-  port = toString (opencode.settings.server.port or "");
-  snacks_terminal_opts = config.lib.nixvim.lua.toLuaObject {
-    win = {
-      position = "right";
-      enter = false;
-      on_win.__raw = "function(win) require('opencode.terminal').setup(win.win) end";
-    };
-  };
+  opencodeCmd = lib.getExe opencode.package;
 
   # INFO: Following the latest release.
   opencode-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "opencode.nvim";
-    version = "main";
+    version = "2026-06-07";
     src = inputs.opencode-nvim;
   };
 in
@@ -37,22 +30,44 @@ in
         lazyLoad.settings.lazy = true;
 
         settings = {
-          auto_reload = true;
-          port = port;
           server =
             let
-              opencodeCmd = lib.getExe opencode.package;
+              snacks_terminal_opts = config.lib.nixvim.lua.toLuaObject {
+                win = {
+                  position = "right";
+                  enter = false;
+                };
+              };
             in
             lib.mkIf snacks.enable {
               start.__raw = "function() require('snacks.terminal').open('${opencodeCmd}', ${snacks_terminal_opts}) end";
-              stop.__raw = "function() require('snacks.terminal').get('${opencodeCmd}', ${snacks_terminal_opts}):close() end";
-              toggle.__raw = "function() require('snacks.terminal').toggle('${opencodeCmd}', ${snacks_terminal_opts}) end";
             };
         };
       };
       lualine.settings.lualine_z.sections.__unkeyed-1.__raw = "require('opencode').statusline";
     };
 
-    globals.opencode_opts.lsp.enabled = true;
+    globals.opencode_opts = {
+      lsp.enabled = true;
+      events.reload = true;
+    };
+
+    autoCmd = lib.mkIf snacks.enable [
+      {
+        event = "User";
+        pattern = "OpencodeEvent:tui.command.execute";
+        callback.__raw = ''
+          function(args)
+            local event = args.data.event
+            if event.properties.command == 'prompt.submit' then
+              local win = require('snacks.terminal').get('${opencodeCmd}', { create = false })
+              if win then
+                win:show()
+              end
+            end
+          end
+        '';
+      }
+    ];
   };
 }

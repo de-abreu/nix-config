@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   options,
   ...
 }:
@@ -10,6 +11,7 @@
       let
         cfg = config.programs.nixvim.plugins.opencode;
         prefix = "<leader>a";
+        opencodeCmd = lib.getExe config.programs.opencode.package;
       in
 
       {
@@ -24,14 +26,14 @@
         keymaps = lib.mkIf cfg.enable [
           {
             key = prefix + "t";
-            action.__raw = "function() require('opencode').toggle() end";
+            action.__raw = "function() require('snacks.terminal').toggle('${opencodeCmd}', { win = { position = 'right', enter = false } }) end";
             mode = "n";
             options.desc = "Toggle window";
           }
 
           {
             key = prefix + "a";
-            action.__raw = "function() require('opencode').ask('@this: ', {submit = true}) end";
+            action.__raw = "function() require('opencode').ask('@this: ') end";
             mode = [
               "n"
               "x"
@@ -115,14 +117,14 @@
 
           {
             key = prefix + ".";
-            action.__raw = "function() require('opencode').prompt('@buffer', {append = true}) end";
+            action.__raw = "function() require('opencode').prompt('@buffer') end";
             mode = "n";
             options.desc = "Add buffer to prompt";
           }
 
           {
             key = prefix + "e";
-            action.__raw = "function() require('opencode').prompt('Explain @this and its context', {submit = true}) end";
+            action.__raw = "function() require('opencode').prompt('Explain @this and its context') end";
             mode = [
               "n"
               "x"
