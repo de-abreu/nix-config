@@ -29,7 +29,7 @@ in
 {
   programs = {
     opencode = {
-      apiKeys = apiKey;
+      env.apiKeys = apiKey;
       settings = {
         permission = lib.genAttrs writeTools (_: "deny");
         agent.build.permission = lib.genAttrs writeTools (_: "allow");

@@ -1,5 +1,7 @@
 { ... }:
 {
-  home.sessionVariables.OPENCODE_ENABLE_EXA = "true";
-  programs.opencode.apiKeys.EXA_API_KEY = "api-keys/exa";
+  programs.opencode.env = {
+    vars.OPENCODE_ENABLE_EXA = true;
+    apiKeys.EXA_API_KEY = "api-keys/exa";
+  };
 }

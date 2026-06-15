@@ -6,23 +6,33 @@
   ...
 }:
 with lib;
-let
-  inherit (types)
-    attrsOf
-    listOf
-    str
-    package
-    ;
-in
 {
-  options.programs.opencode = {
-    apiKeys = mkOption {
-      type = attrsOf str;
-      default = { };
-      description = "API keys to inject into opencode environment. Maps env var name to sops secret path.";
-      example = {
-        OPENCODE_API_KEY = "api-keys/opencode";
-        DEEPSEEK_API_KEY = "api-keys/deepseek";
+  options.programs.opencode = with types; {
+    env = {
+      apiKeys = mkOption {
+        type = attrsOf str;
+        default = { };
+        description = "API keys to inject into the opencode environment. Maps env var name to sops secret path.";
+        example = {
+          OPENCODE_API_KEY = "api-keys/opencode";
+          DEEPSEEK_API_KEY = "api-keys/deepseek";
+        };
+      };
+
+      vars = mkOption {
+        type =
+          oneOf [
+            str
+            bool
+            int
+          ]
+          |> attrsOf;
+        default = { };
+        description = "Environemnt variables to inject into the opencode environment.";
+        example = {
+          OPENCODE_EXPERIMENTAL = true;
+          OPENCODE_ENABLE_EXA = "true";
+        };
       };
     };
 
@@ -44,16 +54,17 @@ in
             ${name}="$(cat ${config.sops.secrets.${secretPath}.path})" || exit 1
             export ${name}
             readonly ${name}
-          '') cfg.apiKeys
+          '') cfg.env.apiKeys
           |> concatStringsSep "\n";
         runtimeInputs = cfg.extraPackages ++ optionals (cfg ? settings.plugin) [ pkgs.bun ];
         flags = optionalAttrs (cfg ? settings.server.port) {
           "--port" = toString cfg.settings.server.port;
         };
+        env = mapAttrs (_: toString) cfg.env.vars;
       };
     in
     {
-      sops.secrets = genAttrs (attrValues cfg.apiKeys) (_: { });
+      sops.secrets = genAttrs (attrValues cfg.env.apiKeys) (_: { });
 
       programs = {
         fish.shellAbbrs.op = "opencode";
@@ -66,6 +77,7 @@ in
             server.port = 8765;
             permission.bash."sudo *" = "deny";
           };
+          env.vars.OPENCODE_EXPERIMENTAL = true;
         };
       };
 
@@ -80,7 +92,6 @@ in
               "${dataHome}/opencode-stable.db" \
               "${dataHome}/opencode.db"
           '';
-        sessionVariables.OPENCODE_EXPERIMENTAL = "true";
       };
       xdg.configFile."opencode/instructions" = {
         source = ./instructions;

@@ -1,0 +1,43 @@
+{
+  programs.opencode.settings = {
+    permission.bash."sudo *" = "deny";
+    agent.plan.permission.bash = {
+      "cp *" = "deny";
+      "curl * --output *" = "deny";
+      "curl * --remote-name *" = "deny";
+      "curl * --remote-name-all *" = "deny";
+      "curl * -O *" = "deny";
+      "curl * -o *" = "deny";
+      "dd *" = "deny";
+      "git add *" = "deny";
+      "git commit *" = "deny";
+      "git push *" = "deny";
+      "git rebase *" = "deny";
+      "git reset *" = "deny";
+      "git clean *" = "deny";
+      "git branch -d *" = "deny";
+      "git branch -D *" = "deny";
+      "git merge *" = "deny";
+      "git rm *" = "deny";
+      "git stash drop *" = "deny";
+      "git stash pop *" = "deny";
+      "git mv *" = "deny";
+      "git tag -d *" = "deny";
+      "git checkout *" = "deny";
+      "git cherry-pick *" = "deny";
+      "git revert *" = "deny";
+      "git submodule *" = "deny";
+      "ln *" = "deny";
+      "mv *" = "deny";
+      "rm *" = "deny";
+      "sed *" = "deny";
+      "ssh-copy-id *" = "deny";
+      "ssh-keygen *" = "deny";
+      "sudo *" = "deny";
+      "tee *" = "deny";
+      "touch *" = "deny";
+      "wget * --output-document *" = "deny";
+      "wget * -O *" = "deny";
+    };
+  };
+}

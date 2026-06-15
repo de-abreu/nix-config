@@ -13,7 +13,7 @@ in
 
   programs = {
     opencode = {
-      apiKeys = apiKey;
+      env.apiKeys = apiKey;
       settings = {
         permission.morph-mcp_edit_file = "deny";
         agent.build.permission.morph-mcp_edit_file = "allow";

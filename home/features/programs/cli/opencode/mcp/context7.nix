@@ -5,7 +5,7 @@ let
 in
 {
   programs = {
-    opencode.apiKeys = apiKey;
+    opencode.env.apiKeys = apiKey;
     mcp.servers.context7 = {
       url = "https://mcp.context7.com/mcp";
       headers.${envVar} = "{env:${envVar}}";

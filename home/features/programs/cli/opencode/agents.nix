@@ -2,12 +2,8 @@
   config,
   flakePath,
   lib,
-  pkgs,
   ...
 }:
-let
-  inherit (pkgs) coreutils;
-in
 {
   # markdown
   home.file.".config/opencode/AGENTS.md" = {
