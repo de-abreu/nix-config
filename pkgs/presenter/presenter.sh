@@ -1,5 +1,5 @@
 font_size=21
-markdown_file=""
+presenterm_args=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -7,33 +7,37 @@ while [[ $# -gt 0 ]]; do
     font_size="$2"
     shift 2
     ;;
-  -*)
-    echo "Usage: $0 [--font-size SIZE] <markdown-file>" >&2
-    exit 1
-    ;;
   *)
-    markdown_file=$(realpath "$1")
+    presenterm_args+=("$1")
     shift
     ;;
   esac
 done
 
-if [[ -z "$markdown_file" ]]; then
-  echo "Usage: $0 [--font-size SIZE] <markdown-file>" >&2
+if [[ ${#presenterm_args[@]} -eq 0 ]]; then
+  echo "Usage: $0 [--font-size SIZE] [presenterm-options...] <markdown-file>" >&2
   exit 1
 fi
 
+last_idx=$((${#presenterm_args[@]} - 1))
+markdown_file="${presenterm_args[$last_idx]}"
+
 if [[ ! -f "$markdown_file" ]]; then
   echo "Error: File '$markdown_file' not found" >&2
+  echo "Usage: $0 [--font-size SIZE] [presenterm-options...] <markdown-file>" >&2
   exit 1
 fi
+
+markdown_file=$(realpath "$markdown_file")
+presenterm_args[last_idx]="$markdown_file"
 
 wezterm \
   --config "enable_tab_bar=false" \
   --config "font_size=${font_size}" \
   start \
   --class "presenterm" \
-  -- presenterm "$markdown_file" &
+  --cwd "$(pwd)" \
+  -- bash -c 'sleep 0.5; presenterm "$@"; rc=$?; if [ $rc -ne 0 ]; then echo "presenterm failed with exit code $rc"; read -n1 -p "Press any key to close..."; fi; exit $rc' _ "${presenterm_args[@]}" &
 
 wezterm_pid=$!
 
