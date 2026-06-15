@@ -20,6 +20,11 @@
           run = "help";
           desc = "Keymaps";
         }
+        {
+          on = "i";
+          run = "filter";
+          desc = "filter interactively";
+        }
       ]
       ++ [ close ];
       help.prepend_map = [

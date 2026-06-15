@@ -27,11 +27,6 @@
           run = "forward";
           desc = "Go to next directory";
         }
-        {
-          on = "h";
-          run = "filter";
-          desc = "Jump to match";
-        }
 
         # Seeking
         {
