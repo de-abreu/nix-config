@@ -4,7 +4,6 @@
 #
 # This is required for IoT development workflows where devices (Raspberry Pi, etc.)
 # are connected directly via ethernet and need to be discovered by hostname.
-{ lib, ... }:
 {
   services.avahi = {
     enable = true;
