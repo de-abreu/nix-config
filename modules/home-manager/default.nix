@@ -4,4 +4,5 @@
   presenterm = import ./presenterm;
   qalculate = import ./qalculate;
   wezterm-override = import ./wezterm-override;
+  wfrc = import ./wfrc;
 }

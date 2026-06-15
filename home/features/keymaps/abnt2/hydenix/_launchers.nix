@@ -13,10 +13,14 @@ let
   browser = config.home.sessionVariables.BROWSER or "firefox";
   terminal = config.home.sessionVariables.TERMINAL or "kitty";
   sysMonitor = config.home.sessionVariables.SYS_MONITOR or "htop";
-  cheatsheetCmd = if (config.programs.cheatsheet.enable or false) then
-                     lib.getExe config.programs.cheatsheet.package
-                   else
-                     "pkill -x rofi || hyde-shell keybinds_hint c";
+  cheatsheetCmd =
+    let
+      cs = config.programs.cheatsheet;
+    in
+    if (cs.enable or false) then
+      lib.getExe cs.package
+    else
+      "pkill -x rofi || hyde-shell keybinds_hint c";
 in
 #hyprlang
 ''
@@ -41,5 +45,12 @@ in
   bindd = ${mod}, S, $d open system monitor, exec, $toDefault; ${sysMonitor}
   bindd = ${mod} Shift, G, $d open game launcher , exec, $toDefault; hyde-shell gamelauncher # run game launcher for steam and lutris
   bindd = ${mod} Alt, G, $d game mode , exec, $toDefault; hyde-shell gamemode # disable hypr effects for gamemode
+  ${lib.optionalString (config.programs.wfrc.enable or false)
+    # hyprlang
+    ''
+      bindd = ${mod}, R, $d record the screen, exec, $toDefault; WFRC_FULL_SCREEN=1 wfrc
+      bindd = ${mod} Shift, R, $d record a portion of the screen, exec, $toDefault; wfrc
+    ''
+  }
   bindd = , $printScreen, $d take a screenshot, exec, $toDefault; ${screenshot}
 ''
