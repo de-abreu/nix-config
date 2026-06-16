@@ -70,7 +70,7 @@ in
   };
 
   programs = {
-    adjust_kbd_backlight = {
+    adjustKeyboardBacklight = {
       enable = true;
       device = "dell::kbd_backlight";
     };
@@ -78,6 +78,11 @@ in
       enable = true;
       devices = [ "/dev/input/by-path/platform-i8042-serio-0-event-kbd" ];
       addBinaryToPath = true;
+    };
+    monitorToggle = {
+      enable = true;
+      primary = "eDP-1";
+      secondary = "HDMI-A-1";
     };
   };
 

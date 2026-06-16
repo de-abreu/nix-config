@@ -31,6 +31,7 @@ fi
 markdown_file=$(realpath "$markdown_file")
 presenterm_args[last_idx]="$markdown_file"
 
+# shellcheck disable=SC2016
 wezterm \
   --config "enable_tab_bar=false" \
   --config "font_size=${font_size}" \

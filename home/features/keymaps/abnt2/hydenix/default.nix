@@ -2,6 +2,7 @@
   config,
   lib,
   options,
+  osConfig,
   pkgs,
   ...
 }:
@@ -23,7 +24,7 @@
       keybindings.overrideConfig =
         with pkgs;
         let
-          hardware-controls = callPackage ./_hardware-controls.nix { };
+          hardware-controls = callPackage ./_hardware-controls.nix { inherit lib osConfig pkgs; };
           launchers = callPackage ./_launchers.nix { inherit config; };
           theming = callPackage ./_theming.nix { };
           windows = callPackage ./_windows.nix { };
