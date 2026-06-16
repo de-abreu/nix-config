@@ -5,21 +5,8 @@
   inputs,
   ...
 }:
+with lib;
 let
-  inherit (lib)
-    literalExpression
-    mkEnableOption
-    mkOption
-    types
-    ;
-
-  inherit (types)
-    attrsOf
-    either
-    lines
-    path
-    ;
-
   cfg = config.programs.wezterm;
   tomlFormat = pkgs.formats.toml { };
 
@@ -28,22 +15,29 @@ let
     package = cfg.package;
     binName = "wezterm-floating";
     args = [
-      "--config" "enable_tab_bar=false"
-      "--config" "initial_cols=120"
-      "--config" "initial_rows=40"
-      "start" "--class" "floating" "--" "$@"
+      "--config"
+      "enable_tab_bar=false"
+      "--config"
+      "initial_cols=120"
+      "--config"
+      "initial_rows=40"
+      "start"
+      "--class"
+      "floating"
+      "--"
+      "$@"
     ];
   };
 in
 {
   meta.maintainers = [
-    lib.hm.maintainers.blmhemu
-    lib.maintainers.khaneliman
+    hm.maintainers.blmhemu
+    maintainers.khaneliman
   ];
 
   disabledModules = [ "programs/wezterm.nix" ];
 
-  options.programs.wezterm = {
+  options.programs.wezterm = with types; {
     enable = mkEnableOption "wezterm";
 
     package = lib.mkPackageOption pkgs "wezterm" { };
