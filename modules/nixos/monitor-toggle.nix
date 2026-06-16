@@ -44,7 +44,7 @@ in
         pkgs.libnotify
       ];
       text = ''
-        STATE_FILE="''${XDG_STATE_HOME:-$HOME/.local/state}/monitor-toggle/state"
+        STATE_FILE="''${XDG_RUNTIME_DIR:-/run/user/$UID}/monitor-toggle/state"
         mkdir -p "$(dirname "$STATE_FILE")"
 
         if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" = "extended" ]; then
