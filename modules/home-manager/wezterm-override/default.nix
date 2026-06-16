@@ -9,24 +9,32 @@ with lib;
 let
   cfg = config.programs.wezterm;
   tomlFormat = pkgs.formats.toml { };
-
   wezterm-floating = inputs.wrappers.lib.wrapPackage {
     inherit pkgs;
     package = cfg.package;
     binName = "wezterm-floating";
-    args = [
-      "--config"
-      "enable_tab_bar=false"
-      "--config"
-      "initial_cols=120"
-      "--config"
-      "initial_rows=40"
-      "start"
-      "--class"
-      "floating"
-      "--"
-      "$@"
-    ];
+    args =
+      let
+        configArgs =
+          [
+            "enable_tab_bar=false"
+            "initial_cols=120"
+            "initial_rows=40"
+            "window_close_confirmation=NeverPrompt"
+          ]
+          |> concatMap (v: [
+            "--config"
+            v
+          ]);
+      in
+      configArgs
+      ++ [
+        "start"
+        "--class"
+        "floating"
+        "--"
+        "$@"
+      ];
   };
 in
 {
