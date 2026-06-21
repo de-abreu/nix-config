@@ -15,6 +15,7 @@
           exec.enable = true;
           exec_replace.enable = true;
         };
+        speaker_notes.always_publish = true;
       };
 
       render = {

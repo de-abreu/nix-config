@@ -13,9 +13,6 @@ let
   hostname = "argo";
 in
 {
-  # INFO: System architecture
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
   imports =
     with inputs;
     [
@@ -31,11 +28,14 @@ in
     # Custom modules
     ++ (lib.attrValues outputs.nixosModules);
 
-  nixpkgs.overlays = [
-    inputs.hydenix.overlays.default
-  ]
-  # Custom overlays
-  ++ lib.attrValues outputs.overlays;
+  nixpkgs = {
+    hostPlatform.system = "x86_64-linux"; # INFO: System architecture
+    overlays = [
+      inputs.hydenix.overlays.default
+    ]
+    # Custom overlays
+    ++ lib.attrValues outputs.overlays;
+  };
 
   # Bootloader configuration for legacy boot mode
   boot = {

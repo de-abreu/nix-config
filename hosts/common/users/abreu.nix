@@ -58,7 +58,13 @@ in
         { osConfig, ... }:
         lib.mkIf (osConfig ? nixpkgs) {
           nixpkgs = {
-            config = lib.mapAttrs (_: v: lib.mkDefault v) osConfig.nixpkgs.config;
+            config = {
+              permittedInsecurePackages = with pkgs; [
+                librewolf.name
+                librewolf-unwrapped.name
+              ]; # TODO: Find an alternative to LibreWolf
+            }
+            // lib.mapAttrs (_: v: lib.mkDefault v) osConfig.nixpkgs.config;
             overlays = lib.mkOrder 900 osConfig.nixpkgs.overlays;
           };
         }

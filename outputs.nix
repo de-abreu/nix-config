@@ -7,11 +7,8 @@ inputs@{
 let
   inherit (self) outputs;
   lib = nixpkgs.lib;
-
   pkgsFor = lib.genAttrs (import systems) (system: import nixpkgs { inherit system; });
-
-forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-
+  forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
   experimentalFeatures = [
     "nix-command"
     "flakes"
@@ -21,7 +18,6 @@ in
 {
   nixosModules = import ./modules/nixos;
   homeModules = import ./modules/home-manager;
-
   overlays = import ./overlays { inherit inputs; };
 
   packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
