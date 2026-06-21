@@ -1,4 +1,3 @@
-{ ... }:
 {
   programs.opencode.env = {
     vars.OPENCODE_ENABLE_EXA = true;

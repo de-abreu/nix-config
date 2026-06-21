@@ -37,6 +37,7 @@ in
     };
 
     mcp.servers.github = {
+      enabled = true;
       command = lib.getExe pkgs.github-mcp-server;
       args = [ "stdio" ];
       env.${envVar} = "{env:${envVar}}";

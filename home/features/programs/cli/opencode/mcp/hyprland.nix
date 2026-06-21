@@ -1,10 +1,17 @@
-{ pkgs, lib, inputs, ... }:
+{
+  inputs,
+  lib,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
   hyprmcp = inputs.hyprmcp;
 in
 {
-  programs.mcp.servers.hyprmcp = {
-    command = lib.getExe' pkgs.uv "uv";
+  programs.mcp.servers.hyprmcp = lib.mkIf osConfig.programs.hyprland.enable {
+    disabled = true;
+    command = lib.getExe pkgs.uv;
     args = [
       "run"
       "--with"
