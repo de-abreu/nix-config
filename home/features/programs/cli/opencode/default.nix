@@ -93,9 +93,5 @@ with lib;
               "${dataHome}/opencode.db"
           '';
       };
-      xdg.configFile."opencode/instructions" = {
-        source = ./instructions;
-        recursive = true;
-      };
     };
 }
