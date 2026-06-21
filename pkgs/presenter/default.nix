@@ -5,6 +5,7 @@ pkgs.writeShellApplication {
     coreutils
     hyprland
     jq
+    mermaid-cli
     unstable.presenterm
     wezterm
   ];
