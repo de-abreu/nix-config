@@ -1,18 +1,26 @@
-{ pkgs, lib, ... }:
-pkgs.writeShellApplication {
+{
+  pkgs,
+  lib,
+  presenterm ? pkgs.presenterm,
+  ...
+}:
+with lib;
+let
   name = "presenter";
-  runtimeInputs = with pkgs; [
-    coreutils
-    hyprland
-    jq
-    mermaid-cli
-    unstable.presenterm
-    wezterm
+in
+pkgs.writeShellApplication {
+  name = name;
+  runtimeInputs = [
+    pkgs.coreutils
+    pkgs.hyprland
+    pkgs.jq
+    pkgs.wezterm
+    presenterm
   ];
-  text = builtins.readFile ./presenter.sh;
-  meta = with lib; {
+  text = readFile ./presenter.sh;
+  meta = {
     licenses = licenses.gpl3;
     platforms = platforms.all;
-    mainProgram = "presenter";
+    mainProgram = name;
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs = {
     presenterm = {
@@ -28,5 +28,9 @@
     fish.shellAbbrs.pt = "presenter";
   };
 
-  home.packages = [ pkgs.presenter ];
+  home.packages = [
+    (pkgs.presenter.override {
+      presenterm = config.programs.presenterm.finalPackage;
+    })
+  ];
 }
