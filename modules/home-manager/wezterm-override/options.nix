@@ -2,41 +2,9 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
-let
-  cfg = config.programs.wezterm;
-  tomlFormat = pkgs.formats.toml { };
-  wezterm-floating = inputs.wrappers.lib.wrapPackage {
-    inherit pkgs;
-    package = cfg.package;
-    binName = "wezterm-floating";
-    args =
-      let
-        configArgs =
-          [
-            "enable_tab_bar=false"
-            "initial_cols=120"
-            "initial_rows=40"
-            "window_close_confirmation=NeverPrompt"
-          ]
-          |> concatMap (v: [
-            "--config"
-            v
-          ]);
-      in
-      configArgs
-      ++ [
-        "start"
-        "--class"
-        "floating"
-        "--"
-        "$@"
-      ];
-  };
-in
 {
   meta.maintainers = [
     hm.maintainers.blmhemu
@@ -75,7 +43,11 @@ in
     };
 
     colorSchemes = mkOption {
-      type = attrsOf (tomlFormat.type);
+      type =
+        let
+          tomlFormat = pkgs.formats.toml { };
+        in
+        attrsOf (tomlFormat.type);
       default = { };
       description = ''
         Attribute set of additional color schemes to be written to
@@ -102,14 +74,5 @@ in
 
     enableBashIntegration = lib.hm.shell.mkBashIntegrationOption { inherit config; };
     enableZshIntegration = lib.hm.shell.mkZshIntegrationOption { inherit config; };
-
-    floatingPackage = mkOption {
-      type = types.package;
-      default = wezterm-floating;
-      description = "Wezterm wrapped with floating window defaults for transient commands.";
-      internal = true;
-    };
   };
-
-  config = import ./_config.nix { inherit cfg lib tomlFormat; };
 }

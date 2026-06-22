@@ -1,24 +1,11 @@
 {
-  config,
   lib,
   pkgs,
   ...
 }:
-let
-  inherit (lib) mkEnableOption mkOption types;
-  inherit (types)
-    attrsOf
-    either
-    listOf
-    int
-    str
-    package
-    ;
-
-  cfg = config.programs.kanata;
-in
+with lib;
 {
-  options.programs.kanata = {
+  options.programs.kanata = with types; {
     enable = mkEnableOption "Kanata advanced keyboard customization";
 
     package = mkOption {
@@ -111,5 +98,4 @@ in
       example = "base";
     };
   };
-  config = import ./config.nix { inherit cfg lib; };
 }

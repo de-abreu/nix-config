@@ -1,30 +1,17 @@
 {
-  inputs,
-  config,
   lib,
   pkgs,
   ...
 }:
-let
-  inherit (lib)
-    literalExpression
-    mkEnableOption
-    mkOption
-    mkPackageOption
-    types
-    ;
-
-  inherit (types) attrsOf path;
-
-  cfg = config.programs.presenterm;
-  yamlFormat = pkgs.formats.yaml { };
-in
+with lib;
 {
-  meta.maintainers = [ lib.hm.maintainers.blmhemu ];
+  meta.maintainers = [ maintainers.blmhemu ];
 
   options.programs.presenterm =
+    with types;
     let
-      themeType = types.either path yamlFormat.type;
+      yamlFormat = pkgs.formats.yaml { };
+      themeType = either path yamlFormat.type;
     in
     {
       enable = mkEnableOption "presenterm, a terminal-based presentation tool";
@@ -89,33 +76,12 @@ in
       exportPdf = {
         enable = mkEnableOption "PDF export support via weasyprint";
       };
-    };
-  config =
-    let
-      presenterm-wrapped = inputs.wrappers.lib.wrapPackage {
-        inherit pkgs;
-        package = cfg.package;
-        runtimeInputs =
-          with pkgs;
-          with lib;
-          optionals cfg.render.latex.enable [
-            typst
-            pandoc
-          ]
-          ++ optionals cfg.render.mermaid.enable [
-            mermaid-cli
-          ]
-          ++ optionals cfg.exportPdf.enable [
-            python3Packages.weasyprint
-          ];
+
+      finalPackage = mkOption {
+        type = package;
+        readOnly = true;
+        internal = true;
+        description = "The presenterm package wrapped with runtime dependencies.";
       };
-    in
-    import ./_config.nix {
-      inherit
-        cfg
-        lib
-        presenterm-wrapped
-        yamlFormat
-        ;
     };
 }

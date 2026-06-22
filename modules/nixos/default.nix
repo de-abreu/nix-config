@@ -1,8 +1,12 @@
+{ inputs, ... }:
+let
+  tree = inputs.import-tree;
+in
 {
   # virtualization = import ./virtualization.nix;
-  adjust-kbd-backlight = import ./adjust-kbd-backlight.nix;
+  adjust-kbd-backlight = tree [ ./adjust-kbd-backlight ];
   avahi = import ./avahi.nix;
-  kanata = import ./kanata;
-  monitor-toggle = import ./monitor-toggle.nix;
+  kanata = tree [ ./kanata ];
+  monitor-toggle = tree [ ./monitor-toggle ];
   nh = import ./nh.nix;
 }
