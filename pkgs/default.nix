@@ -2,8 +2,10 @@
   pkgs ? import <nixpkgs> { },
   ...
 }:
+with pkgs;
 {
-  screenshot = pkgs.callPackage ./screenshot { };
-  presenter = pkgs.callPackage ./presenter { };
-  wfrc = pkgs.callPackage ./wfrc { };
+  screenshot = callPackage ./screenshot { };
+  presenter = callPackage ./presenter { };
+  wezterm-floating = callPackage ./wezterm-floating { };
+  wfrc = callPackage ./wfrc { };
 }
