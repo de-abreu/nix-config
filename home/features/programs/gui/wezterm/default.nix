@@ -1,18 +1,23 @@
 {
   inputs,
+  pkgs,
+  lib,
   ...
 }:
 {
   programs.wezterm = {
     enable = true;
-    extraConfig = {
-      "multiplexing" = ./multiplexing.lua;
-      "rendering" = ./rendering.lua;
-      "scrollback-nvim" = ./scrollback-nvim.lua;
-      "tab-bar" = ./tab-bar.lua;
-    };
+    extraConfig =
+      with lib;
+      builtins.readDir ./modules
+      |> builtins.attrNames
+      |> map (f: removeSuffix ".lua" f)
+      |> flip genAttrs (f: ./modules/${f}.lua);
     plugins = { inherit (inputs) tabline-wez; };
   };
 
-  home.sessionVariables.TERMINAL = "wezterm";
+  home = {
+    sessionVariables.TERMINAL = "wezterm";
+    packages = [ pkgs.wezterm-floating ];
+  };
 }
