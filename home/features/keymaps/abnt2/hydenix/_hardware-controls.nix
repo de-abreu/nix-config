@@ -6,12 +6,13 @@
 with pkgs;
 let
   inherit (lib) optionalString getExe;
-  adjustKeyboardBacklight = osConfig.programs.adjustKeyboardBacklight;
+  adjustKeyboardBacklight = osConfig.programs.adjustKeyboardBacklight or { enable = false; };
   bctl = "hyde-shell brightnesscontrol";
-  monitorToggle = osConfig.programs.monitorToggle;
+  monitorToggle = osConfig.programs.monitorToggle or { enable = false; };
   pctl = playerctl;
   screenlock = "${pctl} pause; loginctl lock-session";
   vctl = "hyde-shell volumecontrol";
+  vpnToggle = osConfig.programs.openfortivpn or { enable = false; };
 in
 #hyprlang
 ''
@@ -40,5 +41,10 @@ in
   ${optionalString monitorToggle.enable ''
     $d=[$hc|Display]
     bindd = , F8, $d toggle mirror/extend, exec, ${getExe monitorToggle.package}
+  ''}
+
+  ${optionalString vpnToggle.enable ''
+    $d=[$hc|Network]
+    bindd = Shift, $printScreen, $d Toggle VPN, exec, ${getExe vpnToggle.package}
   ''}
 ''

@@ -4,12 +4,14 @@
     enable = mkEnableOption "Monitor duplication/extension toggle";
 
     primary = mkOption {
-      type = str;
+      type = nullOr str;
+      default = null;
       example = "eDP-1";
       description = "The primary monitor's name. See: `grep -l connected /sys/class/drm/*/status | sed 's|/sys/class/drm/card[0-9]*-||;s|/status||`";
     };
     secondary = mkOption {
-      type = str;
+      type = nullOr str;
+      default = null;
       example = "HDMI-A-1";
       description = "The secondary monitor's name. See: `grep -l connected /sys/class/drm/*/status | sed 's|/sys/class/drm/card[0-9]*-||;s|/status||`";
     };

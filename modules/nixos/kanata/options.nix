@@ -21,9 +21,10 @@ with lib;
     };
 
     devices = mkOption {
-      type = listOf str;
+      type = nullOr (listOf str);
+      default = null;
       description = ''
-        A list of device paths to be managed using Kanata. Use ls `ls
+        A list of device paths to be managed using Kanata. Use `ls
         /dev/input/by-path/` to discover the keyboards available.
       '';
     };

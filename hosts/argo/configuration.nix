@@ -69,27 +69,26 @@ in
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  programs = {
-    adjustKeyboardBacklight = {
-      enable = true;
-      device = "dell::kbd_backlight";
+  sops = {
+    defaultSopsFormat = "yaml";
+    defaultSopsFile = "${inputs.self}/secrets/hosts/${config.networking.hostName}.yaml";
+    secrets = {
+      root_password.neededForUsers = true;
+      uspnet-vpn = { };
     };
+  };
+
+  programs = {
+    adjustKeyboardBacklight.device = "dell::kbd_backlight";
     kanata = {
-      enable = true;
       devices = [ "/dev/input/by-path/platform-i8042-serio-0-event-kbd" ];
       addBinaryToPath = true;
     };
     monitorToggle = {
-      enable = true;
       primary = "eDP-1";
       secondary = "HDMI-A-1";
     };
-  };
-
-  sops = {
-    defaultSopsFormat = "yaml";
-    defaultSopsFile = "${inputs.self}/secrets/hosts/${config.networking.hostName}.yaml";
-    secrets.root_password.neededForUsers = true;
+    openfortivpn.configFile = config.sops.secrets.uspnet-vpn.path;
   };
 
   users = {

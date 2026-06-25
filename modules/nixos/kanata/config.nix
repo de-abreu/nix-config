@@ -14,10 +14,14 @@ let
   '';
 in
 {
-  config = mkIf cfg.enable {
+  config = mkMerge [
+    (mkIf (cfg.devices != null) {
+      programs.kanata.enable = mkDefault true;
+    })
+    (mkIf cfg.enable {
     assertions = [
       {
-        assertion = cfg.devices != [ ];
+        assertion = cfg.devices != null && cfg.devices != [ ];
         message = "Kanata: You must specify at least one device in 'programs.kanata.devices'.";
       }
     ];
@@ -66,5 +70,6 @@ in
         '';
       };
     };
-  };
+  })
+  ];
 }

@@ -8,7 +8,7 @@
 }:
 let
   mod = if hyprmode then "" else "$mainMod";
-  screenshot = lib.getExe pkgs.screenshot;
+  screenRecorder = config.programs.wfrc or { enable = false; };
   filebrowser = config.home.sessionVariables.FILEBROWSER or "yazi";
   browser = config.home.sessionVariables.BROWSER or "firefox";
   terminal = config.home.sessionVariables.TERMINAL or "kitty";
@@ -45,12 +45,17 @@ in
   bindd = ${mod}, S, $d open system monitor, exec, $toDefault; ${sysMonitor}
   bindd = ${mod} Shift, G, $d open game launcher , exec, $toDefault; hyde-shell gamelauncher # run game launcher for steam and lutris
   bindd = ${mod} Alt, G, $d game mode , exec, $toDefault; hyde-shell gamemode # disable hypr effects for gamemode
-  ${lib.optionalString (config.programs.wfrc.enable or false)
+  ${lib.optionalString (screenRecorder.enable or false)
     # hyprlang
     ''
-      bindd = ${mod}, R, $d record the screen, exec, $toDefault; WFRC_FULL_SCREEN=1 wfrc
-      bindd = ${mod} Shift, R, $d record a portion of the screen, exec, $toDefault; wfrc
+      bindd = ${mod}, R, $d record the screen, exec, $toDefault; WFRC_FULL_SCREEN=1 ${lib.getExe screenRecorder.package}
+      bindd = ${mod} Shift, R, $d record a portion of the screen, exec, $toDefault; ${lib.getExe screenRecorder.package}
     ''
   }
-  bindd = , $printScreen, $d take a screenshot, exec, $toDefault; ${screenshot}
+  ${lib.optionalString (pkgs ? screenshot)
+    # hyprlang
+    ''
+      bindd = , $printScreen, $d take a screenshot, exec, $toDefault; ${lib.getExe pkgs.screenshot}
+    ''
+  }
 ''
