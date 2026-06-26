@@ -7,7 +7,8 @@
 with lib;
 let
   cfg = config.programs.openfortivpn;
-in {
+in
+{
   config = mkMerge [
     (mkIf (cfg.configFile != null) {
       programs.openfortivpn.enable = mkDefault true;
@@ -35,10 +36,19 @@ in {
           });
         '';
 
+      # Stop/start the VPN in response to global connectivity changes.
+      # Uses a flag file to only restart if the VPN was *already running* when
+      # connectivity was lost — never auto-starts a VPN the user never started.
+      networking.networkmanager.dispatcherScripts = [
+        {
+          type = "basic";
+          source = ./openfortivpn-dispatcher.sh;
+        }
+      ];
+
       systemd.services.openfortivpn = {
         description = "OpenFortiVPN Client";
         after = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn -c ${cfg.configFile}";
@@ -49,16 +59,11 @@ in {
 
       programs.openfortivpn.package = pkgs.writeShellApplication {
         name = "openfortivpn-toggle";
-        runtimeInputs = [ pkgs.libnotify ];
-        text = ''
-          if systemctl is-active --quiet openfortivpn; then
-            systemctl stop openfortivpn
-            notify-send "OpenFortiVPN" "Disconnected"
-          else
-            systemctl start openfortivpn
-            notify-send "OpenFortiVPN" "Connected"
-          fi
-        '';
+        runtimeInputs = with pkgs; [
+          libnotify
+          networkmanager
+        ];
+        text = builtins.readFile ./openfortivpn-toggle.sh;
       };
 
       environment.systemPackages = [ cfg.package ];
