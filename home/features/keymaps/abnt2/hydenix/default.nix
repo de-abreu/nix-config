@@ -31,7 +31,7 @@
           workspaces = callPackage ./_workspaces.nix { };
 
           changeSubmap =
-            if config.stylix.enable then
+            if config ? stylix && config.stylix.enable then
               with config.lib.stylix.colors;
               {
                 toHyprmode = "hyprctl keyword general:col.active_border \"rgb(${base08})\"; hyprctl dispatch submap hyprmode";

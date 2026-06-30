@@ -51,7 +51,7 @@ in
         after = [ "network-online.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn -c ${cfg.configFile}";
+          ExecStart = "${getExe pkgs.openfortivpn} -c ${cfg.configFile}";
           Restart = "on-failure";
           RestartSec = 5;
         };

@@ -13,44 +13,27 @@ in
       programs.monitorToggle.enable = lib.mkDefault true;
     })
     (lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = cfg.primary != null && cfg.secondary != null;
-        message = "monitorToggle: both 'primary' and 'secondary' must be set when the module is enabled.";
-      }
-      {
-        assertion = config.programs.hyprland.enable;
-        message = "monitorToggle requires programs.hyprland.enable to be true";
-      }
-    ];
-
-    programs.monitorToggle.package = pkgs.writeShellApplication {
-      name = "monitor-toggle";
-      runtimeInputs = [
-        config.programs.hyprland.package
-        pkgs.libnotify
+      assertions = [
+        {
+          assertion = cfg.primary != null && cfg.secondary != null;
+          message = "monitorToggle: both 'primary' and 'secondary' must be set when the module is enabled.";
+        }
+        {
+          assertion = config.programs.hyprland.enable;
+          message = "monitorToggle requires programs.hyprland.enable to be true";
+        }
       ];
-      text = ''
-        STATE_FILE="''${XDG_RUNTIME_DIR:-/run/user/$UID}/monitor-toggle/state"
-        mkdir -p "$(dirname "$STATE_FILE")"
 
-        if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" = "extended" ]; then
-          # Switch to Mirror Mode
-          hyprctl keyword monitor "${cfg.secondary},preferred,auto,1,mirror,${cfg.primary}"
-          echo "mirrored" > "$STATE_FILE"
-          notify-send "Display Mode" "Screen Mirrored"
-        else
-          # Switch back to Extended Mode — disable secondary, then re-enable without mirror
-          # to let Hyprland re-apply the default monitor config
-          hyprctl keyword monitor "${cfg.secondary},disable"
-          hyprctl keyword monitor "${cfg.secondary},preferred,auto,1"
-          echo "extended" > "$STATE_FILE"
-          notify-send "Display Mode" "Screen Extended"
-        fi
-      '';
-    };
+      programs.monitorToggle.package = pkgs.writeShellApplication {
+        name = "monitor-toggle";
+        runtimeInputs = [
+          config.programs.hyprland.package
+          pkgs.libnotify
+        ];
+        text = import ./_script.nix { inherit cfg; };
+      };
 
-    environment.systemPackages = [ cfg.package ];
-  })
+      environment.systemPackages = [ cfg.package ];
+    })
   ];
 }

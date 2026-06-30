@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  icons = import ../_icons.nix;
+in
 {
   programs.nixvim = {
     autoCmd = [
@@ -15,8 +19,6 @@
     ];
 
     plugins.lualine = {
-      enable = true;
-      lazyLoad.settings.event = "DeferredUIEnter";
       settings.sections.lualine_c = [
         {
           __unkeyed-1 = "%=";
@@ -31,12 +33,17 @@
             function()
               local reg = vim.fn.reg_recording()
               if reg == "" then return "" end
-              return "  Recording @" .. reg
+              return "${icons.macroRecording} Recording @" .. reg
             end
           '';
-          # Optional: Give it a distinct color so it catches your eye
+
+          # Setting a distinctive color to catch the user's eye
           color = {
-            fg = "#ff9e64";
+            fg =
+              if config ? stylix && config.stylix.enable then
+                config.lib.stylix.colors.withHashtag.base09
+              else
+                "#ff9e64";
             gui = "bold";
           };
         }
