@@ -49,6 +49,7 @@ in
       systemd.services.openfortivpn = {
         description = "OpenFortiVPN Client";
         after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "simple";
           ExecStart = "${getExe pkgs.openfortivpn} -c ${cfg.configFile}";
